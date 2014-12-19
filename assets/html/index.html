@@ -5,12 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Streaming player</title>
   <link rel="stylesheet" href="/stream-player/assets/css/libs/video-js.css">
+  <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
   <script src="/stream-player/assets/js/libs/video.js"></script>
+  <script src="/stream-player/assets/js/libs/main.js"></script>
 </head>
 <body>
-  <video id="my_video_1" class="video-js vjs-default-skin" controls
+  <h1 class="title">Output</h1>
+  <video id="output-video" class="video-js vjs-default-skin" controls
   preload="auto" width="1024" height="680" data-setup='{ "techOrder": ["flash"] }'>
       <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test" type='rtmp/flv'>
   </video>
+  <h1 class="title">Input</h1>
+  <video id="input-video" autoplay></video>
+  <button id="input_button">Show webcam</button>
 </body>
 </html>
