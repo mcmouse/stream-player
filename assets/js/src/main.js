@@ -22,7 +22,7 @@
       if (this.hasUserMedia) {
         $button.click(function () {
           this.loadUserMedia();
-        }).bind(this);
+        }.bind(this));
       } else {
         console.log('getUserMedia() is not supported in your browser');
       }
