@@ -5,8 +5,8 @@
 
     //jQuery selectors
     var $body = $('body');
-    var $video = $body.find('#input_video');
-    var $button = $body.find('#load_video');
+    var $video = $body.find('#input-video');
+    var $button = $body.find('#load-video');
 
     this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
 
