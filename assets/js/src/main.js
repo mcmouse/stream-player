@@ -39,8 +39,9 @@
     };
 
     this.displayVideo = function (userVideoStream) {
-      $video.src = window.URL.createObjectURL(userVideoStream);
-      $video.onloadedmetadata = function (e) {
+      var videoPlayer = $video.eq(0);
+      videoPlayer.src = window.URL.createObjectURL(userVideoStream);
+      videoPlayer.onloadedmetadata = function (e) {
         console.log(e);
       };
     };
