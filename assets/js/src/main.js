@@ -39,11 +39,10 @@
     };
 
     this.displayVideo = function (userVideoStream) {
-      var videoPlayer = $video.eq(0);
-      videoPlayer.src = window.URL.createObjectURL(userVideoStream);
-      videoPlayer.onloadedmetadata = function (e) {
+      $video.attr('src', window.URL.createObjectURL(userVideoStream));
+      $video.on('loadedmetadata', function (e) {
         console.log(e);
-      };
+      });
     };
   };
 
