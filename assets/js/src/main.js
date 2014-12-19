@@ -34,7 +34,7 @@
         audio: true,
       };
 
-      this.getUserMedia.call(window, settings, this.displayVideo, this.errorCallback);
+      this.getUserMedia.call(navigator, settings, this.displayVideo, this.errorCallback);
 
     };
 
