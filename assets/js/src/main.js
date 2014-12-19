@@ -8,7 +8,7 @@
     var $video = $body.find('#input_video');
     var $button = $body.find('#load_video');
 
-    this.getUserMedia = navigator.getUserMedia().bind(navigator) || navigator.webkitGetUserMedia().bind(navigator) || navigator.mozGetUserMedia().bind(navigator) || navigator.oGetUserMedia().bind(navigator) || navigator.msGetUserMedia().bind(navigator);
+    this.getUserMedia = navigator.getUserMedia.bind || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
 
     this.hasUserMedia = function () {
       return !!this.getUserMedia;
@@ -34,7 +34,7 @@
         audio: true,
       };
 
-      this.getUserMedia(settings, this.displayVideo, this.errorCallback);
+      this.getUserMedia.call(window, settings, this.displayVideo, this.errorCallback);
 
     };
 
