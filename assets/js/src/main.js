@@ -8,7 +8,7 @@
     var $video = $body.find('#input_video');
     var $button = $body.find('#load_video');
 
-    this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
+    this.getUserMedia = navigator.getUserMedia.bind(navigator) || navigator.webkitGetUserMedia.bind(navigator) || navigator.mozGetUserMedia.bind(navigator) || navigator.oGetUserMedia.bind(navigator) || navigator.msGetUserMedia.bind(navigator);
 
     this.hasUserMedia = function () {
       return !!this.getUserMedia;
