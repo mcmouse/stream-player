@@ -67,10 +67,8 @@
         preload: 'auto',
         techOrder: ['flash', 'html5'],
         autoplay: true,
-        dimensions: {
-          width: 600,
-          height: 400
-        }
+        width: 600,
+        height: 400
       };
 
       this.videoplayer = videojs('output-video', options);
