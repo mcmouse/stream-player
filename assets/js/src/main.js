@@ -71,7 +71,7 @@
 
       this.videoplayer = videojs('output-video', options);
 
-      this.videoplayer.ready(function () {
+      this.videoplayer.onPlay(function () {
         this.$videoOut.width(601);
       }.bind(this));
 
