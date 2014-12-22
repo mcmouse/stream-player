@@ -51,7 +51,7 @@
 
     this.src = {
       src: 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test.flv',
-      type: 'video/flv'
+      type: 'rtmp/flv'
     };
 
     this.init = function () {
