@@ -63,13 +63,12 @@
 
       var options = {
         autoplay: true,
-        src: this.src,
+        sources: [this.src],
         preload: 'auto',
-        techOrder: ['flash'],
-        controls: true,
+        techOrder: ['flash', 'html5'],
       };
 
-      videojs('output-video', options);
+      this.videoplayer = videojs('output-video', options);
 
     };
 
