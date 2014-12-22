@@ -7,6 +7,7 @@
     //jQuery selectors
     var $body = $('body');
     var $video = $body.find('#input-video');
+    var $videoOut = $body.find('#output-video');
     var $button = $body.find('#load-video');
 
     this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
@@ -69,6 +70,10 @@
       };
 
       this.videoplayer = videojs('output-video', options);
+
+      this.videoplayer.ready(function () {
+        this.$videoOut.width(601);
+      }.bind(this));
 
     };
 
