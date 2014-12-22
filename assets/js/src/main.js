@@ -66,7 +66,7 @@
         src: this.src
       };
 
-      videojs('video-out', options);
+      //videojs('video-out', options);
 
     };
 
