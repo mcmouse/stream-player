@@ -72,10 +72,6 @@
       };
 
       this.videoplayer = videojs('output-video', options);
-
-      this.videoplayer.load(function () {
-        this.width(601);
-      });
     };
 
   };
