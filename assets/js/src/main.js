@@ -6,44 +6,52 @@
 
     //jQuery selectors
     var $body = $('body');
-    var $video = $body.find('#input-video');
+    var $video = $body.find('#video-in');
     var $button = $body.find('#load-video');
 
-    this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
+    var inputElement = 'video-in';
 
-    this.hasUserMedia = function () {
-      return !!this.getUserMedia;
-    };
-
-    this.errorCallback = function (e) {
-      console.log('Error: ', e);
-    };
+    var player = (function () {
+      var isIE = navigator.appName.indexOf('Microsoft') !== -1;
+      return (isIE) ? window[inputElement] : document[inputElement];
+    })();
 
     this.init = function () {
-      if (this.hasUserMedia) {
-        $button.click(function () {
-          this.loadUserMedia();
-        }.bind(this));
-      } else {
-        console.log('getUserMedia() is not supported in your browser');
+      $button.click(function () {
+        this.displayVideo();
+      }.bind(this));
+    };
+
+    this.displayVideo = function () {
+      this.userID = this.generateUserID();
+      this.setVideoProperty('url', 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/');
+      this.setVideoProperty('publish', this.userID);
+      this.setVideoProperty('record', true);
+      this.setVideoProperty('controls', true);
+      $video.show();
+    };
+
+    this.setVideoProperty = function (property, value) {
+      player.setProperty(property, value);
+    };
+
+    //Random number generation
+    //From http://slavik.meltser.info/the-efficient-way-to-create-guid-uuid-in-javascript-with-explanation/
+
+    /**
+     * Generates a GUID string.
+     * @returns {String} The generated GUID.
+     * @example af8a8416-6e18-a307-bd9c-f2c947bbb3aa
+     * @author Slavik Meltser (slavik@meltser.info).
+     * @link http://slavik.meltser.info/?p=142
+     */
+
+    this.generateUserID = function () {
+      function _p8(s) {
+        var p = (Math.random().toString(16) + '000000000').substr(2, 8);
+        return s ? '-' + p.substr(0, 4) + '-' + p.substr(4, 4) : p;
       }
-    };
-
-    this.loadUserMedia = function () {
-      var settings = {
-        video: true,
-        audio: true,
-      };
-
-      this.getUserMedia.call(navigator, settings, this.displayVideo, this.errorCallback);
-
-    };
-
-    this.displayVideo = function (userVideoStream) {
-      $video.attr('src', window.URL.createObjectURL(userVideoStream));
-      $video.on('loadedmetadata', function (e) {
-        console.log(e);
-      });
+      return _p8() + _p8(true) + _p8(true) + _p8();
     };
   };
 
@@ -57,17 +65,6 @@
         height: 400,
         width: 600
       });
-
-      // var options = {
-      //   sources: [this.src],
-      //   preload: 'auto',
-      //   techOrder: ['flash', 'html5'],
-      //   autoplay: true,
-      //   width: 600,
-      //   height: 400
-      // };
-
-      // this.videoplayer = videojs('output-video', options);
     };
 
   };
