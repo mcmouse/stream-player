@@ -65,7 +65,7 @@
         autoplay: true,
         src: this.src,
         preload: 'auto',
-        techOrder: ['html5', 'flash'],
+        techOrder: ['flash'],
         controls: true,
       };
 
