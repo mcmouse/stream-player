@@ -33,7 +33,7 @@
     };
 
     this.setVideoProperty = function (property, value) {
-      player.setAttribute(property, value);
+      player.setProperty(property, value);
     };
 
     //Random number generation
