@@ -23,9 +23,9 @@
     };
 
     this.displayVideo = function () {
-      this.userID = this.generateUserID();
+      window.userID = this.generateUserID();
       this.setVideoProperty('url', 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/');
-      this.setVideoProperty('publish', this.userID);
+      this.setVideoProperty('publish', window.userID);
       this.setVideoProperty('record', true);
       this.setVideoProperty('controls', true);
       $video.show();
@@ -57,7 +57,7 @@
 
   var VideoOut = function () {
 
-    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test';
+    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/' + window.userID;
 
     this.init = function () {
       jwplayer('output-video').setup({
