@@ -1,4 +1,4 @@
-/* global jwplayer */
+/* global videojs */
 (function (window, document, $, undefined) {
   'use strict';
 
@@ -49,14 +49,25 @@
 
   var VideoOut = function () {
 
-    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/flv:test.flv';
+    this.src = {
+      src: 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test.flv',
+      type: 'video/flv'
+    };
 
     this.init = function () {
-      jwplayer('video-out').setup({
-        file: this.src,
-        height: 400,
-        width: 600
-      });
+      // jwplayer('video-out').setup({
+      //   file: this.src,
+      //   height: 400,
+      //   width: 600
+      // });'
+
+      var options = {
+        autoplay: true,
+        src: this.src
+      };
+
+      videojs('video-out', options);
+
     };
 
   };
