@@ -4,22 +4,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Streaming player</title>
-  <link rel="stylesheet" href="/stream-player/assets/css/libs/video-js.css">
   <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
-  <script src="/stream-player/assets/js/libs/video.js"></script>
+  <script src="http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js"></script>
   <script src="/stream-player/assets/js/src/main.js"></script>
 </head>
 <body>
   <h1 class="title">Output</h1>
-  <video id="output-video" class="video-js vjs-default-skin" controls
-  preload="auto" width="1024" height="680" data-setup='{ "techOrder": ["flash"] }'>
-      <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test" type='rtmp/flv'>
-  </video>
+  <div id="video-out"></div>
+
   <h1 class="title">Input</h1>
   <!--<video id="input-video" autoplay></video>
   <button id="load-video">Show webcam</button>-->
   <object type="application/x-shockwave-flash" data="/stream-player/assets/js/libs/VideoIO.swf"
-    id="input-video-flash" width="320" height="240">
+    id="video-in" width="600" height="400">
     <param name="movie" value="/stream-player/assets/js/libs/VideoIO.swf" />
     <param name="quality" value="high" />
     <param name="bgcolor" value="#FFFFFF" />
