@@ -49,13 +49,13 @@
 
   var VideoOut = function () {
 
-    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live:test.flv';
+    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/flv:test.flv';
 
     this.init = function () {
       jwplayer('video-out').setup({
         file: this.src,
-        height: 360,
-        width: 640
+        height: 400,
+        width: 600
       });
     };
 
