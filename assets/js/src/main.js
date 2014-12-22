@@ -69,7 +69,7 @@
         controls: true,
       };
 
-      videojs('video-out', options);
+      videojs('output-video', options);
 
     };
 
