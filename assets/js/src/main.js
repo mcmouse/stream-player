@@ -63,7 +63,6 @@
       // });'
 
       var options = {
-        autoplay: true,
         sources: [this.src],
         preload: 'auto',
         techOrder: ['flash', 'html5'],
@@ -71,10 +70,10 @@
 
       this.videoplayer = videojs('output-video', options);
 
-      this.videoplayer.onPlay(function () {
+      this.videoplayer.ready(function () {
+        this.videoplayer.play();
         this.$videoOut.width(601);
       }.bind(this));
-
     };
 
   };
