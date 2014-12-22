@@ -49,7 +49,7 @@
 
   var VideoOut = function () {
 
-    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/test:live.flv';
+    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live:test.flv';
 
     this.init = function () {
       jwplayer('video-out').setup({
