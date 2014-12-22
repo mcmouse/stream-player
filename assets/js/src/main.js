@@ -66,14 +66,14 @@
         sources: [this.src],
         preload: 'auto',
         techOrder: ['flash', 'html5'],
+        autoplay: true,
+        dimensions: {
+          width: 600,
+          height: 400
+        }
       };
 
       this.videoplayer = videojs('output-video', options);
-
-      this.videoplayer.ready(function () {
-        this.videoplayer.play();
-        this.$videoOut.width(601);
-      }.bind(this));
     };
 
   };
