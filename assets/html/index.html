@@ -12,8 +12,9 @@
 </head>
 <body>
   <h1 class="title">Output</h1>
-  <video id="video-out" class="video-js" data-setup='{}' controls>
-    <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/&flv:test.flv" type="rtmp/flv">
+  <video id="output-video" class="video-js vjs-default-skin" controls
+  preload="auto" width="1024" height="680" data-setup='{ "techOrder": ["flash"] }'>
+      <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test" type='rtmp/flv'>
   </video>
 
   <h1 class="title">Input</h1>
