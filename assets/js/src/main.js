@@ -1,4 +1,4 @@
-/* global videojs */
+/* global jwplayer */
 (function (window, document, $, undefined) {
   'use strict';
 
@@ -7,7 +7,6 @@
     //jQuery selectors
     var $body = $('body');
     var $video = $body.find('#input-video');
-    var $videoOut = $body.find('#output-video');
     var $button = $body.find('#load-video');
 
     this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
@@ -50,28 +49,25 @@
 
   var VideoOut = function () {
 
-    this.src = {
-      src: 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test',
-      type: 'rtmp/flv'
-    };
+    this.src = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test';
 
     this.init = function () {
-      // jwplayer('video-out').setup({
-      //   file: this.src,
-      //   height: 400,
-      //   width: 600
-      // });'
+      jwplayer('output-video').setup({
+        file: this.src,
+        height: 400,
+        width: 600
+      });
 
-      var options = {
-        sources: [this.src],
-        preload: 'auto',
-        techOrder: ['flash', 'html5'],
-        autoplay: true,
-        width: 600,
-        height: 400
-      };
+      // var options = {
+      //   sources: [this.src],
+      //   preload: 'auto',
+      //   techOrder: ['flash', 'html5'],
+      //   autoplay: true,
+      //   width: 600,
+      //   height: 400
+      // };
 
-      this.videoplayer = videojs('output-video', options);
+      // this.videoplayer = videojs('output-video', options);
     };
 
   };
