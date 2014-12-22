@@ -56,7 +56,7 @@
         file: this.src,
         height: 360,
         width: 640
-      }.bind(this));
+      });
     };
 
   };
