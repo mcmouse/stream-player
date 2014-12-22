@@ -17,13 +17,14 @@
     })();
 
     this.init = function () {
+      window.userID = this.generateUserID();
+
       $button.click(function () {
         this.displayVideo();
       }.bind(this));
     };
 
     this.displayVideo = function () {
-      window.userID = this.generateUserID();
       this.setVideoProperty('url', 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/');
       this.setVideoProperty('publish', window.userID);
       this.setVideoProperty('record', true);
@@ -32,7 +33,7 @@
     };
 
     this.setVideoProperty = function (property, value) {
-      player.setProperty(property, value);
+      player.setAttribute(property, value);
     };
 
     //Random number generation
