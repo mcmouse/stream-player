@@ -18,15 +18,15 @@
   <h1 class="title">Input</h1>
   <!--<video id="input-video" autoplay></video>
   <button id="load-video">Show webcam</button>-->
-  <object type="application/x-shockwave-flash" data="VideoIO.swf"
+  <object type="application/x-shockwave-flash" data="/stream-player/assets/js/libs/VideoIO.swf"
     id="input-video-flash" width="320" height="240">
-    <param name="movie" value="VideoIO.swf" />
+    <param name="movie" value="/stream-player/assets/js/libs/VideoIO.swf" />
     <param name="quality" value="high" />
     <param name="bgcolor" value="#FFFFFF" />
     <param name="allowFullScreen" value="true" />
     <param name="allowScriptAccess" value="" />
     <param name="flashVars" 
-    value="controls=true&url=rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live&publish=test" />
+    value="controls=true&url=rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live&publish=test&record=true" />
   </object>
 </body>
 </html>
