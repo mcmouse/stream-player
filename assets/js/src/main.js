@@ -6,16 +6,18 @@
 
     //jQuery selectors
     var $body = $('body');
-    var $video = $body.find('#video-in');
+    var $video = $body.find('#input-video');
     var $button = $body.find('#load-video');
 
-    var inputElement = 'video-in';
     var srcUrl = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/';
-    var isIE = navigator.appName.indexOf('Microsoft') !== -1;
 
-    var player = (function () {
-      return (isIE) ? window[inputElement] : document[inputElement];
-    })();
+    this.createPlayer = function () {
+      this.template = $body.find('#player-template').innerHTML;
+      this.template = this.template
+        .replace('{{id}}', window.userID)
+        .replace('{{srcUrl}}', srcUrl);
+      $video.append(this.template);
+    };
 
     this.init = function () {
       window.userID = this.generateUserID();
@@ -26,16 +28,14 @@
     };
 
     this.displayVideo = function () {
-      this.setVideoProperty('url', srcUrl);
-      this.setVideoProperty('publish', window.userID);
-      this.setVideoProperty('record', true);
+      this.createPlayer();
       $video.show();
     };
 
 
-    this.setVideoProperty = function (property, value) {
-      player.setProperty(property, value);
-    };
+    // this.setVideoProperty = function (property, value) {
+    //   player.setProperty(property, value);
+    // };
 
     //Random number generation
     //From http://slavik.meltser.info/the-efficient-way-to-create-guid-uuid-in-javascript-with-explanation/

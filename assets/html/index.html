@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Streaming player</title>
   <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
-  <script src="/stream-player/assets/js/libs/flash.js"></script>
 
   <!-- JWPlayer -->
   <script src="http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js"></script>
@@ -21,60 +20,28 @@
 </head>
 <body>
   <h1 class="title">Output</h1>
-
-  <!-- Ugh -->
-  <script language="JavaScript" type="text/javascript">
-    var hasProductInstall = DetectFlashVer(6, 0, 65);
-    var hasVersion10 = DetectFlashVer(10, 0, 0);
-    var hasVersion10_3 = DetectFlashVer(10, 3, 0);
-    var hasVersion11 = DetectFlashVer(11, 0, 0);
-
-    if (hasProductInstall && !hasVersion10) {
-      var MMPlayerType = (isIE == true) ? 'ActiveX' : 'PlugIn';
-      var MMredirectURL = window.location;
-        document.title = document.title.slice(0, 47) + ' - Flash Player Installation';
-        var MMdoctitle = document.title;
-
-      AC_FL_RunContent(
-        'src', 'playerProductInstall',
-        'FlashVars', 'MMredirectURL='+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+'',
-        'width', '320',
-        'height', '240',
-        'align', 'middle',
-        'id', 'video1',
-        'quality', 'high',
-        'bgcolor', '#000000',
-        'name', 'video1',
-        'allowScriptAccess','always',
-        'type', 'application/x-shockwave-flash',
-        'pluginspage', 'http://www.adobe.com/go/getflashplayer'
-      );
-
-    } else if (hasVersion10) { 
-      AC_FL_RunContent(
-          'src', (hasVersion11 ? 'VideoIO11' : (hasVersion10_3 ? 'VideoIO45' : 'VideoIO')),
-          'width', '600',
-          'height', '400',
-          'align', 'middle',
-          'id', 'video-in',
-          'quality', 'high',
-          'bgcolor', '#000000',
-          'name', 'video-in',
-          'allowScriptAccess','always',
-          'allowFullScreen','true',
-          'type', 'application/x-shockwave-flash',
-          'pluginspage', 'http://www.adobe.com/go/getflashplayer'
-      );
-    } else {
-      var alternateContent = 'This content requires the Adobe Flash Player. ' + '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
-      document.write(alternateContent);
-    }
-  </script>
+  <div id="output-video">
+     <!--  <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test" type='rtmp/flv'/> -->
+  </div>
 
   <h1 class="title">Input</h1>
+  <!--<video id="input-video" autoplay></video>
+  <button id="load-video">Show webcam</button>-->
 
-  <button id="load-video">Show webcam</button>
-
-    
+  <div id="input-video">
+  </div>
+  
+  <script id="player-template">
+    <object type="application/x-shockwave-flash" data="/stream-player/assets/js/libs/VideoIO.swf"
+      id="video-in" width="600" height="400">
+      <param name="movie" value="/stream-player/assets/js/libs/VideoIO.swf" />
+      <param name="quality" value="high" />
+      <param name="bgcolor" value="#FFFFFF" />
+      <param name="allowFullScreen" value="true" />
+      <param name="allowScriptAccess" value="" />
+      <param name="flashVars" 
+      value="controls=true&url={{srcUrl}}&publish={{id}}&record=true" />
+    </object>
+  </script>
 </body>
 </html>
