@@ -1,4 +1,4 @@
-/* global jwplayer */
+/* global jwplayer, io */
 (function (window, document, $, undefined) {
   'use strict';
 
@@ -91,6 +91,15 @@
       console.log(data);
       socket.emit('my other event', {
         my: 'data'
+      });
+    });
+
+    var socket2 = io.connect('http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081');
+
+    socket2.on('news', function (data) {
+      console.log(data);
+      socket.emit('socket2s event', {
+        my: 'data2'
       });
     });
 
