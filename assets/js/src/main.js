@@ -26,71 +26,15 @@
     };
 
     this.displayVideo = function () {
-      var flashVersion = this.detectFlash();
-      if (flashVersion.hasProductInstall && !flashVersion.hasVersion10) {
-        this.updateFlash();
-      } else if (flashVersion.hasVersion10) {
-        AC_FL_RunContent(
-          'src', '/stream-player/assets/libs/js/' + (flashVersion.hasVersion11 ? 'VideoIO11' : (flashVersion.hasVersion10_3 ? 'VideoIO45' : 'VideoIO')),
-          'width', '320',
-          'height', '240',
-          'align', 'middle',
-          'id', inputElement,
-          'quality', 'high',
-          'bgcolor', '#000000',
-          'name', inputElement,
-          'allowScriptAccess', 'always',
-          'allowFullScreen', 'true',
-          'type', 'application/x-shockwave-flash',
-          'pluginspage', 'http://www.adobe.com/go/getflashplayer',
-          'url', srcUrl,
-          'publish', this.userID,
-          'record', 'true'
-        );
-      } else {
-        this.installFlash();
-      }
+      this.setVideoProperty('url', srcUrl);
       this.setVideoProperty('publish', window.userID);
+      this.setVideoProperty('record', true);
       $video.show();
     };
 
-    this.updateFlash = function () {
-      var MMPlayerType = (isIE === true) ? 'ActiveX' : 'PlugIn';
-      var MMredirectURL = window.location;
-      document.title = document.title.slice(0, 47) + '- Flash Player Installation';
-      var MMdoctitle = document.title;
-
-      AC_FL_RunContent(
-        'src', 'playerProductInstall',
-        'FlashVars', 'MMredirectURL=' + MMredirectURL + '&MMplayerType=' + MMPlayerType + '&MMdoctitle=' + MMdoctitle + '',
-        'width', '320',
-        'height', '240',
-        'align', 'middle',
-        'id', 'video1',
-        'quality', 'high',
-        'bgcolor', '#000000',
-        'name', 'video1',
-        'allowScriptAccess', 'always',
-        'type', 'application/x-shockwave-flash',
-        'pluginspage', 'http://www.adobe.com/go/getflashplayer'
-      );
-    };
-
-    this.installFlash = function () {
-      alert('go get flash');
-    };
 
     this.setVideoProperty = function (property, value) {
       player.setProperty(property, value);
-    };
-
-    this.detectFlash = function () {
-      return {
-        hasFlash: DetectFlashVer(6, 0, 65),
-        hasVersion10: DetectFlashVer(10, 0, 0),
-        hasVersion10_3: DetectFlashVer(10, 3, 0),
-        hasVersion11: DetectFlashVer(11, 0, 0)
-      };
     };
 
     //Random number generation
