@@ -2,7 +2,7 @@
 (function (window, $, _, undefined) {
   'use strict';
 
-  var ChatApp = function () {
+  var ChatApp = (function () {
 
     return Marionette.Application.extend({
       initialize: function () {
@@ -13,7 +13,7 @@
         this.chatRoom = new ChatRoom(options);
       }
     });
-  };
+  })();
 
 
   $(function () {
