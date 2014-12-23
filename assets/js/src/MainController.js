@@ -19,4 +19,6 @@ $(function () {
 
   var mainController = new MainController();
   mainController.init();
+
+  window.mainController = mainController;
 });

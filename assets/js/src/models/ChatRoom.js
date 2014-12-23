@@ -1,5 +1,5 @@
 /* jshint ignore:start */
-var ChatRoom = (function (serverAddress) {
+var ChatRoom = (function (options) {
   'use strict';
 
   return Backbone.Model.extend({
@@ -48,5 +48,5 @@ var ChatRoom = (function (serverAddress) {
     },
   });
 
-})(options);
+});
 /* jshint ignore:end */
