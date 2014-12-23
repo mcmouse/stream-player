@@ -1,4 +1,4 @@
-/* global jwplayer */
+/* global jwplayer,DetectFlashVer,AC_FL_RunContent */
 (function (window, document, $, undefined) {
   'use strict';
 
@@ -10,9 +10,10 @@
     var $button = $body.find('#load-video');
 
     var inputElement = 'video-in';
+    var srcUrl = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/';
+    var isIE = navigator.appName.indexOf('Microsoft') !== -1;
 
     var player = (function () {
-      var isIE = navigator.appName.indexOf('Microsoft') !== -1;
       return (isIE) ? window[inputElement] : document[inputElement];
     })();
 
@@ -25,15 +26,71 @@
     };
 
     this.displayVideo = function () {
-      this.setVideoProperty('url', 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/');
+      var flashVersion = this.detectFlash();
+      if (flashVersion.hasProductInstall && !flashVersion.hasVersion10) {
+        this.updateFlash();
+      } else if (flashVersion.hasVersion10) {
+        AC_FL_RunContent(
+          'src', '/stream-player/assets/libs/js/' + (flashVersion.hasVersion11 ? 'VideoIO11' : (flashVersion.hasVersion10_3 ? 'VideoIO45' : 'VideoIO')),
+          'width', '320',
+          'height', '240',
+          'align', 'middle',
+          'id', 'video1',
+          'quality', 'high',
+          'bgcolor', '#000000',
+          'name', 'video1',
+          'allowScriptAccess', 'always',
+          'allowFullScreen', 'true',
+          'type', 'application/x-shockwave-flash',
+          'pluginspage', 'http://www.adobe.com/go/getflashplayer',
+          'url', srcUrl,
+          'publish', this.userID,
+          'record', 'true'
+        );
+      } else {
+        this.installFlash();
+      }
       this.setVideoProperty('publish', window.userID);
-      this.setVideoProperty('record', true);
-      this.setVideoProperty('controls', true);
       $video.show();
+    };
+
+    this.updateFlash = function () {
+      var MMPlayerType = (isIE === true) ? 'ActiveX' : 'PlugIn';
+      var MMredirectURL = window.location;
+      document.title = document.title.slice(0, 47) + '- Flash Player Installation';
+      var MMdoctitle = document.title;
+
+      AC_FL_RunContent(
+        'src', 'playerProductInstall',
+        'FlashVars', 'MMredirectURL=' + MMredirectURL + '&MMplayerType=' + MMPlayerType + '&MMdoctitle=' + MMdoctitle + '',
+        'width', '320',
+        'height', '240',
+        'align', 'middle',
+        'id', 'video1',
+        'quality', 'high',
+        'bgcolor', '#000000',
+        'name', 'video1',
+        'allowScriptAccess', 'always',
+        'type', 'application/x-shockwave-flash',
+        'pluginspage', 'http://www.adobe.com/go/getflashplayer'
+      );
+    };
+
+    this.installFlash = function () {
+      alert('go get flash');
     };
 
     this.setVideoProperty = function (property, value) {
       player.setProperty(property, value);
+    };
+
+    this.detectFlash = function () {
+      return {
+        hasFlash: DetectFlashVer(6, 0, 65),
+        hasVersion10: DetectFlashVer(10, 0, 0),
+        hasVersion10_3: DetectFlashVer(10, 3, 0),
+        hasVersion11: DetectFlashVer(11, 0, 0)
+      };
     };
 
     //Random number generation
