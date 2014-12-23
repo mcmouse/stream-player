@@ -7,7 +7,8 @@
     //jQuery selectors
     var $body = $('body');
     var $video = $body.find('#input-video');
-    var $button = $body.find('#load-video');
+    var $showButton = $body.find('#load-video');
+    var $hideButton = $body.find('#hide-video');
 
     var srcUrl = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/';
 
@@ -26,8 +27,12 @@
     this.init = function () {
       window.userID = this.generateUserID();
 
-      $button.click(function () {
+      $showButton.click(function () {
         this.displayVideo();
+      }.bind(this));
+
+      $hideButton.click(function () {
+        this.hideVideo();
       }.bind(this));
     };
 
