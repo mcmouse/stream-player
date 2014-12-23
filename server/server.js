@@ -8,12 +8,25 @@
 
   server.listen(8081);
 
-  io.on('connection', function (socket) {
-    socket.emit('news', {
-      hello: 'world'
-    });
-    socket.on('my other event', function (data) {
-      console.log(data);
-    });
+  var chat = io.of('/chat');
+  var webcams = io.of('/webcams');
+
+  chat.on('connection', function (socket) {
+    console.log('user joined!');
   });
+
+  chat.on('userJoined', function (data) {
+    chat.emit('userJoined', data);
+  });
+
+  chat.on('userLeft', function (data) {
+    chat.emit('userLeft', data);
+  });
+
+  chat.on('newMessage', function (data) {
+    chat.emit('newMessage', data);
+  });
+
+  webcams.on('connection');
+
 })();

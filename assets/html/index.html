@@ -24,7 +24,16 @@
   <script src="/stream-player/assets/js/libs/backbone.js"></script>
   <script src="/stream-player/assets/js/libs/marionette.js"></script>
 
-  <script src="/stream-player/assets/js/src/main.js"></script>
+  <!-- Oh jeez -->
+  <script src="/stream-player/assets/js/src/models/Message.js"></script>
+  <script src="/stream-player/assets/js/src/collections/MessageCollection.js"></script>
+
+  <script src="/stream-player/assets/js/src/models/User.js"></script>
+  <script src="/stream-player/assets/js/src/collections/UserCollection.js"></script>
+
+  <script src="/stream-player/assets/js/src/collections/ChatRoom.js"></script>
+
+  <script src="/stream-player/assets/js/src/MainController.js"></script>
 </head>
 <body>
   <h1 class="title">Output</h1>
@@ -38,19 +47,6 @@
 
   <div id="input-video">
   </div>
-  
-  <!-- Flash video recorder template - VideoIO -->
-  <script id="player-template" type="text/template">
-    <object type="application/x-shockwave-flash" data="/stream-player/assets/js/libs/VideoIO.swf"
-      id="video-in" width="600" height="400">
-      <param name="movie" value="/stream-player/assets/js/libs/VideoIO.swf" />
-      <param name="quality" value="high" />
-      <param name="bgcolor" value="#FFFFFF" />
-      <param name="allowFullScreen" value="true" />
-      <param name="allowScriptAccess" value="" />
-      <param name="flashVars" 
-      value="controls=true&url={{srcUrl}}&publish={{id}}&record=true" />
-    </object>
-  </script>
+
 </body>
 </html>
