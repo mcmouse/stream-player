@@ -4,7 +4,11 @@ var MainController = (function (window, $, _, undefined) {
 
   return {
     init: function () {
-      this.chatRoom = new ChatRoom();
+      var options = {
+        serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
+      };
+
+      this.chatRoom = new ChatRoom(options);
     }
   };
 })(window, $, _);

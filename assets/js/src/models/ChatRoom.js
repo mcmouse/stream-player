@@ -14,7 +14,7 @@ var ChatRoom = (function (serverAddress) {
       ]),
     },
 
-    serverAddress: serverAddress,
+    serverAddress: options.serverAddress,
 
     initialize: function () {
       this._listener = io(this.serverAddress + '/chat');
@@ -48,5 +48,5 @@ var ChatRoom = (function (serverAddress) {
     },
   });
 
-})(serverAddress);
+})(options);
 /* jshint ignore:end */
