@@ -27,6 +27,8 @@
     chat.emit('newMessage', data);
   });
 
-  webcams.on('connection');
+  webcams.on('connection', function (data) {
+    console.log(data);
+  });
 
 })();
