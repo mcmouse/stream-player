@@ -14,9 +14,12 @@ var CurrentUser = (function () {
         success: function () {
           console.log('success');
         },
-        error: function (model, xhr, options) {
-          console.log(model, xhr, options);
-        }
+        error: function (model, xhr) {
+          if (xhr === 'Record not found.') {
+            this.set('test', 'some value');
+            this.save();
+          }
+        }.bind(this)
       });
     }
   });
