@@ -82,10 +82,23 @@
         width: 600
       });
     };
+  };
+
+  var Broadcast = function () {
+
+    var socket = io.connect('http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081');
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', {
+        my: 'data'
+      });
+    });
 
   };
 
   $(function () {
+    var broadcast = broadcast || new Broadcast();
+
     var videoIn = videoIn || new VideoIn();
     videoIn.init();
 

@@ -1,0 +1,9 @@
+{
+  "name": "Stream-Player-Server",
+  "version": "0.0.1",
+  "devDependencies": {
+    "express": "^4.10.6",
+    "http": "0.0.0",
+    "socket.io": "^1.2.1"
+  }
+}
