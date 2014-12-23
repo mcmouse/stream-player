@@ -1,4 +1,4 @@
-/* global jwplayer,DetectFlashVer,AC_FL_RunContent */
+/* global jwplayer */
 (function (window, document, $, undefined) {
   'use strict';
 
@@ -19,6 +19,10 @@
       $video.append(this.template);
     };
 
+    this.removePlayer = function () {
+      $video.innerHTML = '';
+    };
+
     this.init = function () {
       window.userID = this.generateUserID();
 
@@ -30,6 +34,11 @@
     this.displayVideo = function () {
       this.createPlayer();
       $video.show();
+    };
+
+    this.hideVideo = function () {
+      this.removePlayer();
+      $video.hide();
     };
 
 
