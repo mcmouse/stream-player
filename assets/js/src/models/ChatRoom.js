@@ -42,10 +42,8 @@ var ChatRoom = (function (serverAddress) {
 
     addMessage: function (data) {
       this.get('messages').add(new Message({
-        {
-          sender: data.message.sender,
-          message: data.message.text
-        }
+        sender: data.message.sender,
+        message: data.message.text
       }));
     },
   });
