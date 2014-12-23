@@ -12,7 +12,7 @@
     var srcUrl = 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/';
 
     this.createPlayer = function () {
-      this.template = $body.find('#player-template').innerHTML;
+      this.template = $body.find('#player-template')[0].innerHTML;
       this.template = this.template
         .replace('{{id}}', window.userID)
         .replace('{{srcUrl}}', srcUrl);
