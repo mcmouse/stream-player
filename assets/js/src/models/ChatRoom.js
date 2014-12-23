@@ -10,7 +10,7 @@ var ChatRoom = (function (serverAddress) {
         new Message({
           sender: '',
           message: 'Chat Server v.1'
-        });
+        })
       ]),
     },
 
