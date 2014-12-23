@@ -1,26 +1,29 @@
-/* globals _, ChatRoom */
+/* globals _, ChatRoom, Marionette */
 (function (window, $, _, undefined) {
   'use strict';
 
-  var MainController = function () {
+  var ChatApp = function () {
 
-    return {
-      init: function () {
+    return Marionette.Application.extend({
+      initialize: function () {
         var options = {
           serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
         };
 
         this.chatRoom = new ChatRoom(options);
       }
-    };
+    });
   };
 
 
   $(function () {
-    var mainController = new MainController();
-    mainController.init();
+    var chatApp = new ChatApp({
+      container: '#chat-app'
+    });
 
-    window.mainController = mainController;
+    window.chatApp = chatApp;
+
+    chatApp.start();
   });
 
 })(window, $, _);
