@@ -5,10 +5,8 @@
 
 //From http://backbonejs.org/docs/backbone-localstorage.html
 
-(function (window, $, _) {
+(function (window, $, _, Backbone) {
   'use strict';
-
-  var Backbone = this.Backbone;
 
   function S4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -125,4 +123,4 @@
     return Backbone.getSyncMethod(model).apply(this, [method, model, options, error]);
   };
 
-})(window, $, _);
+})(window, $, _, Backbone);
