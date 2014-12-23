@@ -3,6 +3,8 @@ var CurrentUser = (function () {
   'use strict';
 
   return Backbone.Model.extend({
+    localStorage: new Backbone.LocalStorage('current-user'),
+
     defaults: {
       id: 'current'
     },
