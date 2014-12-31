@@ -11,8 +11,8 @@ var CurrentUser = (function () {
 
     initialize: function () {
       this.fetch({
-        success: function () {
-          console.log('success');
+        success: function (model, response, options) {
+          console.log(model);
         },
         error: function (model, xhr) {
           if (xhr === 'Record not found.') {
