@@ -1,8 +1,8 @@
-/* globals Backbone, Marionette, User, chatApp */
+/* globals Backbone, User, chatApp */
 var LoginController = (function () {
   'use strict';
 
-  return Marionette.Object.extend({
+  return Backbone.Model.extend({
     localStorage: new Backbone.LocalStorage('LoginController'),
 
     defaults: {
