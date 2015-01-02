@@ -17,6 +17,8 @@ var LoginController = (function () {
     loadUser: function () {
       this.fetch({
         success: function () {
+          //Needed for deep model copy
+          this.set('currentUser', new User(this.get('currentUser')));
           this.trigger('userLoaded', this.get('currentUser').get('name'));
         }.bind(this),
 
