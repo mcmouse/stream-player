@@ -1,4 +1,4 @@
-/* globals _, ChatRoom, LoginController, Marionette */
+/* globals _, ChatRoom, LoginView, LoginController, Marionette */
 (function (window, $, _, undefined) {
   'use strict';
 
@@ -12,17 +12,24 @@
 
         this.chatRoom = new ChatRoom(options);
         this.loginController = new LoginController();
-
-        this.listenTo(this.loginController, 'userLoaded', function (user) {
-          this.chatRoom.addLocalUser(user);
+        this.loginView = new LoginView({
+          model: this.loginController
         });
 
-        this.listenTo(this.loginController, 'noSavedUser', function () {
-          console.log('no saved user found');
-          if (!this.chatRoom.hasUser('new user')) {
-            this.loginController.saveUser('new user');
+        this.listenTo(this.loginController, 'userLoaded', function (user) {
+          if (!this.chatRoom.hasUser(user.get('name'))) {
+            this.chatRoom.addLocalUser(user);
           } else {
-            console.log('user exists');
+            this.loginView.trigger('nameInUse');
+          }
+        });
+
+        this.listenTo(this.loginView, 'userNameSet', function (userName) {
+
+          if (!this.chatRoom.hasUser(userName)) {
+            this.loginController.saveUser(userName);
+          } else {
+            this.loginView.trigger('nameInUse');
           }
         });
 
