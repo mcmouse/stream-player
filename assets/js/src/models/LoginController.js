@@ -12,16 +12,6 @@ var LoginController = (function () {
 
     initialize: function () {
 
-      this.on('userLoaded', function (name) {
-        console.log('user was loaded with name ' + name);
-      });
-
-      this.on('noSavedUser', function () {
-        console.log('no saved user found');
-        this.saveUser('new user');
-      });
-
-      this.loadUser();
     },
 
     loadUser: function () {
@@ -38,18 +28,17 @@ var LoginController = (function () {
       });
     },
 
+    loadedUser: function () {
+      return this.get('loadedUser');
+    },
+
     saveUser: function (userName) {
-      if (chatApp.chatRoom.hasUser(userName)) {
-        this.trigger('userExists');
-      } else {
-        this.set('currentUser', new User({
-          name: userName
-        }));
-        this.set('loadedUser', true);
-        this.save();
-        chatApp.chatRoom.addLocalUser(this.currentUser);
-        this.trigger('userLoaded');
-      }
+      this.set('currentUser', new User({
+        name: userName
+      }));
+      this.set('loadedUser', true);
+      this.save();
+      this.trigger('userLoaded');
     },
 
   });

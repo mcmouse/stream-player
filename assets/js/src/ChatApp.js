@@ -12,6 +12,21 @@
 
         this.chatRoom = new ChatRoom(options);
         this.loginController = new LoginController();
+
+        this.listenTo(this.loginController, 'userLoaded', function (name) {
+          console.log('user was loaded with name ' + name);
+        });
+
+        this.listenTo(this.loginController, 'noSavedUser', function () {
+          console.log('no saved user found');
+          if (!this.chatRoom.hasUser('new user')) {
+            this.loginController.saveUser('new user');
+          } else {
+            console.log('user exists');
+          }
+        });
+
+        this.loginController.loadUser();
       }
     });
   })();
