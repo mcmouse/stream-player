@@ -38,7 +38,7 @@ var LoginController = (function () {
       }));
       this.set('loadedUser', true);
       this.save();
-      this.trigger('userLoaded');
+      this.trigger('userLoaded', this.get('currentUser').get('name'));
     },
 
   });
