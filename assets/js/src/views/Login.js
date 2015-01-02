@@ -37,7 +37,7 @@ var LoginView = (function () {
     },
 
     showEnterUserName: function () {
-      this.ui.enterUserName.show();
+      $(this.ui.enterUserName).show();
     },
 
     setName: function () {
