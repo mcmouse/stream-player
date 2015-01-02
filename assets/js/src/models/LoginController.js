@@ -11,7 +11,6 @@ var LoginController = (function () {
     },
 
     initialize: function () {
-      this.loadUser();
 
       this.on('userLoaded', function (name) {
         console.log('user was loaded with name ' + name);
@@ -21,6 +20,8 @@ var LoginController = (function () {
         console.log('no saved user found');
         this.saveUser('new user');
       });
+
+      this.loadUser();
     },
 
     loadUser: function () {
