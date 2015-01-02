@@ -14,8 +14,12 @@ var LoginController = (function () {
       this.fetch({
         success: function () {
           //Needed for deep model copy
-          this.set('currentUser', new User(this.get('currentUser')));
-          this.trigger('userLoaded', this.get('currentUser'));
+          if (this.get('loadedUser')) {
+            this.set('currentUser', new User(this.get('currentUser')));
+            this.trigger('userLoaded', this.get('currentUser'));
+          } else {
+            this.trigger('noSavedUser');
+          }
         }.bind(this),
 
         error: function (model, xhr) {
@@ -43,7 +47,6 @@ var LoginController = (function () {
       this.trigger('userLoggedOut', this.get('currentUser'));
       this.set('loadedUser', false);
       this.set('currentUser', null);
-      this.save();
     },
 
   });
