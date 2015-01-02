@@ -16,6 +16,7 @@
   });
 
   chat.on('userJoined', function (data) {
+    console.log('broadcasting new user with name ' + data.username);
     chat.emit('userJoined', data);
   });
 
