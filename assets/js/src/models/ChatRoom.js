@@ -28,7 +28,7 @@ var ChatRoom = (function () {
     hasUser: function (userName) {
       var onlineUsers = this.get('onlineUsers');
       var user = onlineUsers.find(function (item) {
-        return item.get('name') == data.username;
+        return item.get('name') == userName;
       });
       return user;
     },
