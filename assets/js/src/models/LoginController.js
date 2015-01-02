@@ -10,10 +10,6 @@ var LoginController = (function () {
       loadedUser: false,
     },
 
-    initialize: function () {
-
-    },
-
     loadUser: function () {
       this.fetch({
         success: function () {

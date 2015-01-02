@@ -13,8 +13,8 @@
         this.chatRoom = new ChatRoom(options);
         this.loginController = new LoginController();
 
-        this.listenTo(this.loginController, 'userLoaded', function (name) {
-          console.log('user was loaded with name ' + name);
+        this.listenTo(this.loginController, 'userLoaded', function (user) {
+          this.chatRoom.addLocalUser(user);
         });
 
         this.listenTo(this.loginController, 'noSavedUser', function () {
@@ -24,6 +24,10 @@
           } else {
             console.log('user exists');
           }
+        });
+
+        this.listenTo(this.chatRoom, 'userAdded', function () {
+          console.log('user added to chatroom from server');
         });
 
         this.loginController.loadUser();
