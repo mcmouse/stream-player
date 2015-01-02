@@ -1,4 +1,4 @@
-/* globals Backbone, User, chatApp */
+/* globals Backbone, User */
 var LoginController = (function () {
   'use strict';
 
@@ -37,6 +37,12 @@ var LoginController = (function () {
       this.set('loadedUser', true);
       this.save();
       this.trigger('userLoaded', this.get('currentUser'));
+    },
+
+    removeUser: function () {
+      this.trigger('userLoggedOut', this.get('currentUser'));
+      this.set('loadedUser', false);
+      this.set('currentUser', null);
     },
 
   });

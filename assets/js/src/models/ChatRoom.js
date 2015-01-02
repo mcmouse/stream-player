@@ -64,6 +64,13 @@ var ChatRoom = (function () {
       }
     },
 
+    removeLocalUser: function (user) {
+      this.broadcast('userLeft', {
+        id: user.get('id'),
+        username: user.get('name')
+      });
+    }
+
     addMessage: function (data) {
       this.get('messages').add(new Message({
         sender: data.message.sender,

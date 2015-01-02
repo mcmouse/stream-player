@@ -19,12 +19,14 @@ var LoginView = (function () {
       'enterUserNameInput': '.enter-user-name-input',
       'setNameButton': '.set-name-button',
       'nameInUse': '.name-in-use',
-      'loggedInRegion': '.logged-in-region'
+      'loggedInRegion': '.logged-in-region',
+      'logOutButton': '.log-out-button',
     },
 
     events: {
       'click @ui.loginButton': 'loadUser',
       'click @ui.setNameButton': 'setName',
+      'click @ui.logOutButton': 'logOut',
     },
 
     modelEvents: {
@@ -57,6 +59,14 @@ var LoginView = (function () {
         name: user.get('name')
       });
       $(this.ui.loggedInRegion).html(html).show();
+      $(this.ui.logOutButton).show();
+    },
+
+    logOut: function () {
+      this.model.removeUser();
+      $(this.ui.loggedInRegion).hide();
+      $(this.ui.logOutButton).hide();
+      $(this.ui.loginRegion).show();
     },
   });
 })();

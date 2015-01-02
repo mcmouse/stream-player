@@ -37,6 +37,14 @@
         this.listenTo(this.chatRoom, 'userAdded', function () {
           console.log('user added to chatroom from server');
         });
+
+        this.listenTo(this.loginController, 'userLoggedOut', function (user) {
+          this.chatRoom.removeLocalUser(user);
+        });
+
+        this.listenTo(this.chatRoom, 'userRemoved', function () {
+          console.log('user removed from chatroom from server');
+        });
       }
     });
   })();
