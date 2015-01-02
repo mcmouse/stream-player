@@ -21,20 +21,46 @@ var ChatRoom = (function () {
       this._listener.on('newMessage', this.addMessage);
     },
 
-    addUser: function (data) {
-      this.get('onlineUsers').add(new User({
-        name: data.username
-      }));
+    broadcast: function (event, data) {
+      this._listener.emit(event, data);
     },
 
-    removeUser: function (data) {
+    hasUser: function (userName) {
       var onlineUsers = this.get('onlineUsers');
       var user = onlineUsers.find(function (item) {
         return item.get('name') == data.username;
       });
+      return user;
+    },
 
+    addUser: function (data) {
+      var user = this.hasUser(data.username);
+      //If the user does not exist in the chatroom, add them
+      if (!user) {
+        this.get('onlineUsers').add(new User({
+          id: data.id,
+          name: data.username
+        }));
+        this.trigger('userAdded');
+      }
+      //Otherwise trigger a "user exists" event
+      else {
+        this.trigger('userExists');
+      }
+    },
+
+    addLocalUser: function (user) {
+      this.broadcast("userJoined", {
+        id: user.get('id'),
+        username: user.get('name')
+      });
+    },
+
+    removeUser: function (data) {
+      user = this.hasUser(data.username);
       if (user) {
         onlineUsers.remove(user);
+        this.trigger('userRemoved');
       }
     },
 
@@ -43,6 +69,7 @@ var ChatRoom = (function () {
         sender: data.message.sender,
         message: data.message.text
       }));
+      this.trigger('messageSent');
     },
   });
 

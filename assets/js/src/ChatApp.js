@@ -1,4 +1,4 @@
-/* globals _, ChatRoom, CurrentUser, Marionette */
+/* globals _, ChatRoom, LoginController, Marionette */
 (function (window, $, _, undefined) {
   'use strict';
 
@@ -11,7 +11,7 @@
         };
 
         this.chatRoom = new ChatRoom(options);
-        this.currentUser = new CurrentUser();
+        this.loginController = new LoginController();
       }
     });
   })();
