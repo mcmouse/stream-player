@@ -51,7 +51,7 @@ var LoginView = (function () {
     },
 
     setLoggedIn: function (user) {
-      $(this.ui.enterUserName).hide();
+      $(this.ui.enterUserNameRegion).hide();
       var loggedInTemplate = _.template('<div class="logged-in">Welcome, <%= name %>');
       var html = loggedInTemplate({
         name: user.get('name')
