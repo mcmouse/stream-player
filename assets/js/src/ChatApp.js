@@ -19,6 +19,7 @@
         this.listenTo(this.loginController, 'userLoaded', function (user) {
           if (!this.chatRoom.hasUser(user.get('name'))) {
             this.chatRoom.addLocalUser(user);
+            this.loginView.trigger('loggedIn');
           } else {
             this.loginView.trigger('nameInUse');
           }
