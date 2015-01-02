@@ -16,9 +16,9 @@ var ChatRoom = (function () {
 
     initialize: function () {
       this._listener = io(this.get('serverAddress') + '/chat');
-      this._listener.on('userJoined', this.addUser, this);
-      this._listener.on('userLeft', this.removeUser, this);
-      this._listener.on('newMessage', this.addMessage, this);
+      this._listener.on('userJoined', this.addUser.bind(this));
+      this._listener.on('userLeft', this.removeUser.bind(this));
+      this._listener.on('newMessage', this.addMessage.bind(this));
     },
 
     broadcast: function (event, data) {
