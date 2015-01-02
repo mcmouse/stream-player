@@ -69,7 +69,7 @@ var ChatRoom = (function () {
         id: user.get('id'),
         username: user.get('name')
       });
-    }
+    },
 
     addMessage: function (data) {
       this.get('messages').add(new Message({
