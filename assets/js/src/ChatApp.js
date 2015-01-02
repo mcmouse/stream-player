@@ -37,8 +37,6 @@
         this.listenTo(this.chatRoom, 'userAdded', function () {
           console.log('user added to chatroom from server');
         });
-
-        this.loginController.loadUser();
       }
     });
   })();
