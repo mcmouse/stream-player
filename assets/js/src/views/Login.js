@@ -8,8 +8,8 @@ var LoginView = (function () {
     template: false,
 
     initialize: function () {
-      this.on('nameInUse', this.showNameInUse());
-      this.on('loggedIn', this.setLoggedIn());
+      this.on('nameInUse', this.showNameInUse);
+      this.on('loggedIn', this.setLoggedIn);
     },
 
     ui: {
