@@ -17,7 +17,7 @@ var LoginController = (function () {
     loadUser: function () {
       this.fetch({
         success: function () {
-          this.trigger('userLoaded', this.currentUser.get('name'));
+          this.trigger('userLoaded', this.get('currentUser').get('name'));
         }.bind(this),
 
         error: function (model, xhr) {
