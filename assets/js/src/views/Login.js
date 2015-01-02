@@ -7,6 +7,11 @@ var LoginView = (function () {
 
     template: false,
 
+    initialize: function () {
+      this.on('nameInUse', this.showNameInUse());
+      this.on('loggedIn', this.setLoggedIn());
+    },
+
     ui: {
       'loginRegion': '.login',
       'loginButton': '.login-button',
@@ -20,8 +25,6 @@ var LoginView = (function () {
     events: {
       'click @ui.loginButton': 'loadUser',
       'click @ui.setNameButton': 'setName',
-      'nameInUse': 'showNameInUse',
-      'loggedIn': 'setLoggedIn',
     },
 
     modelEvents: {
