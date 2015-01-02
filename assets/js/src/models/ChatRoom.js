@@ -57,7 +57,7 @@ var ChatRoom = (function () {
     },
 
     removeUser: function (data) {
-      user = this.hasUser(data.username);
+      var user = this.hasUser(data.username);
       if (user) {
         onlineUsers.remove(user);
         this.trigger('userRemoved');
