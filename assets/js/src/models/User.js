@@ -5,7 +5,7 @@
  * the server at some point.
  * @return Backbone.Model User
  */
-define('User', [
+define([
   'jquery',
   'underscore',
   'backbone',

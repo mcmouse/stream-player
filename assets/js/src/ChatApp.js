@@ -6,12 +6,12 @@
  * @return Marionette.Application ChatApp
  */
 
-define('ChatApp', [
+define([
   'jquery',
   'underscore',
   'backbone',
   'marionette',
-  'ChatRoomController',
+  'controllers/ChatRoomController',
 ], function ($, _, Backbone, Marionette, ChatRoomController) {
   'use strict';
 

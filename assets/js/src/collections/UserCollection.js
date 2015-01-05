@@ -1,6 +1,6 @@
 /* globals define */
 
-define('UserCollection', [
+define([
   'backbone',
   'models/User',
 ], function (Backbone, User) {

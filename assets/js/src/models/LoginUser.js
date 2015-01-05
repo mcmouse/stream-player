@@ -6,7 +6,7 @@
  * @return Backbone.Model LoginController
  */
 
-define('LoginUser', [
+define([
   'jquery',
   'underscore',
   'backbone',

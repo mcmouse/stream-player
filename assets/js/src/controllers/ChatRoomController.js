@@ -4,7 +4,7 @@
  * Manages the ChatRoom by delegating events
  * @return Marionette.Object ChatRoomManager
  */
-define('ChatRoomController', [
+define([
   'jquery',
   'underscore',
   'backbone',

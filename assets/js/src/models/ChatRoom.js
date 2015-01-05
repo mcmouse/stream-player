@@ -4,7 +4,7 @@
  * Contains all logic necessary for running the chat room and communicating with the server.
  * @return Backbone.Model ChatRoom
  */
-define('ChatRoom', [
+define([
   'jquery',
   'underscore',
   'backbone',

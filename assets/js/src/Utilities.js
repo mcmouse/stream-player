@@ -4,7 +4,7 @@
  * Object containing global helper functions.
  * @return Object Utilities
  */
-define('Utilities', [], function () {
+define([], function () {
   'use strict';
 
   return {

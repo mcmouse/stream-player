@@ -5,7 +5,7 @@
  * @return Marionette.ItemView LoginView
  */
 
-define('LoginView', [
+define([
   'jquery',
   'underscore',
   'backbone',

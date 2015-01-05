@@ -4,7 +4,7 @@
  * Collection of all messages in the current room
  * return Backbone.Collection MessageCollection
  */
-define('MessageCollection', [
+define([
   'backbone',
   'models/Message',
 ], function (Backbone, Message) {

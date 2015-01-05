@@ -1,7 +1,7 @@
 /* globals define */
 
 
-define('Message', ['backbone'],
+define(['backbone'],
   function (Backbone) {
     'use strict';
 
