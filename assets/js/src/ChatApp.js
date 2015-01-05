@@ -11,7 +11,7 @@ define('ChatApp', [
   'underscore',
   'backbone',
   'marionette',
-  'controllers/ChatRoomController',
+  'ChatRoomController',
 ], function ($, _, Backbone, Marionette, ChatRoomController) {
   'use strict';
 
