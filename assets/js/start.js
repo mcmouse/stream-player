@@ -1,6 +1,7 @@
 /* globals require */
 
 require.config({
+  baseUrl: '/stream-player/assets/js/src',
   shim: {
     'socketio': {
       exports: 'io'
