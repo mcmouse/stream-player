@@ -23,8 +23,8 @@ var ChatRoom = (function () {
 
     //Initialize our socket.io listener and set up events for adding and removing users
     //and adding events
-    initialize: function () {
-      this._listener = io(this.get('serverAddress') + '/chat');
+    initialize: function (options) {
+      this._listener = io(options.serverAddress + '/chat');
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));
