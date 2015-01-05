@@ -1,11 +1,18 @@
-/* globals _, Backbone, LoginView, LoginController */
+/* globals Backbone, User, io, UserCollection, MessageCollection, Message */
+
+/**
+ * Contains all logic necessary for running the chat room and communicating with the server.
+ * @return Backbone.Model ChatRoom
+ */
 var ChatRoom = (function () {
   'use strict';
 
   return Backbone.Model.extend({
     defaults: {
+      //Create our collection of online users
       onlineUsers: new UserCollection(),
 
+      //Create our collection of messages
       messages: new MessageCollection([
         new Message({
           sender: '',
@@ -14,6 +21,8 @@ var ChatRoom = (function () {
       ]),
     },
 
+    //Initialize our socket.io listener and set up events for adding and removing users
+    //and adding events
     initialize: function () {
       this._listener = io(this.get('serverAddress') + '/chat');
       this._listener.on('userJoined', this.addUser.bind(this));
@@ -21,10 +30,13 @@ var ChatRoom = (function () {
       this._listener.on('newMessage', this.addMessage.bind(this));
     },
 
+    //Alias to emit socket events
     broadcast: function (event, data) {
       this._listener.emit(event, data);
     },
 
+    //Test user collection for a particular userName.
+    //Returns user model or undefined
     hasUser: function (userName) {
       var onlineUsers = this.get('onlineUsers');
       var user = onlineUsers.find(function (item) {
@@ -33,6 +45,7 @@ var ChatRoom = (function () {
       return user;
     },
 
+    //Add a user to the collection if the are not already added.
     addUser: function (data) {
       var user = this.hasUser(data.username);
       //If the user does not exist in the chatroom, add them
@@ -49,13 +62,15 @@ var ChatRoom = (function () {
       }
     },
 
+    //Add a local user by broadcasting the "userJoined" event
     addLocalUser: function (user) {
-      this.broadcast("userJoined", {
+      this.broadcast('userJoined', {
         id: user.get('id'),
         username: user.get('name')
       });
     },
 
+    //Remove a user from the collection if they exist in the collection.
     removeUser: function (data) {
       var user = this.hasUser(data.username);
       if (user) {
@@ -64,6 +79,7 @@ var ChatRoom = (function () {
       }
     },
 
+    //Remove a local user by broadcasting the "userLeft" event
     removeLocalUser: function (user) {
       this.broadcast('userLeft', {
         id: user.get('id'),
@@ -71,6 +87,7 @@ var ChatRoom = (function () {
       });
     },
 
+    //Add a message to the collection
     addMessage: function (data) {
       this.get('messages').add(new Message({
         sender: data.message.sender,

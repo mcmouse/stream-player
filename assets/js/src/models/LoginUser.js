@@ -5,7 +5,7 @@
  * to manage user lifecycle.
  * @return Backbone.Model LoginController
  */
-var LoginController = (function () {
+var LoginUser = (function () {
   'use strict';
 
   return Backbone.Model.extend({
@@ -15,7 +15,7 @@ var LoginController = (function () {
     //Set up defaults for localstorage ID and loaded user state.
     defaults: {
       id: 'LoginController',
-      loadedUser: false,
+      loggedInUser: false,
     },
 
     //Load a user from localstorage by using fetch to retrieve stored user state.
@@ -25,9 +25,9 @@ var LoginController = (function () {
         //saved model with unloaded user. Triggers events for listeners.
         success: function () {
           //Needed for deep model copy to set up user model
-          if (this.get('loadedUser')) {
+          if (this.get('loggedInUser')) {
             this.set('currentUser', new User(this.get('currentUser')));
-            this.trigger('userLoaded', this.get('currentUser'));
+            this.trigger('userLoggedIn', this.get('currentUser'));
           } else {
             this.trigger('noSavedUser');
           }
@@ -44,7 +44,7 @@ var LoginController = (function () {
 
     //Returns whether there is a loaded user.
     loadedUser: function () {
-      return this.get('loadedUser');
+      return this.get('loggedInUser');
     },
 
     //Initialize the User model to generate a unique ID and save it to localstorage. 
@@ -53,9 +53,9 @@ var LoginController = (function () {
       this.set('currentUser', new User({
         name: userName
       }));
-      this.set('loadedUser', true);
+      this.set('loggedInUser', true);
       this.save();
-      this.trigger('userLoaded', this.get('currentUser'));
+      this.trigger('userLoggedIn', this.get('currentUser'));
     },
 
     //Delete the current User model, save the LoginController to localstorage.
