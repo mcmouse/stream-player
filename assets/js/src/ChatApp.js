@@ -28,6 +28,6 @@ define('ChatApp', [
       //Set up chat room
       this.chatRoomController = new ChatRoomController(chatOptions);
     }
-  });
+  })();
 
 });
