@@ -1,4 +1,4 @@
-/* globals _, Marionette, ChatRoomManager */
+/* globals _, Marionette, ChatRoomController */
 
 /**
  * Creates the main application, sets up internal models and views, handles app
@@ -19,7 +19,7 @@
         };
 
         //Set up chat room
-        this.chatRoomManager = new ChatRoomManager(chatOptions);
+        this.chatRoomController = new ChatRoomController(chatOptions);
       }
     });
   })();
