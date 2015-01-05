@@ -1,7 +1,6 @@
 /* globals require */
 
 require.config({
-  baseUrl: '/stream-player/assets/js/libs',
   shim: {
     'socketio': {
       exports: 'io'
@@ -9,12 +8,15 @@ require.config({
     'underscore': {
       exports: '_'
     },
-    'backbone': {
+    'backbone-original': {
       deps: [
         'underscore',
-        'jquery'
+        'jquery',
       ],
       exports: 'Backbone'
+    },
+    'backbone': {
+      deps: ['backbone-original'],
     },
     'marionette': {
       deps: [
@@ -26,17 +28,21 @@ require.config({
   paths: {
     jquery: 'https://code.jquery.com/jquery-2.1.3.js',
     socketio: 'https://cdn.socket.io/socket.io-1.2.1.js',
+    underscore: '../libs/underscore',
+    marionette: '../libs/marionette',
+    'backbone-original': '../libs/backbone',
+    backbone: '../libs/backbone-localstorage',
     templates: '../templates',
-    utilities: '/stream-player/assets/js/src/Utilities',
-    models: '/stream-player/assets/js/src/models',
-    controllers: '/stream-player/assets/js/src/controllers',
-    collections: '/stream-player/assets/js/src/collections',
-    views: '/stream-player/assets/js/src/views',
+    utilities: 'Utilities',
+    models: 'models',
+    controllers: 'controllers',
+    collections: 'collections',
+    views: 'views',
   }
 });
 
 require([
-  'js/src/ChatApp'
+  'ChatApp'
 ], function (ChatApp) {
   'use strict';
 
