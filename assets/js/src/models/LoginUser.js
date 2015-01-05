@@ -62,7 +62,7 @@ var LoginUser = (function () {
     //Trigger necessary events.
     removeUser: function () {
       this.trigger('userLoggedOut', this.get('currentUser'));
-      this.set('loadedUser', false);
+      this.set('loggedInUser', false);
       this.set('currentUser', null);
       this.save();
     },
