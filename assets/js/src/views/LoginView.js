@@ -10,7 +10,7 @@ define([
   'underscore',
   'backbone',
   'marionette',
-  'templates/text!LoginRegion.html',
+  'text!templates/LoginRegion.html',
 ], function ($, _, Backbone, Marionette, LoginRegionTemplate) {
   'use strict';
 

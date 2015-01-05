@@ -36,7 +36,7 @@ require.config({
     marionette: '../libs/marionette',
     backbone: '../libs/backbone',
     'backbone.localstorage': '../libs/backbone-localstorage',
-    templates: '../templates',
+    templates: '../../../templates',
   }
 });
 
