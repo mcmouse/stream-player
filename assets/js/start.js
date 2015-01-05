@@ -27,8 +27,8 @@ require.config({
     }
   },
   paths: {
-    jquery: 'https://code.jquery.com/jquery-2.1.3.js',
-    socketio: 'https://cdn.socket.io/socket.io-1.2.1.js',
+    jquery: 'https://code.jquery.com/jquery-2.1.3',
+    socketio: 'https://cdn.socket.io/socket.io-1.2.1',
     underscore: '../libs/underscore',
     marionette: '../libs/marionette',
     'backbone-original': '../libs/backbone',
