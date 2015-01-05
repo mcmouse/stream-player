@@ -36,11 +36,6 @@ require.config({
     backbone: '../libs/backbone',
     'backbone-localstorage': '../libs/backbone-localstorage',
     templates: '../templates',
-    utilities: 'Utilities',
-    models: 'models',
-    controllers: 'controllers',
-    collections: 'collections',
-    views: 'views',
   }
 });
 
