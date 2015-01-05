@@ -1,7 +1,7 @@
 /* globals require */
 
 require.config({
-  baseUrl: 'js/libs',
+  baseUrl: '/stream-player/assets/js/libs',
   shim: {
     'socketio': {
       exports: 'io'
@@ -27,11 +27,11 @@ require.config({
     jquery: 'https://code.jquery.com/jquery-2.1.3.js',
     socketio: 'https://cdn.socket.io/socket.io-1.2.1.js',
     templates: '../templates',
-    utilities: 'js/src/Utilities',
-    models: 'js/src/models',
-    controllers: 'js/src/controllers',
-    collections: 'js/src/collections',
-    views: 'js/src/views',
+    utilities: '/stream-player/assets/js/src/Utilities',
+    models: '/stream-player/assets/js/src/models',
+    controllers: '/stream-player/assets/js/src/controllers',
+    collections: '/stream-player/assets/js/src/collections',
+    views: '/stream-player/assets/js/src/views',
   }
 });
 
