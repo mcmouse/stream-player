@@ -17,11 +17,13 @@ require.config({
       exports: 'Backbone'
     },
     'backbone': {
-      deps: ['backbone-original'],
+      deps: [
+        'backbone-original'
+      ],
     },
     'marionette': {
       deps: [
-        'backbone'
+        'backbone-original'
       ],
       exports: 'Marionette'
     }
