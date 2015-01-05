@@ -10,6 +10,7 @@ define('LoginUser', [
   'jquery',
   'underscore',
   'backbone',
+  'backbone-localstorage',
   'marionette',
   'models/User',
 ], function ($, _, Backbone, Marionette, User) {

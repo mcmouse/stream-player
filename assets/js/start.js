@@ -9,17 +9,17 @@ require.config({
     'underscore': {
       exports: '_'
     },
-    'backbone-original': {
+    'backbone': {
       deps: [
         'underscore',
         'jquery',
       ],
       exports: 'Backbone'
     },
-    'backbone': {
+    'backbone-localstorage': {
       deps: [
-        'backbone-original'
-      ],
+        'backbone'
+      ]
     },
     'marionette': {
       deps: [
@@ -33,8 +33,8 @@ require.config({
     socketio: 'https://cdn.socket.io/socket.io-1.2.1',
     underscore: '../libs/underscore',
     marionette: '../libs/marionette',
-    'backbone-original': '../libs/backbone',
-    backbone: '../libs/backbone-localstorage',
+    backbone: '../libs/backbone',
+    'backbone-localstorage': '../libs/backbone-localstorage',
     templates: '../templates',
     utilities: 'Utilities',
     models: 'models',
