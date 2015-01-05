@@ -16,7 +16,7 @@ require.config({
       ],
       exports: 'Backbone'
     },
-    'backbone-localstorage': {
+    'backbone.localstorage': {
       deps: [
         'backbone'
       ],
@@ -35,7 +35,7 @@ require.config({
     underscore: '../libs/underscore',
     marionette: '../libs/marionette',
     backbone: '../libs/backbone',
-    'backbone-localstorage': '../libs/backbone-localstorage',
+    'backbone.localstorage': '../libs/backbone-localstorage',
     templates: '../templates',
   }
 });
