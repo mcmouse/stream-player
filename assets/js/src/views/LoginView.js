@@ -46,44 +46,44 @@ var LoginView = (function () {
 
     //On login button click, hide the login area and load the user
     loadUser: function () {
-      $(this.ui.loginRegion).hide();
+      this.ui.loginRegion.hide();
       this.model.loadUser();
     },
 
     //Show the enter user name region
     showEnterUserName: function () {
-      $(this.ui.enterUserNameRegion).show();
+      this.ui.enterUserNameRegion.show();
     },
 
     //Get user name and pass up to any listeners
     setName: function () {
-      var user = $(this.ui.enterUserNameInput).val();
+      var user = this.ui.enterUserNameInput.val();
       this.trigger('userNameSet', user);
-      $(this.ui.nameInUse).hide();
+      this.ui.nameInUse.hide();
     },
 
     //Show the "that user name is in use" window
     showNameInUse: function () {
-      $(this.ui.nameInUse).show();
+      this.ui.nameInUse.show();
     },
 
     //Set the logged in region template from the user
     setLoggedIn: function (user) {
-      $(this.ui.enterUserNameRegion).hide();
+      this.ui.enterUserNameRegion.hide();
       var loggedInTemplate = _.template('<div class="logged-in">Welcome, <%= name %>');
       var html = loggedInTemplate({
         name: user.get('name')
       });
-      $(this.ui.loggedInRegion).html(html).show();
-      $(this.ui.logOutButton).show();
+      this.ui.loggedInRegion.html(html).show();
+      this.ui.logOutButton.show();
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button
     logOut: function () {
       this.model.removeUser();
-      $(this.ui.loggedInRegion).hide();
-      $(this.ui.logOutButton).hide();
-      $(this.ui.loginRegion).show();
+      this.ui.loggedInRegion.hide();
+      this.ui.logOutButton.hide();
+      this.ui.loginRegion.show();
     },
   });
 })();

@@ -18,7 +18,7 @@ var ChatRoomController = (function () {
       this.loginUser = new LoginUser();
       this.loginView = new LoginView({
         model: this.loginUser
-      });
+      }).render();
 
       //Set up event listeners
       this.setupEvents();
