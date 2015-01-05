@@ -27,7 +27,7 @@ require.config({
         'backbone'
       ],
       exports: 'Marionette'
-    }
+    },
   },
   paths: {
     jquery: 'https://code.jquery.com/jquery-2.1.3',
@@ -37,6 +37,7 @@ require.config({
     backbone: '../libs/backbone',
     'backbone.localstorage': '../libs/backbone-localstorage',
     templates: '../../../templates',
+    text: '../libs/text',
   }
 });
 
