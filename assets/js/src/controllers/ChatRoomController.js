@@ -8,7 +8,7 @@ var ChatRoomController = (function () {
   'use strict';
 
   return Marionette.Object.extend({
-    initialize: function () {
+    initialize: function (vars) {
       //Initialize chat room
       this.chatRoom = new ChatRoom({
         serverAddress: this.get('serverAddress'),
