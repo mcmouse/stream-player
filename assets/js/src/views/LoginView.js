@@ -10,14 +10,19 @@ define([
   'underscore',
   'backbone',
   'marionette',
-], function ($, _, Backbone, Marionette) {
+  'templates/text!LoginRegion.html',
+], function ($, _, Backbone, Marionette, LoginRegionTemplate) {
   'use strict';
 
   return Marionette.ItemView.extend({
     el: '#login-region',
 
     //Static HTML
-    template: false,
+    template: function (model) {
+      return _.template(LoginRegionTemplate)({
+        name: model.currentUser.name
+      });
+    },
 
     //Initialize events
     initialize: function () {
@@ -57,38 +62,34 @@ define([
 
     //Show the enter user name region
     showEnterUserName: function () {
-      this.ui.enterUserNameRegion.show();
+      this.ui.enterUserNameRegion.removeClass('hidden');
     },
 
     //Get user name and pass up to any listeners
     setName: function () {
       var user = this.ui.enterUserNameInput.val();
       this.trigger('userNameSet', user);
-      this.ui.nameInUse.hide();
+      this.ui.nameInUse.addClass('hidden');
     },
 
     //Show the "that user name is in use" window
     showNameInUse: function () {
-      this.ui.nameInUse.show();
+      this.ui.nameInUse.removeClass('hidden');
     },
 
     //Set the logged in region template from the user
-    setLoggedIn: function (user) {
-      this.ui.enterUserNameRegion.hide();
-      var loggedInTemplate = _.template('<div class="logged-in">Welcome, <%= name %>');
-      var html = loggedInTemplate({
-        name: user.get('name')
-      });
-      this.ui.loggedInRegion.html(html).show();
-      this.ui.logOutButton.show();
+    setLoggedIn: function () {
+      this.ui.enterUserNameRegion.addClass('hidden');
+      this.ui.loggedInRegion.removeClass('hidden');
+      this.ui.logOutButton.removeClass('hidden');
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button
     logOut: function () {
       this.model.removeUser();
-      this.ui.loggedInRegion.hide();
-      this.ui.logOutButton.hide();
-      this.ui.loginRegion.show();
+      this.ui.loggedInRegion.addClass('hidden');
+      this.ui.logOutButton.addClass('hidden');
+      this.ui.loginRegion.removeClass('hidden');
     },
   });
 });

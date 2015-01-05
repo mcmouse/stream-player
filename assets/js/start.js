@@ -19,7 +19,8 @@ require.config({
     'backbone-localstorage': {
       deps: [
         'backbone'
-      ]
+      ],
+      exports: 'Backbone.LocalStorage',
     },
     'marionette': {
       deps: [
