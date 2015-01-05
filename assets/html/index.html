@@ -4,51 +4,33 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Streaming player</title>
-  <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
 
-  <!-- JWPlayer -->
-  <script src="http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js"></script>
+  <!-- CSS -->
+  <link href="/stream-player/assets/css/main.css" rel="stylesheet" type="text/css"/>
 
-  <!-- Socket.IO -->
-  <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
-
-  <!-- Backbone && Marionette -->
-  <script src="/stream-player/assets/js/libs/underscore.js"></script>
-  <script src="/stream-player/assets/js/libs/backbone.js"></script>
-  <script src="/stream-player/assets/js/libs/backbone-localstorage.js"></script>
-  <script src="/stream-player/assets/js/libs/marionette.js"></script>
-
-  <script src="/stream-player/assets/js/src/Utilities.js"></script>
-
-  <!-- Oh jeez -->
-  <script src="/stream-player/assets/js/src/models/Message.js"></script>
-  <script src="/stream-player/assets/js/src/collections/MessageCollection.js"></script>
-
-  <script src="/stream-player/assets/js/src/models/User.js"></script>
-  <script src="/stream-player/assets/js/src/collections/UserCollection.js"></script>
-
-  <script src="/stream-player/assets/js/src/models/LoginUser.js"></script>
-  <script src="/stream-player/assets/js/src/views/LoginView.js"></script>
-
-  <script src="/stream-player/assets/js/src/models/ChatRoom.js"></script>
-  <script src="/stream-player/assets/js/src/controllers/ChatRoomController.js"></script>
-
-  <script src="/stream-player/assets/js/src/ChatApp.js"></script>
-</head>
+  <!-- RequireJS load -->
+  <script data-main="js/start" src="js/libs/require/require.js"></script>
+  
 <body>
-  <h1 class="title">Output</h1>
-  <div id="output-video">
+  <!-- <h1 class="title">Output</h1>
+  <div id="output-video"> -->
      <!--  <source src="rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/test" type='rtmp/flv'/> -->
-  </div>
+  <!-- </div>
 
   <h1 class="title">Input</h1>
   <button id="load-video">Show webcam</button>
   <button id="hide-video">Hide webcam</button>
 
   <div id="input-video">
-  </div>
+  </div> -->
 
   <div id="chat-app">
+    <h1>Chat area</h1>
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <h4>Enter a new message below</h4>
+      <input type='text' id="new-message"/>
+    </div>
   </div>
   <div id="login-region">
     <div class="login">

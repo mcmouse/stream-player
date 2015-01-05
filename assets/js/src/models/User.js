@@ -1,11 +1,16 @@
-/* globals Backbone, Utilities */
+/* globals define */
 
 /**
  * User model containing defaults and methods for all users. Will be saved to
  * the server at some point.
  * @return Backbone.Model User
  */
-var User = (function () {
+define('User', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'utilities'
+], function ($, _, Backbone, Utilities) {
   'use strict';
 
   return Backbone.Model.extend({
@@ -14,4 +19,4 @@ var User = (function () {
       id: Utilities.getGUID()
     },
   });
-})();
+});

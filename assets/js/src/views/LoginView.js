@@ -1,11 +1,16 @@
-/* globals Marionette, _ */
+/* globals define */
 
 /**
  * Controls all markup for the login area, and fires appropriate events to handle logged in state.
  * @return Marionette.ItemView LoginView
  */
 
-var LoginView = (function () {
+define('LoginView', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'marionette',
+], function ($, _, Backbone, Marionette) {
   'use strict';
 
   return Marionette.ItemView.extend({
@@ -86,4 +91,4 @@ var LoginView = (function () {
       this.ui.loginRegion.show();
     },
   });
-})();
+});

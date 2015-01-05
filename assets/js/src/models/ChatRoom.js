@@ -1,10 +1,20 @@
-/* globals Backbone, User, io, UserCollection, MessageCollection, Message */
+/* globals define */
 
 /**
  * Contains all logic necessary for running the chat room and communicating with the server.
  * @return Backbone.Model ChatRoom
  */
-var ChatRoom = (function () {
+define('ChatRoom', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'marionette',
+  'socketio',
+  'models/User',
+  'collections/UserCollection',
+  'models/Message',
+  'collections/MessageCollection'
+], function ($, _, Backbone, Marionette, io, User, UserCollection, Message, MessageCollection) {
   'use strict';
 
   return Backbone.Model.extend({
@@ -97,5 +107,4 @@ var ChatRoom = (function () {
     },
   });
 
-})();
-/* jshint ignore:end */
+});

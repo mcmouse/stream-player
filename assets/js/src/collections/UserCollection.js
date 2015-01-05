@@ -1,8 +1,13 @@
-/* globals Backbone, User */
-var UserCollection = (function () {
+/* globals define */
+
+define('UserCollection', [
+  'backbone',
+  'models/User',
+], function (Backbone, User) {
+
   'use strict';
 
   return Backbone.Collection.extend({
     model: User,
   });
-})();
+});

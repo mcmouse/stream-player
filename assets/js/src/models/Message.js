@@ -1,6 +1,9 @@
-/* jshint ignore:start */
-var Message = (function () {
-  'use strict';
+/* globals define */
 
-  return Backbone.Model.extend({});
-})();
+
+define('Message', ['backbone'],
+  function (Backbone) {
+    'use strict';
+
+    return Backbone.Model.extend({});
+  })();

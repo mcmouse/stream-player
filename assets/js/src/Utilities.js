@@ -1,8 +1,10 @@
+/* globals define */
+
 /**
  * Object containing global helper functions.
  * @return Object Utilities
  */
-var Utilities = (function () {
+define('Utilities', [], function () {
   'use strict';
 
   return {
@@ -14,4 +16,4 @@ var Utilities = (function () {
       return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
     },
   };
-})();
+});

@@ -1,11 +1,18 @@
-/* globals Backbone, User */
+/* globals define */
 
 /**
  * Controls setting, saving, and loading the user, as well as triggering appropriate events
  * to manage user lifecycle.
  * @return Backbone.Model LoginController
  */
-var LoginUser = (function () {
+
+define('LoginUser', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'marionette',
+  'models/User',
+], function ($, _, Backbone, Marionette, User) {
   'use strict';
 
   return Backbone.Model.extend({
@@ -68,4 +75,4 @@ var LoginUser = (function () {
     },
 
   });
-})();
+});

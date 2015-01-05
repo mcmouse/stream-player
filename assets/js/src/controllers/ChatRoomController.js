@@ -1,10 +1,18 @@
-/* globals Marionette, ChatRoom, LoginUser, LoginView */
+/* globals define */
 
 /**
  * Manages the ChatRoom by delegating events
  * @return Marionette.Object ChatRoomManager
  */
-var ChatRoomController = (function () {
+define('ChatRoomController', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'marionette',
+  'models/ChatRoom',
+  'models/LoginUser',
+  'views/LoginView',
+], function ($, _, Backbone, Marionette, ChatRoom, LoginUser, LoginView) {
   'use strict';
 
   return Marionette.Object.extend({
@@ -80,4 +88,4 @@ var ChatRoomController = (function () {
     },
 
   });
-})();
+});

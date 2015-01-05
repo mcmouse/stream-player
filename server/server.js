@@ -24,6 +24,7 @@
     });
 
     socket.on('newMessage', function (data) {
+      console.log('broadcasting message from user ' + data.username + ' with message ' + data.message);
       socket.emit('newMessage', data);
     });
   });

@@ -1,40 +1,33 @@
-/* globals _, Marionette, ChatRoomController */
+/* globals define */
 
 /**
  * Creates the main application, sets up internal models and views, handles app
  * lifecycle management and delegation, and starts the app.
  * @return Marionette.Application ChatApp
  */
-(function (window, $, _, undefined) {
+
+define('ChatApp', [
+  'jquery',
+  'underscore',
+  'backbone',
+  'marionette',
+  'controllers/ChatRoomController',
+], function ($, _, Backbone, Marionette, ChatRoomController) {
   'use strict';
 
-  var ChatApp = (function () {
+  return Marionette.Application.extend({
+    container: '#chat-app',
 
-    return Marionette.Application.extend({
-      initialize: function () {
+    initialize: function () {
 
-        //Set up app defaults
-        var chatOptions = {
-          serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
-        };
+      //Set up app defaults
+      var chatOptions = {
+        serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
+      };
 
-        //Set up chat room
-        this.chatRoomController = new ChatRoomController(chatOptions);
-      }
-    });
-  })();
-
-
-  $(function () {
-    //Initialize app
-    var chatApp = new ChatApp({
-      container: '#chat-app'
-    });
-
-    window.chatApp = chatApp;
-
-    //Start app
-    chatApp.start();
+      //Set up chat room
+      this.chatRoomController = new ChatRoomController(chatOptions);
+    }
   });
 
-})(window, $, _);
+});
