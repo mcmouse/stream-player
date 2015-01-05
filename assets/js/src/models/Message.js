@@ -6,4 +6,4 @@ define(['backbone'],
     'use strict';
 
     return Backbone.Model.extend({});
-  })();
+  });

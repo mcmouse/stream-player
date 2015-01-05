@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'utilities'
+  'Utilities'
 ], function ($, _, Backbone, Utilities) {
   'use strict';
 
