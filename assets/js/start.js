@@ -49,5 +49,6 @@ require([
 ], function (ChatApp) {
   'use strict';
 
-  ChatApp.start();
+  var chatApp = new ChatApp();
+  chatApp.start();
 });
