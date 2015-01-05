@@ -23,7 +23,7 @@ require.config({
     },
     'marionette': {
       deps: [
-        'backbone-original'
+        'backbone'
       ],
       exports: 'Marionette'
     }
