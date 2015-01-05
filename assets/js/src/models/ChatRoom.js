@@ -1,4 +1,4 @@
-/* jshint ignore:start */
+/* globals _, Backbone, LoginView, LoginController */
 var ChatRoom = (function () {
   'use strict';
 

@@ -1,4 +1,10 @@
 /* globals _, ChatRoom, LoginView, LoginController, Marionette */
+
+/**
+ * Creates the main application, sets up internal models and views, handles app
+ * lifecycle management and delegation, and starts the app.
+ * @return Marionette.Application ChatApp
+ */
 (function (window, $, _, undefined) {
   'use strict';
 
@@ -6,16 +12,21 @@
 
     return Marionette.Application.extend({
       initialize: function () {
-        var options = {
+
+        //Set up app defaults
+        var chatOptions = {
           serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
         };
 
-        this.chatRoom = new ChatRoom(options);
+        //Set up models and views
+        this.chatRoom = new ChatRoom(chatOptions);
+
         this.loginController = new LoginController();
         this.loginView = new LoginView({
           model: this.loginController
         });
 
+        //Set up event management between LoginController and ChatRoom.
         this.listenTo(this.loginController, 'userLoaded', function (user) {
           if (!this.chatRoom.hasUser(user.get('name'))) {
             this.chatRoom.addLocalUser(user);
