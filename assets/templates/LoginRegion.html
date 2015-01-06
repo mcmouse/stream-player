@@ -1,16 +1,16 @@
-<div class="login">
+<div class="login <%= loggedOut %>">
   <h4>Click to log in</h4>
   <button class="login-button">Log in now</button>
 </div>
-<div class="enter-user-name hidden">
+<div class="enter-user-name <%= enterUserName %>">
   <h4>Click to set your username</h4>
   <input class="enter-user-name-input" type="text"/>
   <button class="set-name-button">Set user name</button>
 </div>
-<div class="name-in-use hidden">
+<div class="name-in-use <%= nameInUse %>">
   Sorry, that name is in use. Please enter a different name.
 </div>
-<div class="logged-in-region hidden">
+<div class="logged-in-region <%= isLoggedIn %>">
   <div class="logged-in">Welcome, <%= name %></div>
 </div>
 <button class="log-out-button hidden">Log out</button>
