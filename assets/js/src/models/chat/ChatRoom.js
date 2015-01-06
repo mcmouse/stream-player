@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * Contains all logic necessary for running the chat room and communicating with the server.
@@ -19,16 +19,16 @@ define([
   return Backbone.Model.extend({
     defaults: {
       //Create our collection of online users
-      onlineUsers: App.collections.UserCollection,
+      onlineUsers: chatApp.collections.UserCollection,
 
       //Create our collection of messages
-      messages: App.collections.MessageCollection
+      messages: chatApp.collections.MessageCollection
     },
 
     //Initialize our socket.io listener and set up events for adding and removing users
     //and adding events
     initialize: function () {
-      this._listener = io(App.options.serverAddress + '/chat');
+      this._listener = io(chatApp.options.serverAddress + '/chat');
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));

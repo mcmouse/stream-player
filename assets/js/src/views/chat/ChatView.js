@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * View for displaying the collection of messages
@@ -29,7 +29,7 @@ define([
     initialize: function (options) {
       if (options.messageCollection) {
         this.getRegion('chatMessages').show(new ChatMessagesView({
-          collection: App.collections.MessageCollection
+          collection: chatApp.collections.MessageCollection
         }));
       }
       //this.getRegion('userList').show(new UserListView());

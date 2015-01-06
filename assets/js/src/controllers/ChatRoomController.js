@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * Manages the ChatRoom by delegating events
@@ -31,7 +31,7 @@ define([
       //Initialize login flow
       this.loginView = new LoginView({
         model: new LoginViewModel(),
-        currentUser: App.controller.CurrentUser,
+        currentUser: chatApp.controller.CurrentUser,
       }).render();
 
       //Set up event listeners
