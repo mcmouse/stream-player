@@ -1,4 +1,4 @@
-/* globals define, App */
+/* globals define */
 
 /**
  * Manages the ChatRoom by delegating events
@@ -9,13 +9,14 @@ define([
   'underscore',
   'backbone',
   'marionette',
+  'ChatApp',
   'models/chat/ChatRoom',
   'models/user/CurrentUser',
   'models/login/LoginViewModel',
   'models/chat/ChatViewModel',
   'views/login/LoginView',
   'views/chat/ChatView',
-], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, ChatViewModel, LoginView, ChatView) {
+], function ($, _, Backbone, Marionette, App, ChatRoom, CurrentUser, LoginViewModel, ChatViewModel, LoginView, ChatView) {
   'use strict';
 
   return Marionette.Object.extend({

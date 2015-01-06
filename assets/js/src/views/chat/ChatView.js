@@ -1,4 +1,4 @@
-/* globals define, App */
+/* globals define */
 
 /**
  * View for displaying the collection of messages
@@ -10,11 +10,12 @@ define([
   'underscore',
   'backbone',
   'marionette',
+  'ChatApp',
   'views/chat/UserListView',
   'views/chat/ChatMessagesView',
   'views/chat/SendMessageView',
   'text!templates/ChatRoom',
-], function ($, _, Backbone, Marionette, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
+], function ($, _, Backbone, Marionette, App, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
   'use strict';
 
   return Marionette.LayoutView.extend({
