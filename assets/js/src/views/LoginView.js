@@ -29,6 +29,16 @@ define([
       });
     },
 
+    serializeData: function () {
+      var model = this.model.toJSON;
+
+      if (model.loggedInUser && typeof model.currentUser === 'object') {
+        model.currentUser = model.currentUser.toJSON;
+      }
+
+      return model;
+    },
+
     //Cache selectors
     ui: {
       'loginRegion': '.login',
