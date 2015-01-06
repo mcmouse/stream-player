@@ -18,14 +18,12 @@ define([
 
   return Backbone.Model.extend({
     //Set up localstorage from backbone.localstorage module
-    localStorage: new Backbone.LocalStorage('LoginController'),
+    localStorage: new Backbone.LocalStorage('CurrentUser'),
 
     //Set up defaults for localstorage ID and loaded user state.
     defaults: {
-      id: 'LoginController',
+      id: 'SavedUser',
       loggedInUser: false,
-      enteringUserName: false,
-      nameInUse: false,
     },
 
     //Load a user from localstorage by using fetch to retrieve stored user state.
@@ -57,35 +55,15 @@ define([
       return this.get('loggedInUser');
     },
 
-    //Set model state while entering user name
-    showEnteringUserName: function () {
-      this.set({
-        'enteringUserName': true,
-        'nameInUse': false,
-        'loggedInUser': false
-      });
-    },
-
-    //Set model state while showing "name in use" dialogue
-    showNameInUse: function () {
-      this.set({
-        'enteringUserName': false,
-        'nameInUse': true,
-        'loggedInUser': false
-      });
-    },
-
     //Initialize the User model to generate a unique ID and save it to localstorage. 
     //Trigger necessary events.
     saveUser: function (userName) {
 
       this.set({
-        'currentUser': new User({
+        currentUser: new User({
           name: userName,
         }),
-        'enteringUserName': true,
-        'nameInUse': false,
-        'loggedInUser': false
+        loggedInUser: true
       });
 
       this.save();
@@ -98,10 +76,8 @@ define([
       this.trigger('userLoggedOut', this.get('currentUser'));
 
       this.set({
-        'currentUser': null,
-        'enteringUserName': true,
-        'nameInUse': false,
-        'loggedInUser': false
+        currentUser: null,
+        loggedInUser: false,
       });
 
       this.save();

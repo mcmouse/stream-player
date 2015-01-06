@@ -19,13 +19,9 @@ define([
 
     //Cache selectors
     ui: {
-      'loginRegion': '.login',
       'loginButton': '.login-button',
-      'enterUserNameRegion': '.enter-user-name',
       'enterUserNameInput': '.enter-user-name-input',
       'setNameButton': '.set-name-button',
-      'nameInUse': '.name-in-use',
-      'loggedInRegion': '.logged-in-region',
       'logOutButton': '.log-out-button',
     },
 
@@ -36,46 +32,42 @@ define([
       'click @ui.logOutButton': 'logOut',
     },
 
-    //Listen to the model's 'noSavedUser' event if there is no saved user in local storage
-    modelEvents: {
-      'noSavedUser': 'showEnterUserName',
-      'userLoggedIn': 'render'
-    },
+    currentUser: null,
 
-    initialize: function () {
+    initialize: function (options) {
+      this.currentUser = options.currentUser;
+
+      if (this.currentUser) {
+        this.listenTo(this.currentUser, {
+          'noSavedUser': this.model.showEnterUserName,
+          'userLoggedIn': this.model.showLoggedIn,
+          'userLoggedOut': this.model.showLoggedOut,
+        });
+      }
+
+      this.on({
+        'nameInUse': this.model.showNameInUse,
+      });
+
       this.listenTo(this.model, 'change', this.render);
     },
 
     //Static HTML
-    template: function (model) {
+    template: _.template(LoginRegionTemplate),
 
-      return _.template(LoginRegionTemplate)({
-        loginClasses: (!model.loggedInUser && !model.enteringUserName && !model.nameInUse ? 'visible' : 'hidden'),
-        enterUserNameClasses: (model.enteringUserName ? 'visible' : 'hidden'),
-        nameInUseClasses: (model.nameInUse ? 'visible' : 'hidden'),
-        loggedInClasses: (model.loggedInUser ? 'visible' : 'hidden'),
-        name: (model.loggedInUser ? model.currentUser.name : '')
-      });
-    },
-
-    serializeData: function () {
-      var model = this.model.toJSON();
-
-      if (model.loggedInUser && model.currentUser instanceof Backbone.Model) {
-        model.currentUser = model.currentUser.toJSON();
-      }
-
-      return model;
+    templateHelpers: function () {
+      return {
+        loginClasses: (this.model.get('loggedOut') ? 'visible' : 'hidden'),
+        enterUserNameClasses: (this.model.get('enteringUserName') ? 'visible' : 'hidden'),
+        nameInUseClasses: (this.model.get('nameInUse') ? 'visible' : 'hidden'),
+        loggedInClasses: (this.model.get('loggedIn') ? 'visible' : 'hidden'),
+        name: (this.model.get('loggedIn') ? this.currentUser.get('name') : '')
+      };
     },
 
     //On login button click, hide the login area and load the user
     loadUser: function () {
-      this.model.loadUser();
-    },
-
-    //Show the enter user name region
-    showEnterUserName: function () {
-      this.model.showEnteringUserName();
+      this.currentUser.loadUser();
     },
 
     //Get user name and pass up to any listeners
@@ -84,14 +76,9 @@ define([
       this.trigger('userNameSet', user);
     },
 
-    //Show the "that user name is in use" window
-    showNameInUse: function () {
-      this.model.showNameInUse();
-    },
-
     //Log out, hiding logged in state, clearing user from model, and showing log in button
     logOut: function () {
-      this.model.removeUser();
+      this.currentUser.removeUser();
     },
   });
 });

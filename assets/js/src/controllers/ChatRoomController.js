@@ -10,9 +10,10 @@ define([
   'backbone',
   'marionette',
   'models/ChatRoom',
-  'models/LoginUser',
+  'models/CurrentUser',
+  'models/LoginViewModel',
   'views/LoginView',
-], function ($, _, Backbone, Marionette, ChatRoom, LoginUser, LoginView) {
+], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, LoginView) {
   'use strict';
 
   return Marionette.Object.extend({
@@ -23,9 +24,9 @@ define([
       });
 
       //Initialize login flow
-      this.loginUser = new LoginUser();
       this.loginView = new LoginView({
-        model: this.loginUser
+        model: new LoginViewModel(),
+        currentUser: new CurrentUser()
       }).render();
 
       //Set up event listeners
