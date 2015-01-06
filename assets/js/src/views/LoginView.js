@@ -29,11 +29,6 @@ define([
       });
     },
 
-    //Initialize events
-    initialize: function () {
-      this.listenTo(this.model, 'change', this.render);
-    },
-
     //Cache selectors
     ui: {
       'loginRegion': '.login',
@@ -56,16 +51,19 @@ define([
     //Listen to the model's 'noSavedUser' event if there is no saved user in local storage
     modelEvents: {
       'noSavedUser': 'showEnterUserName',
+      'userLoggedIn': 'render'
     },
 
     //On login button click, hide the login area and load the user
     loadUser: function () {
       this.model.loadUser();
+      this.render();
     },
 
     //Show the enter user name region
     showEnterUserName: function () {
       this.model.showEnteringUserName();
+      this.render();
     },
 
     //Get user name and pass up to any listeners
@@ -77,11 +75,13 @@ define([
     //Show the "that user name is in use" window
     showNameInUse: function () {
       this.model.showNameInUse();
+      this.render();
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button
     logOut: function () {
       this.model.removeUser();
+      this.render();
     },
   });
 });
