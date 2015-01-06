@@ -17,28 +17,6 @@ define([
   return Marionette.ItemView.extend({
     el: '#login-region',
 
-    //Static HTML
-    template: function (model) {
-
-      return _.template(LoginRegionTemplate)({
-        loginClasses: (!model.loggedInUser && !model.enteringUserName && !model.nameInUse ? 'visible' : 'hidden'),
-        enterUserNameClasses: (model.enteringUserName ? 'visible' : 'hidden'),
-        nameInUseClasses: (model.nameInUse ? 'visible' : 'hidden'),
-        loggedInClasses: (model.loggedInUser ? 'visible' : 'hidden'),
-        name: (model.loggedInUser ? model.currentUser.name : '')
-      });
-    },
-
-    serializeData: function () {
-      var model = this.model.toJSON;
-
-      if (model.loggedInUser && typeof model.currentUser === 'object') {
-        model.currentUser = model.currentUser.toJSON;
-      }
-
-      return model;
-    },
-
     //Cache selectors
     ui: {
       'loginRegion': '.login',
@@ -64,6 +42,32 @@ define([
       'userLoggedIn': 'render'
     },
 
+    initialize: function () {
+      this.listenTo(this.model, 'change', this.render);
+    },
+
+    //Static HTML
+    template: function (model) {
+
+      return _.template(LoginRegionTemplate)({
+        loginClasses: (!model.loggedInUser && !model.enteringUserName && !model.nameInUse ? 'visible' : 'hidden'),
+        enterUserNameClasses: (model.enteringUserName ? 'visible' : 'hidden'),
+        nameInUseClasses: (model.nameInUse ? 'visible' : 'hidden'),
+        loggedInClasses: (model.loggedInUser ? 'visible' : 'hidden'),
+        name: (model.loggedInUser ? model.currentUser.name : '')
+      });
+    },
+
+    serializeData: function () {
+      var model = this.model.toJSON;
+
+      if (model.loggedInUser && model.currentUser instanceof Backbone.Model) {
+        model.currentUser = model.currentUser.toJSON;
+      }
+
+      return model;
+    },
+
     //On login button click, hide the login area and load the user
     loadUser: function () {
       this.model.loadUser();
@@ -72,7 +76,6 @@ define([
     //Show the enter user name region
     showEnterUserName: function () {
       this.model.showEnteringUserName();
-      this.render();
     },
 
     //Get user name and pass up to any listeners
@@ -84,13 +87,11 @@ define([
     //Show the "that user name is in use" window
     showNameInUse: function () {
       this.model.showNameInUse();
-      this.render();
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button
     logOut: function () {
       this.model.removeUser();
-      this.render();
     },
   });
 });
