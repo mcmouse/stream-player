@@ -21,10 +21,10 @@ define([
     //and adding events
     initialize: function () {
       //Create our collection of online users
-      this.onlineUsers = chatApp.collections.UserCollection;
+      this.set('onlineUsers', chatApp.collections.UserCollection);
 
       //Create our collection of messages
-      this.messages = chatApp.collections.MessageCollection;
+      this.et('messages', chatApp.collections.MessageCollection);
 
       //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
