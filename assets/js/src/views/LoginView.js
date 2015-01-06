@@ -59,10 +59,10 @@ define([
     },
 
     serializeData: function () {
-      var model = this.model.toJSON;
+      var model = this.model.toJSON();
 
       if (model.loggedInUser && model.currentUser instanceof Backbone.Model) {
-        model.currentUser = model.currentUser.toJSON;
+        model.currentUser = model.currentUser.toJSON();
       }
 
       return model;
