@@ -32,7 +32,7 @@ define([
     },
 
     //Set view to "entering user name" state
-    showEnteringUserName: function () {
+    showEnterUserName: function () {
       this.set({
         'loggedOut': false,
         'enteringUserName': true,
