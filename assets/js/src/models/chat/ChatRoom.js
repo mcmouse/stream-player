@@ -1,4 +1,4 @@
-/* globals define, App */
+/* globals define */
 
 /**
  * Contains all logic necessary for running the chat room and communicating with the server.
@@ -10,9 +10,10 @@ define([
   'backbone',
   'marionette',
   'socketio',
+  'ChatApp',
   'models/user/User',
   'models/chat/Message',
-], function ($, _, Backbone, Marionette, io, User, Message) {
+], function ($, _, Backbone, Marionette, io, App, User, Message) {
   'use strict';
 
   return Backbone.Model.extend({
