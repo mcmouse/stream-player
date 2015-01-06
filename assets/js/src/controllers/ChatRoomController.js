@@ -26,7 +26,7 @@ define([
 
       this.chatView = new ChatView({
         model: new ChatViewModel(),
-      });
+      }).render();
 
       //Initialize login flow
       this.loginView = new LoginView({
