@@ -20,7 +20,7 @@ define([
     //Static HTML
     template: function (model) {
       return _.template(LoginRegionTemplate)({
-        name: (typeof model.currentUser === 'undefined' || typeof model.currentUser.name === 'undefined' ? '' : model.currentUser.name)
+        name: (model.loggedInUser ? model.currentUser.name : '')
       });
     },
 
