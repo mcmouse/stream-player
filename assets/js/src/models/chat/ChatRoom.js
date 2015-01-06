@@ -24,7 +24,7 @@ define([
       this.set('onlineUsers', chatApp.collections.UserCollection);
 
       //Create our collection of messages
-      this.et('messages', chatApp.collections.MessageCollection);
+      this.set('messages', chatApp.collections.MessageCollection);
 
       //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
