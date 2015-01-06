@@ -28,7 +28,6 @@ define([
     initialize: function () {
       this.on('nameInUse', this.showNameInUse);
       this.on('loggedIn', this.setLoggedIn);
-      this.listenTo(this.model, 'change', this.render);
     },
 
     //Cache selectors
@@ -83,6 +82,7 @@ define([
       this.ui.enterUserNameRegion.addClass('hidden');
       this.ui.loggedInRegion.removeClass('hidden');
       this.ui.logOutButton.removeClass('hidden');
+      this.render();
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button
@@ -91,6 +91,7 @@ define([
       this.ui.loggedInRegion.addClass('hidden');
       this.ui.logOutButton.addClass('hidden');
       this.ui.loginRegion.removeClass('hidden');
+      this.render();
     },
   });
 });
