@@ -2,7 +2,7 @@
 
 define([
   'backbone',
-  'models/User',
+  'models/user/User',
 ], function (Backbone, User) {
 
   'use strict';
