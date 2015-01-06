@@ -12,7 +12,7 @@ define([
   'models/chat/ChatRoom',
   'models/user/CurrentUser',
   'models/login/LoginViewModel',
-  'models/login/ChatViewModel',
+  'models/chat/ChatViewModel',
   'views/login/LoginView',
   'views/chat/ChatView',
 ], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, ChatViewModel, LoginView, ChatView) {

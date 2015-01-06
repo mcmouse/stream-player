@@ -10,7 +10,7 @@ define([
   'backbone',
   'marionette',
   'socketio',
-  'models/User',
+  'models/user/User',
   'models/chat/Message',
 ], function ($, _, Backbone, Marionette, io, User, Message) {
   'use strict';
