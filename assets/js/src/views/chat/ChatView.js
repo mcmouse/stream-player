@@ -10,12 +10,11 @@ define([
   'underscore',
   'backbone',
   'marionette',
-  'ChatApp',
   'views/chat/UserListView',
   'views/chat/ChatMessagesView',
   'views/chat/SendMessageView',
   'text!templates/ChatRoom',
-], function ($, _, Backbone, Marionette, App, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
+], function ($, _, Backbone, Marionette, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -26,12 +25,10 @@ define([
       //sendMessage: '#send-message'
     },
 
-    initialize: function (options) {
-      if (options.messageCollection) {
-        this.getRegion('chatMessages').show(new ChatMessagesView({
-          collection: chatApp.collections.MessageCollection
-        }));
-      }
+    initialize: function () {
+      this.getRegion('chatMessages').show(new ChatMessagesView({
+        collection: chatApp.collections.MessageCollection
+      }));
       //this.getRegion('userList').show(new UserListView());
       //this.getRegion('content').show(new SendMessageView());
     }
