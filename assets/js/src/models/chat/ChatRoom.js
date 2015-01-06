@@ -17,22 +17,22 @@ define([
   'use strict';
 
   return Backbone.Model.extend({
-    defaults: {
-      //Create our collection of online users
-      onlineUsers: chatApp.collections.UserCollection,
-
-      //Create our collection of messages
-      messages: chatApp.collections.MessageCollection
-    },
-
     //Initialize our socket.io listener and set up events for adding and removing users
     //and adding events
     initialize: function () {
+      //Create our collection of online users
+      this.onlineUsers = chatApp.collections.UserCollection;
+
+      //Create our collection of messages
+      this.messages = chatApp.collections.MessageCollection;
+
+      //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));
 
+      //Add initial message
       this.addMessage({
         message: {
           sender: 'ChatRoom',
