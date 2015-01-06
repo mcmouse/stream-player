@@ -2,3 +2,8 @@
 .hidden {
   display: none;
 }
+
+/* line 5, ../../sass/main.scss */
+.visible {
+  display: block;
+}

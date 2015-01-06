@@ -24,6 +24,8 @@ define([
     defaults: {
       id: 'LoginController',
       loggedInUser: false,
+      enteringUserName: false,
+      nameInUse: false,
     },
 
     //Load a user from localstorage by using fetch to retrieve stored user state.
@@ -55,13 +57,37 @@ define([
       return this.get('loggedInUser');
     },
 
+    //Set model state while entering user name
+    showEnteringUserName: function () {
+      this.set({
+        'enteringUserName': true,
+        'nameInUse': false,
+        'loggedInUser': false
+      });
+    },
+
+    //Set model state while showing "name in use" dialogue
+    showNameInUse: function () {
+      this.set({
+        'enteringUserName': false,
+        'nameInUse': true,
+        'loggedInUser': false
+      });
+    },
+
     //Initialize the User model to generate a unique ID and save it to localstorage. 
     //Trigger necessary events.
     saveUser: function (userName) {
-      this.set('currentUser', new User({
-        name: userName
-      }));
-      this.set('loggedInUser', true);
+
+      this.set({
+        'currentUser': new User({
+          name: userName,
+        }),
+        'enteringUserName': true,
+        'nameInUse': false,
+        'loggedInUser': false
+      });
+
       this.save();
       this.trigger('userLoggedIn', this.get('currentUser'));
     },
@@ -70,8 +96,14 @@ define([
     //Trigger necessary events.
     removeUser: function () {
       this.trigger('userLoggedOut', this.get('currentUser'));
-      this.set('loggedInUser', false);
-      this.set('currentUser', null);
+
+      this.set({
+        'currentUser': null,
+        'enteringUserName': true,
+        'nameInUse': false,
+        'loggedInUser': false
+      });
+
       this.save();
     },
 
