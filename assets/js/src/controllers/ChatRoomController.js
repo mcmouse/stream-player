@@ -31,7 +31,7 @@ define([
       //Initialize login flow
       this.loginView = new LoginView({
         model: new LoginViewModel(),
-        currentUser: chatApp.controller.CurrentUser,
+        currentUser: chatApp.models.CurrentUser,
       }).render();
 
       //Set up event listeners
