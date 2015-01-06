@@ -61,7 +61,7 @@ define([
         enterUserNameClasses: (this.model.get('enteringUserName') ? 'visible' : 'hidden'),
         nameInUseClasses: (this.model.get('nameInUse') ? 'visible' : 'hidden'),
         loggedInClasses: (this.model.get('loggedIn') ? 'visible' : 'hidden'),
-        name: (this.model.get('loggedIn') ? this.currentUser.get('name') : '')
+        name: this.currentUser.getName(),
       };
     },
 

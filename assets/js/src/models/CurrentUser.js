@@ -34,8 +34,8 @@ define([
         success: function () {
           //Needed for deep model copy to set up user model
           if (this.get('loggedInUser')) {
-            this.set('currentUser', new User(this.get('currentUser')));
-            this.trigger('userLoggedIn', this.get('currentUser'));
+            this.set('user', new User(this.get('user')));
+            this.trigger('userLoggedIn', this.get('user'));
           } else {
             this.trigger('noSavedUser');
           }
@@ -55,28 +55,32 @@ define([
       return this.get('loggedInUser');
     },
 
+    getName: function () {
+      return (this.loadedUser() ? this.get('currentUser').get('name') : undefined);
+    },
+
     //Initialize the User model to generate a unique ID and save it to localstorage. 
     //Trigger necessary events.
     saveUser: function (userName) {
 
       this.set({
-        currentUser: new User({
+        user: new User({
           name: userName,
         }),
         loggedInUser: true
       });
 
       this.save();
-      this.trigger('userLoggedIn', this.get('currentUser'));
+      this.trigger('userLoggedIn', this.get('user'));
     },
 
     //Delete the current User model, save the LoginController to localstorage.
     //Trigger necessary events.
     removeUser: function () {
-      this.trigger('userLoggedOut', this.get('currentUser'));
+      this.trigger('userLoggedOut', this.get('user'));
 
       this.set({
-        currentUser: null,
+        user: null,
         loggedInUser: false,
       });
 
