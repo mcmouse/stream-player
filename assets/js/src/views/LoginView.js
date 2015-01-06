@@ -39,9 +39,9 @@ define([
 
       if (this.currentUser) {
         this.listenTo(this.currentUser, {
-          'noSavedUser': this.model.showEnterUserName,
-          'userLoggedIn': this.model.showLoggedIn,
-          'userLoggedOut': this.model.showLoggedOut,
+          'noSavedUser': _.bind(this.model.showEnterUserName, this.model),
+          'userLoggedIn': _.bind(this.model.showLoggedIn, this.model),
+          'userLoggedOut': _.bind(this.model.showLoggedOut, this.model),
         });
       }
 
