@@ -42,7 +42,7 @@ define([
       //Set up event management
 
       //Update chat room when user logs in or logs out
-      this.listenTo(this.currentUser, {
+      this.listenTo(chatApp.models.CurrentUser, {
         'userLoggedIn': this.addUserToChatRoom,
         'userLoggedOut': this.removeUserFromChatRoom
       });
@@ -87,7 +87,7 @@ define([
     //Check if chat room contains name
     isNameInUse: function (userName) {
       if (!this.chatRoom.hasUser(userName)) {
-        this.currentUser.saveUser(userName);
+        chatApp.models.CurrentUser.saveUser(userName);
       } else {
         this.loginView.trigger('nameInUse');
       }
