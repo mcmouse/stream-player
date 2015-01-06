@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, App */
 
 /**
  * Contains all logic necessary for running the chat room and communicating with the server.
@@ -11,33 +11,33 @@ define([
   'marionette',
   'socketio',
   'models/User',
-  'collections/UserCollection',
-  'models/Message',
-  'collections/MessageCollection'
-], function ($, _, Backbone, Marionette, io, User, UserCollection, Message, MessageCollection) {
+  'models/chat/Message',
+], function ($, _, Backbone, Marionette, io, User, Message) {
   'use strict';
 
   return Backbone.Model.extend({
     defaults: {
       //Create our collection of online users
-      onlineUsers: new UserCollection(),
+      onlineUsers: App.collections.UserCollection,
 
       //Create our collection of messages
-      messages: new MessageCollection([
-        new Message({
-          sender: '',
-          message: 'Chat Server v.1'
-        })
-      ]),
+      messages: App.collections.MessageCollection
     },
 
     //Initialize our socket.io listener and set up events for adding and removing users
     //and adding events
-    initialize: function (options) {
-      this._listener = io(options.serverAddress + '/chat');
+    initialize: function () {
+      this._listener = io(App.options.serverAddress + '/chat');
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));
+
+      this.addMessage({
+        message: {
+          sender: 'ChatRoom',
+          text: 'Welcome to the chat room'
+        }
+      });
     },
 
     //Alias to emit socket events

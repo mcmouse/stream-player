@@ -12,7 +12,11 @@ define([
   'backbone',
   'marionette',
   'controllers/ChatRoomController',
-], function ($, _, Backbone, Marionette, ChatRoomController) {
+  'models/user/CurrentUser',
+  'collections/MessageCollection',
+  'collections/UserCollection',
+
+], function ($, _, Backbone, Marionette, ChatRoomController, CurrentUser, MessageCollection, UserCollection) {
   'use strict';
 
   return Marionette.Application.extend({
@@ -20,14 +24,36 @@ define([
 
     initialize: function () {
 
-      //Set up app defaults
-      var chatOptions = {
-        serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
-      };
+      //Create all shared models
+      this.setupModels();
+      this.setupCollections();
+      this.setupOptions();
 
       //Set up chat room
-      this.chatRoomController = new ChatRoomController(chatOptions);
-    }
+      this.chatRoomController = new ChatRoomController();
+    },
+
+    //Set up all app models
+    setupModels: function () {
+      this.models = {
+        CurrentUser: new CurrentUser()
+      };
+    },
+
+    //Set up all app collections
+    setupCollections: function () {
+      this.collections = {
+        MessageCollection: new MessageCollection(),
+        UserCollection: new UserCollection(),
+      };
+    },
+
+    //Set up app options
+    setupOptions: function () {
+      this.options = {
+        serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
+      };
+    },
   });
 
 });

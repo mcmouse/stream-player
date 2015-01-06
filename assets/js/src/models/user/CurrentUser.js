@@ -12,7 +12,7 @@ define([
   'backbone',
   'backbone.localstorage',
   'marionette',
-  'models/User',
+  'models/user/User',
 ], function ($, _, Backbone, BackboneLocalStorage, Marionette, User) {
   'use strict';
 

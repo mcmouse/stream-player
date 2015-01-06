@@ -6,7 +6,7 @@
  */
 define([
   'backbone',
-  'models/Message',
+  'models/chat/Message',
 ], function (Backbone, Message) {
   'use strict';
 

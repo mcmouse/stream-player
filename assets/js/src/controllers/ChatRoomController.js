@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, App */
 
 /**
  * Manages the ChatRoom by delegating events
@@ -9,25 +9,28 @@ define([
   'underscore',
   'backbone',
   'marionette',
-  'models/ChatRoom',
-  'models/CurrentUser',
-  'models/LoginViewModel',
-  'views/LoginView',
-], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, LoginView) {
+  'models/chat/ChatRoom',
+  'models/user/CurrentUser',
+  'models/login/LoginViewModel',
+  'models/login/ChatViewModel',
+  'views/login/LoginView',
+  'views/chat/ChatView',
+], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, ChatViewModel, LoginView, ChatView) {
   'use strict';
 
   return Marionette.Object.extend({
-    initialize: function (options) {
+    initialize: function () {
       //Initialize chat room
-      this.chatRoom = new ChatRoom({
-        serverAddress: options.serverAddress,
+      this.chatRoom = new ChatRoom();
+
+      this.chatView = new ChatView({
+        model: new ChatViewModel(),
       });
 
       //Initialize login flow
-      this.currentUser = new CurrentUser();
       this.loginView = new LoginView({
         model: new LoginViewModel(),
-        currentUser: this.currentUser,
+        currentUser: App.controller.CurrentUser,
       }).render();
 
       //Set up event listeners
