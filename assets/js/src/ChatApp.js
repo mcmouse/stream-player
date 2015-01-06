@@ -29,8 +29,7 @@ define([
       this.setupCollections();
       this.setupOptions();
 
-      //Set up chat room
-      this.chatRoomController = new ChatRoomController();
+      this.on('start', this.createChatRoom);
     },
 
     //Set up all app models
@@ -53,6 +52,11 @@ define([
       this.options = {
         serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
       };
+    },
+
+    createChatRoom: function () {
+      //Set up chat room
+      this.chatRoomController = new ChatRoomController();
     },
   });
 
