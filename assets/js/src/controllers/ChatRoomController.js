@@ -24,9 +24,10 @@ define([
       });
 
       //Initialize login flow
+      this.currentUser = new CurrentUser();
       this.loginView = new LoginView({
         model: new LoginViewModel(),
-        currentUser: new CurrentUser()
+        currentUser: this.currentUser,
       }).render();
 
       //Set up event listeners
@@ -37,7 +38,7 @@ define([
       //Set up event management
 
       //Update chat room when user logs in or logs out
-      this.listenTo(this.loginUser, {
+      this.listenTo(this.currentUser, {
         'userLoggedIn': this.addUserToChatRoom,
         'userLoggedOut': this.removeUserFromChatRoom
       });
