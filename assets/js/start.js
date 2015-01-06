@@ -47,5 +47,6 @@ require([
   'use strict';
 
   var chatApp = new ChatApp();
+  window.chatApp = chatApp;
   chatApp.start();
 });
