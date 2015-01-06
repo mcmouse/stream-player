@@ -54,9 +54,8 @@ define([
     loadedUser: function () {
       return this.get('loggedInUser');
     },
-
     getName: function () {
-      return (this.loadedUser() ? this.get('currentUser').get('name') : undefined);
+      return (this.loadedUser() ? this.get('user').get('name') : undefined);
     },
 
     //Initialize the User model to generate a unique ID and save it to localstorage. 
