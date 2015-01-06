@@ -28,6 +28,7 @@ define([
     initialize: function () {
       this.on('nameInUse', this.showNameInUse);
       this.on('loggedIn', this.setLoggedIn);
+      this.listenTo(this.model, 'change', this.render);
     },
 
     //Cache selectors
