@@ -83,7 +83,7 @@ define([
     //Check if chat room contains name
     isNameInUse: function (userName) {
       if (!this.chatRoom.hasUser(userName)) {
-        this.loginUser.saveUser(userName);
+        this.currentUser.saveUser(userName);
       } else {
         this.loginView.trigger('nameInUse');
       }
