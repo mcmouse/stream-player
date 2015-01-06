@@ -57,7 +57,6 @@ define([
     //On login button click, hide the login area and load the user
     loadUser: function () {
       this.model.loadUser();
-      this.render();
     },
 
     //Show the enter user name region
