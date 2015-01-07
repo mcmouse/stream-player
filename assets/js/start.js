@@ -62,7 +62,7 @@ require.config({
     backbone: '../libs/backbone',
     'backbone.localstorage': '../libs/backbone-localstorage',
     'backbone.radio': '../libs/backbone-radio',
-    'backbone.babysitter': '../libs/backbone/babysitter',
+    'backbone.babysitter': '../libs/backbone-babysitter',
     templates: '../../templates',
     text: '../libs/text',
   }
