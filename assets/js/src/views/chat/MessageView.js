@@ -19,9 +19,8 @@ define([
     classes: 'message',
     templateHelpers: function () {
       var currentUserClasses = '';
-      var currentUser = chatApp.models.CurrentUser.get('user');
-      if (currentUser) {
-        if (this.model.get('name') === currentUser.get('name')) {
+      if (chatApp.models.CurrentUser.loadedUser()) {
+        if (this.model.get('name') === chatApp.models.CurrentUser.getName()) {
           currentUserClasses += 'current-user';
         }
       }

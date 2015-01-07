@@ -29,7 +29,9 @@
     });
 
     socket.on('userLeft', function (data) {
-      delete socket.user;
+      if (socket.user) {
+        delete socket.user;
+      }
       delete users[data.id];
       chat.emit('userLeft', data);
     });
@@ -42,6 +44,10 @@
 
     socket.on('disconnect', function () {
       if (socket.user) {
+        chat.emit('userLeft', {
+          username: users[socket.user.id],
+          id: socket.user.id
+        });
         delete users[socket.user.id];
         delete socket.user;
       }

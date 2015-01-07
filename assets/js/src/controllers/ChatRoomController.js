@@ -101,8 +101,10 @@ define([
     },
 
     //Logging for server add/remove
-    userRemovedFromServer: function () {
-      console.log('user removed from chatroom from server');
+    userRemovedFromServer: function (data) {
+      if (data.username === chatApp.models.CurrentUser.getName()) {
+        chatApp.models.CurrentUser.removeUser();
+      }
     },
 
     //Check if chat room contains name

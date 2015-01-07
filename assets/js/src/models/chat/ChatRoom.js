@@ -101,7 +101,7 @@ define([
       var user = this.hasUser(data.username);
       if (user) {
         this.get('onlineUsers').remove(user);
-        this.trigger('userRemoved');
+        this.trigger('userRemoved', data);
       }
     },
 
