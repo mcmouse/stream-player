@@ -43,7 +43,7 @@ define([
 
     //Request our initial group of users
     loadInitialUsers: function () {
-      this.broadcast('userList');
+      this.broadcast('getUsers');
     },
 
     //Set our initial users on server response
