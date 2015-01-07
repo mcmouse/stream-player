@@ -2,6 +2,7 @@
 
 /**
  * Collection view for listing all messages
+ * @return Marionette.CollectionView ChatMessagesView
  */
 
 define([

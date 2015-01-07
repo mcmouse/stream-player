@@ -2,7 +2,7 @@
 
 /**
  * View for displaying a single message
- * @return Marionette.Application ChatApp
+ * @return Marionette.ItemView MessageView
  */
 
 define([
@@ -11,11 +11,11 @@ define([
   'backbone',
   'marionette',
   'text!templates/Message.html',
-], function ($, _, Backbone, Marionette, Message) {
+], function ($, _, Backbone, Marionette, MessageTemplate) {
   'use strict';
 
   return Marionette.ItemView.extend({
-    template: _.template(Message),
+    template: _.template(MessageTemplate),
     classes: 'message',
   });
 });

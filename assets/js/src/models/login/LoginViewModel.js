@@ -2,15 +2,14 @@
 
 /**
  * Controls state for the login area
+ * @return Backbone.Model LoginViewModel
  */
 
 define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
-  'text!templates/LoginRegion.html',
-], function ($, _, Backbone, Marionette, LoginRegionTemplate) {
+], function ($, _, Backbone) {
   'use strict';
 
   return Backbone.Model.extend({

@@ -21,7 +21,7 @@ define([
     el: '#chat-region',
     template: _.template(ChatRoomTemplate),
     regions: {
-      //userList: '#user-list',
+      userList: '#user-list',
       chatMessages: '#chat-messages',
       sendMessage: '#send-message'
     },
@@ -34,7 +34,7 @@ define([
     //Display the "send a message" view on user login
     showChatMessageView: function () {
       this.getRegion('chatMessages').show(new ChatMessagesView({
-        collection: chatApp.collections.MessageCollection
+        collection: chatApp.collections.MessageCollection,
       }));
     },
 
@@ -44,7 +44,9 @@ define([
     },
 
     showUserListView: function () {
-      //this.getRegion('userList').show(new UserListView());
+      this.getRegion('userList').show(new UserListView({
+        collection: chatApp.collections.UserCollection,
+      }));
     },
 
     showSendMessageView: function () {
