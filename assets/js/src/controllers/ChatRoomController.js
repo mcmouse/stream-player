@@ -62,7 +62,7 @@ define([
 
     setLoggedInUser: function (user) {
       this.addUserToChatRoom(user);
-      this.chatView.showSendMessageRegion();
+      this.chatView.showSendMessageView();
       this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'sendNewMessage', this.addMessageToChatRoom);
     },
 
