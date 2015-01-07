@@ -18,6 +18,7 @@ define([
   'use strict';
 
   return Marionette.LayoutView.extend({
+    el: '#chat-region',
     template: _.template(ChatRoomTemplate),
     regions: {
       //userList: '#user-list',
