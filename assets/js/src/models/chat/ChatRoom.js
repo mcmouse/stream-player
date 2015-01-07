@@ -33,10 +33,8 @@ define([
 
       //Add initial message
       this.addMessage({
-        message: {
-          sender: 'ChatRoom',
-          text: 'Welcome to the chat room'
-        }
+        sender: 'ChatRoom',
+        message: 'Welcome to the chat room'
       });
     },
 
