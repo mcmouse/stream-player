@@ -96,9 +96,7 @@ define([
     },
 
     //Logging for server add/remove
-    userAddedFromServer: function () {
-      console.log('user added to chatroom from server');
-    },
+    userAddedFromServer: function () {},
 
     //Logging for server add/remove
     userRemovedFromServer: function (data) {
