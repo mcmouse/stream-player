@@ -19,7 +19,7 @@ define([
     classes: 'user',
     templateHelpers: function () {
       return {
-        currentUserClasses: this.model.get('id') === chatApp.models.CurrentUser.get('id') ? 'current-user' : '',
+        currentUserClasses: this.model.get('name') === chatApp.models.CurrentUser.get('name') ? 'current-user' : '',
       };
     }
   });
