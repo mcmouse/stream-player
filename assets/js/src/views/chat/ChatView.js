@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'views/chat/UserListView',
   'views/chat/ChatMessagesView',
   'views/chat/SendMessageView',

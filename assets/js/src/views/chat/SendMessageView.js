@@ -8,7 +8,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'text!templates/SendMessage.html',
 ], function ($, _, Backbone, Marionette, SendMessageTemplate) {
   'use strict';

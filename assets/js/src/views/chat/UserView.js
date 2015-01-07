@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'text!templates/User.html',
 ], function ($, _, Backbone, Marionette, UserTemplate) {
   'use strict';

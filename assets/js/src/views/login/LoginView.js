@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'text!templates/LoginRegion.html',
 ], function ($, _, Backbone, Marionette, LoginRegionTemplate) {
   'use strict';

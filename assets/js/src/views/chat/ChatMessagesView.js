@@ -9,7 +9,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'views/chat/MessageView',
 ], function ($, _, Backbone, Marionette, MessageView) {
   'use strict';

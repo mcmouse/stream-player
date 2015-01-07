@@ -11,7 +11,7 @@ define([
   'underscore',
   'backbone',
   'backbone.localstorage',
-  'marionette',
+  'backbone.marionette',
   'models/user/User',
 ], function ($, _, Backbone, BackboneLocalStorage, Marionette, User) {
   'use strict';

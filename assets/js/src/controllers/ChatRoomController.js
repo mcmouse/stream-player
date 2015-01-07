@@ -8,7 +8,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'models/chat/ChatRoom',
   'models/user/CurrentUser',
   'models/login/LoginViewModel',

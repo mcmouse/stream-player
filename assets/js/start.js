@@ -34,7 +34,7 @@ require.config({
       ],
       exports: 'Backbone.Radio'
     },
-    'marionette': {
+    'backbone.marionette': {
       deps: [
         'backbone',
         'backbone.babysitter',
@@ -42,7 +42,7 @@ require.config({
       ],
       exports: 'Marionette'
     },
-    'marionette.radio.shim': {
+    'backbone.marionette.radio.shim': {
       deps: [
         'marionette'
       ],
@@ -57,9 +57,9 @@ require.config({
     jquery: 'https://code.jquery.com/jquery-2.1.3',
     socketio: 'https://cdn.socket.io/socket.io-1.2.1',
     underscore: '../libs/underscore',
-    marionette: '../libs/marionette',
-    'marionette.radio.shim': '../libs/marionette-radio-shim',
     backbone: '../libs/backbone',
+    'backbone.marionette': '../libs/marionette',
+    'backbone.marionette.radio.shim': '../libs/marionette-radio-shim',
     'backbone.localstorage': '../libs/backbone-localstorage',
     'backbone.radio': '../libs/backbone-radio',
     'backbone.babysitter': '../libs/backbone-babysitter',
@@ -69,7 +69,7 @@ require.config({
 });
 
 require([
-  'ChatApp', 'marionette', 'marionette.radio.shim',
+  'ChatApp', 'backbone.marionette', 'backbone.marionette.radio.shim',
 ], function (ChatApp) {
   'use strict';
 

@@ -10,7 +10,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'marionette',
+  'backbone.marionette',
   'controllers/ChatRoomController',
   'models/user/CurrentUser',
   'collections/MessageCollection',
