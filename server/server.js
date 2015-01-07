@@ -25,6 +25,7 @@
     });
 
     socket.on('getUsers', function () {
+      console.log('broadcasting userList with users ' + users);
       socket.emit('userList', users);
     });
 
