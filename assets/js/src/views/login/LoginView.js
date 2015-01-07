@@ -46,7 +46,7 @@ define([
       }
 
       this.on({
-        'nameInUse': this.model.showNameInUse,
+        'nameInUse': _.bind(this.model.showNameInUse, this.model),
       });
 
       this.listenTo(this.model, 'change', this.render);
