@@ -23,16 +23,26 @@ define([
     regions: {
       //userList: '#user-list',
       chatMessages: '#chat-messages',
-      //sendMessage: '#send-message'
+      sendMessage: '#send-message'
     },
 
-    showRegions: function () {
+    showInitialRegions: function () {
+      this.showChatMessageView();
+      this.showUserListView();
+    },
+
+    showChatMessageView: function () {
       this.getRegion('chatMessages').show(new ChatMessagesView({
         collection: chatApp.collections.MessageCollection
       }));
-
-      //this.getRegion('userList').show(new UserListView());
-      //this.getRegion('content').show(new SendMessageView());
     },
+
+    showUserListView: function () {
+      //this.getRegion('userList').show(new UserListView());
+    },
+
+    showSendMessageView: function () {
+      this.getRegion('content').show(new SendMessageView());
+    }
   });
 });

@@ -100,11 +100,16 @@ define([
     //Add a message to the collection
     addMessage: function (data) {
       this.get('messages').add(new Message({
-        sender: data.message.sender,
-        message: data.message.text
+        sender: data.username,
+        message: data.message
       }));
       this.trigger('messageSent');
     },
+
+    //Broadcasts a local message to the chatroom
+    addLocalMessage: function (data) {
+      this.broadcast('newMessage', data);
+    }
   });
 
 });

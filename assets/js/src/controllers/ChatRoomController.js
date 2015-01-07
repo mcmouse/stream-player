@@ -27,7 +27,7 @@ define([
         model: new ChatViewModel(),
       }).render();
 
-      this.chatView.showRegions();
+      this.chatView.showInitialRegions();
 
       //Initialize login flow
       this.loginView = new LoginView({
@@ -44,8 +44,8 @@ define([
 
       //Update chat room when user logs in or logs out
       this.listenTo(chatApp.models.CurrentUser, {
-        'userLoggedIn': this.addUserToChatRoom,
-        'userLoggedOut': this.removeUserFromChatRoom
+        'userLoggedIn': this.setLoggedInUser,
+        'userLoggedOut': this.removeLoggedInUser,
       });
 
       //Check if name is in use when view submits name change
@@ -58,6 +58,17 @@ define([
         'userAdded': this.userAddedFromServer,
         'userRemoved': this.userRemovedFromServer,
       });
+    },
+
+    setLoggedInUser: function (user) {
+      this.addUserToChatRoom(user);
+      this.chatView.showSendMessageRegion();
+      this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'sendNewMessage', this.addMessageToChatRoom);
+    },
+
+    removeLoggedInUser: function (user) {
+      this.removeUserFromChatRoom(user);
+      this.stopListening(this.chatView.getRegion('sendMessage').currentView);
     },
 
     //Add local user to chat room and update view
@@ -73,6 +84,14 @@ define([
     //Remove local user from chat room
     removeUserFromChatRoom: function (user) {
       this.chatRoom.removeLocalUser(user);
+    },
+
+    //Add a message to the chat room
+    addMessageToChatRoom: function (message) {
+      this.chatRoom.addLocalMessage({
+        username: chatApp.models.CurrentUser.getName(),
+        message: message,
+      });
     },
 
     //Logging for server add/remove
