@@ -10,7 +10,7 @@ define([
   'underscore',
   'backbone',
   'marionette',
-  'text!templates/Message',
+  'text!templates/Message.html',
 ], function ($, _, Backbone, Marionette, Message) {
   'use strict';
 
