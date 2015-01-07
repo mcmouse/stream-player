@@ -41,6 +41,7 @@
     });
 
     socket.on('disconnect', function () {
+      console.log('disconnected');
       if (socket.user) {
         delete users[socket.user.id];
         delete socket.user;
