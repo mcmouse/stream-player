@@ -78,6 +78,7 @@ define([
         this.chatRoom.addLocalUser(user);
         this.loginView.trigger('loggedIn', user);
       } else {
+        this.chatView.hideSendMessageView();
         this.loginView.trigger('nameInUse');
       }
     },
