@@ -20,7 +20,7 @@ define([
     templateHelpers: function () {
       var currentUserClasses = '';
       if (chatApp.models.CurrentUser.loadedUser()) {
-        if (this.model.get('name') === chatApp.models.CurrentUser.getName()) {
+        if (this.model.get('username') === chatApp.models.CurrentUser.getName()) {
           currentUserClasses += 'current-user';
         }
       }
