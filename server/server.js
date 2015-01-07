@@ -44,7 +44,7 @@
     });
 
     socket.on('disconnect', function () {
-      console.log('emitting userLeft because of disconnect with username ' + users[socket.user.id] + 'and id ' + socket.user.id);
+      console.log('emitting userLeft because of disconnect: ' + socket.user);
       if (socket.user) {
         chat.emit('userLeft', {
           username: users[socket.user.id],
