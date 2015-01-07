@@ -44,7 +44,7 @@ require.config({
     },
     'backbone.marionette.radio.shim': {
       deps: [
-        'marionette'
+        'backbone.marionette'
       ],
     }
   },
