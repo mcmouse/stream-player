@@ -38,11 +38,6 @@ define([
       }));
     },
 
-    //Hide the "send a message" view on user logout
-    hideChatMessageView: function () {
-      this.getRegion('chatMessages').empty();
-    },
-
     showUserListView: function () {
       this.getRegion('userList').show(new UserListView({
         collection: chatApp.collections.UserCollection,
@@ -51,6 +46,11 @@ define([
 
     showSendMessageView: function () {
       this.getRegion('sendMessage').show(new SendMessageView());
-    }
+    },
+
+    //Hide the "send a message" view on user logout
+    hideSendMessageView: function () {
+      this.getRegion('chatMessages').empty();
+    },
   });
 });
