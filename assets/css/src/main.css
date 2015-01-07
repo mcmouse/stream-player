@@ -7,3 +7,8 @@
 .visible {
   display: block;
 }
+
+/* line 9, ../../sass/main.scss */
+.current-user {
+  font-weight: bold;
+}

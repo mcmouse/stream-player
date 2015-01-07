@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * View for displaying a single user
@@ -17,5 +17,10 @@ define([
   return Marionette.ItemView.extend({
     template: _.template(UserTemplate),
     classes: 'user',
+    templateHelpers: function () {
+      return {
+        currentUserClasses: this.model.get('id') === chatApp.models.CurrentUser.get('id') ? 'current-user' : '',
+      };
+    }
   });
 });
