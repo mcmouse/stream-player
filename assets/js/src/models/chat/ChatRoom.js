@@ -51,7 +51,7 @@ define([
       for (var user in users) {
         this.addUser({
           id: user,
-          name: users[user]
+          username: users[user]
         });
       }
     },
