@@ -18,8 +18,15 @@ define([
     template: _.template(UserTemplate),
     classes: 'user',
     templateHelpers: function () {
+      var currentUserClasses = '';
+      var currentUser = chatApp.models.CurrentUser.get('user');
+      if (currentUser) {
+        if (this.model.get('name') === currentUser.get('name')) {
+          currentUserClasses += 'current-user';
+        }
+      }
       return {
-        currentUserClasses: this.model.get('name') === chatApp.models.CurrentUser.get('name') ? 'current-user' : '',
+        currentUserClasses: currentUserClasses,
       };
     }
   });
