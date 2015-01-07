@@ -16,16 +16,16 @@
 
     socket.on('userJoined', function (data) {
       console.log('broadcasting new user with name ' + data.username);
-      socket.emit('userJoined', data);
+      chat.emit('userJoined', data);
     });
 
     socket.on('userLeft', function (data) {
-      socket.emit('userLeft', data);
+      chat.emit('userLeft', data);
     });
 
     socket.on('newMessage', function (data) {
       console.log('broadcasting message from user ' + data.username + ' with message ' + data.message);
-      socket.emit('newMessage', data);
+      chat.emit('newMessage', data);
     });
   });
 
