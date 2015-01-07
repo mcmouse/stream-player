@@ -30,12 +30,30 @@ define([
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));
+      this._listener.on('userList', this.setInitialUsers.bind(this));
+
+      this.loadInitialUsers();
 
       //Add initial message
       this.addMessage({
         username: 'ChatRoom',
         message: 'Welcome to the chat room'
       });
+    },
+
+    //Request our initial group of users
+    loadInitialUsers: function () {
+      this.broadcast('userList');
+    },
+
+    //Set our initial users on server response
+    setInitialUsers: function (users) {
+      for (var user in users) {
+        this.addUser({
+          id: user,
+          name: users[user]
+        });
+      }
     },
 
     //Alias to emit socket events
