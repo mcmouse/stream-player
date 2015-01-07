@@ -50,7 +50,7 @@ define([
 
     //Hide the "send a message" view on user logout
     hideSendMessageView: function () {
-      this.getRegion('chatMessages').empty();
+      this.getRegion('sendMessage').empty();
     },
   });
 });
