@@ -30,6 +30,8 @@ define([
       if (messageText && messageText !== '') {
         this.trigger('messageSent', messageText);
       }
+
+      this.ui.messageText.val('');
     }
   });
 });
