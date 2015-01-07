@@ -27,6 +27,8 @@ define([
         model: new ChatViewModel(),
       }).render();
 
+      this.chatView.showRegions();
+
       //Initialize login flow
       this.loginView = new LoginView({
         model: new LoginViewModel(),

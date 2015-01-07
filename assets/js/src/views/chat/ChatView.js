@@ -25,12 +25,13 @@ define([
       //sendMessage: '#send-message'
     },
 
-    initialize: function () {
+    showRegions: function () {
       this.getRegion('chatMessages').show(new ChatMessagesView({
         collection: chatApp.collections.MessageCollection
       }));
+
       //this.getRegion('userList').show(new UserListView());
       //this.getRegion('content').show(new SendMessageView());
-    }
+    },
   });
 });
