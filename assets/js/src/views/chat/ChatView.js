@@ -13,7 +13,7 @@ define([
   'views/chat/UserListView',
   'views/chat/ChatMessagesView',
   'views/chat/SendMessageView',
-  'text!templates/ChatRoom',
+  'text!templates/ChatRoom.html',
 ], function ($, _, Backbone, Marionette, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
   'use strict';
 
