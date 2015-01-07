@@ -25,7 +25,7 @@
     });
 
     socket.on('getUsers', function () {
-      console.log('broadcasting userList with number of users ' + _.count(users));
+      console.log('broadcasting userList with number of users ' + _.size(users));
       socket.emit('userList', users);
     });
 
