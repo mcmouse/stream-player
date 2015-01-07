@@ -45,7 +45,7 @@ define([
     showNameInUse: function () {
       this.set({
         'loggedOut': false,
-        'enteringUserName': false,
+        'enteringUserName': true,
         'nameInUse': true,
         'loggedIn': false
       });
