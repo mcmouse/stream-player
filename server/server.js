@@ -20,7 +20,7 @@
     socket.on('userJoined', function (data) {
       console.log('broadcasting new user with name ' + data.username);
       users[data.id] = data.username;
-
+      socket.user = data;
       chat.emit('userJoined', data);
     });
 
@@ -29,14 +29,22 @@
     });
 
     socket.on('userLeft', function (data) {
-
+      delete socket.user;
       delete users[data.id];
       chat.emit('userLeft', data);
     });
 
+
     socket.on('newMessage', function (data) {
       console.log('broadcasting message from user ' + data.username + ' with message ' + data.message);
       chat.emit('newMessage', data);
+    });
+
+    socket.on('disconnect', function () {
+      if (socket.user) {
+        delete users[socket.user.id];
+        delete socket.user;
+      }
     });
   });
 
