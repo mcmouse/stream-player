@@ -33,7 +33,7 @@ define([
 
       //Add initial message
       this.addMessage({
-        sender: 'ChatRoom',
+        username: 'ChatRoom',
         message: 'Welcome to the chat room'
       });
     },
@@ -97,10 +97,7 @@ define([
 
     //Add a message to the collection
     addMessage: function (data) {
-      this.get('messages').add(new Message({
-        sender: data.username,
-        message: data.message
-      }));
+      this.get('messages').add(new Message(data));
       this.trigger('messageSent');
     },
 
