@@ -31,10 +31,16 @@ define([
       this.showUserListView();
     },
 
+    //Display the "send a message" view on user login
     showChatMessageView: function () {
       this.getRegion('chatMessages').show(new ChatMessagesView({
         collection: chatApp.collections.MessageCollection
       }));
+    },
+
+    //Hide the "send a message" view on user logout
+    hideChatMessageView: function () {
+      this.getRegion('chatMessages').empty();
     },
 
     showUserListView: function () {

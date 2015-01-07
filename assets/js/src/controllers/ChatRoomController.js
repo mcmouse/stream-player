@@ -69,6 +69,7 @@ define([
     removeLoggedInUser: function (user) {
       this.removeUserFromChatRoom(user);
       this.stopListening(this.chatView.getRegion('sendMessage').currentView);
+      this.chatView.hideSendMessageView();
     },
 
     //Add local user to chat room and update view
