@@ -25,7 +25,7 @@
     });
 
     socket.on('getUsers', function () {
-      console.log('broadcasting userList with users ' + users);
+      console.log('broadcasting userList with number of users ' + _.count(users));
       socket.emit('userList', users);
     });
 
@@ -44,6 +44,7 @@
     });
 
     socket.on('disconnect', function () {
+      console.log('emitting userLeft because of disconnect with username ' + users[socket.user.id] + 'and id ' + socket.user.id);
       if (socket.user) {
         chat.emit('userLeft', {
           username: users[socket.user.id],
