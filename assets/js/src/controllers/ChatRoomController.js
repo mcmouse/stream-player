@@ -110,6 +110,7 @@ define([
       if (!this.chatRoom.hasUser(userName)) {
         chatApp.models.CurrentUser.saveUser(userName);
       } else {
+        this.chatView.hideSendMessageView();
         this.loginView.trigger('nameInUse');
       }
     },
