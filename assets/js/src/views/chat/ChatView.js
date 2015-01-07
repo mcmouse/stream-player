@@ -42,7 +42,7 @@ define([
     },
 
     showSendMessageView: function () {
-      this.getRegion('content').show(new SendMessageView());
+      this.getRegion('sendMessage').show(new SendMessageView());
     }
   });
 });
