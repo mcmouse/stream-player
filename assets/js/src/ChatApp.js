@@ -28,6 +28,7 @@ define([
       this.setupModels();
       this.setupCollections();
       this.setupOptions();
+      this.setupEvents();
 
       this.on('start', this.createChatRoom);
     },
