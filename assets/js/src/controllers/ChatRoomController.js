@@ -2,7 +2,7 @@
 
 /**
  * Manages the ChatRoom by delegating events
- * @return Marionette.Object ChatRoomManager
+ * @return Marionette.Object ChatRoomController
  */
 define([
   'jquery',
@@ -43,21 +43,27 @@ define([
       //Set up event management
 
       //Update chat room when user logs in or logs out
-      this.listenTo(chatApp.models.CurrentUser, {
+      chatApp.channels.localUserChannel.on({
         'userLoggedIn': this.setLoggedInUser,
         'userLoggedOut': this.removeLoggedInUser,
-      });
+      }, this);
 
-      //Check if name is in use when view submits name change
-      this.listenTo(this.loginView, {
-        'userNameSet': this.isNameInUse,
-      });
+      //Set name in use
+      chatApp.channels.localUserChannel.comply({
+        'nameInUse': this.setNameInUse
+      }, this);
 
       //Log when user is added or removed froms erver
-      this.listenTo(this.chatRoom, {
+      chatApp.channels.chatRoomChannel.on({
+        'userNameSet': this.isNameInUse,
         'userAdded': this.userAddedFromServer,
         'userRemoved': this.userRemovedFromServer,
-      });
+        'messageSent': this.addMessageToChatRoom,
+      }, this);
+
+      chatApp.channels.chatRoomChannel.reply({
+        'isUserNameInUse': this.isNameInUse,
+      }, this);
     },
 
     setLoggedInUser: function (user) {
@@ -74,13 +80,7 @@ define([
 
     //Add local user to chat room and update view
     addUserToChatRoom: function (user) {
-      if (!this.chatRoom.hasUser(user.get('name'))) {
-        this.chatRoom.addLocalUser(user);
-        this.loginView.trigger('loggedIn', user);
-      } else {
-        this.chatView.hideSendMessageView();
-        this.loginView.trigger('nameInUse');
-      }
+      this.chatRoom.addLocalUser(user);
     },
 
     //Remove local user from chat room
@@ -108,12 +108,13 @@ define([
 
     //Check if chat room contains name
     isNameInUse: function (userName) {
-      if (!this.chatRoom.hasUser(userName)) {
-        chatApp.models.CurrentUser.saveUser(userName);
-      } else {
-        this.chatView.hideSendMessageView();
-        this.loginView.trigger('nameInUse');
-      }
+      return this.chatRoom.hasUser(userName);
+    },
+
+    //Set name is in use
+    setNameInUse: function () {
+      this.chatView.hideSendMessageView();
+      this.loginView.showNameInUse();
     },
 
   });

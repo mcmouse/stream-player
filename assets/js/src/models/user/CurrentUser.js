@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * Controls setting, saving, and loading the user, as well as triggering appropriate events
@@ -35,9 +35,9 @@ define([
           //Needed for deep model copy to set up user model
           if (this.get('loggedInUser')) {
             this.set('user', new User(this.get('user')));
-            this.trigger('userLoggedIn', this.get('user'));
+            chatApp.channels.localUserChannel.trigger('userLoggedIn', this.get('user'));
           } else {
-            this.trigger('noSavedUser');
+            chatApp.channels.localUserChannel.trigger('noSavedUser');
           }
         }.bind(this),
 
@@ -45,7 +45,7 @@ define([
         //error message when a user does not exist, but we want to generate a new user if 
         //there is any error.
         error: function () {
-          this.trigger('noSavedUser');
+          chatApp.channels.localUserChannel.trigger('noSavedUser');
         }.bind(this),
       });
     },
@@ -70,13 +70,13 @@ define([
       });
 
       this.save();
-      this.trigger('userLoggedIn', this.get('user'));
+      chatApp.channels.localUserChannel.trigger('userLoggedIn', this.get('user'));
     },
 
     //Delete the current User model, save the LoginController to localstorage.
     //Trigger necessary events.
     removeUser: function () {
-      this.trigger('userLoggedOut', this.get('user'));
+      chatApp.channels.localUserChannel.trigger('userLoggedOut', this.get('user'));
 
       this.set({
         user: null,

@@ -8,7 +8,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'backbone.marionette',
+  'bacmarionette',
   'socketio',
   'models/user/User',
   'models/chat/Message',
@@ -27,10 +27,15 @@ define([
 
       //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
-      this._listener.on('userJoined', this.addUser.bind(this));
-      this._listener.on('userLeft', this.removeUser.bind(this));
-      this._listener.on('newMessage', this.addMessage.bind(this));
-      this._listener.on('userList', this.setInitialUsers.bind(this));
+      this._listener.on({
+        'userJoined': this.addUser,
+        'userLeft': this.removeUser,
+        'newMessage': this.addMessage,
+        'userList': this.setInitialUsers,
+      }, this);
+      // this._listener.on('userLeft', this.removeUser.bind(this));
+      // this._listener.on('newMessage', this.addMessage.bind(this));
+      // this._listener.on('userList', this.setInitialUsers.bind(this));
 
       this.loadInitialUsers();
 
@@ -80,11 +85,11 @@ define([
           id: data.id,
           name: data.username
         }));
-        this.trigger('userAdded');
+        chatApp.channels.chatRoomChannel.trigger('userAdded');
       }
       //Otherwise trigger a "user exists" event
       else {
-        this.trigger('userExists');
+        chatApp.channels.chatRoomChannel.trigger('userExists');
       }
     },
 
@@ -101,7 +106,7 @@ define([
       var user = this.hasUser(data.username);
       if (user) {
         this.get('onlineUsers').remove(user);
-        this.trigger('userRemoved', data);
+        chatApp.channels.chatRoomChannel.trigger('userRemoved', data);
       }
     },
 
@@ -116,7 +121,7 @@ define([
     //Add a message to the collection
     addMessage: function (data) {
       this.get('messages').add(new Message(data));
-      this.trigger('messageSent');
+      chatApp.channels.chatRoomChannel.trigger('messageRecieved');
     },
 
     //Broadcasts a local message to the chatroom

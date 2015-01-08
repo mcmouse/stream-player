@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * Controls all markup for the login area, and fires appropriate events to handle logged in state.
@@ -38,16 +38,12 @@ define([
       this.currentUser = options.currentUser;
 
       if (this.currentUser) {
-        this.listenTo(this.currentUser, {
-          'noSavedUser': _.bind(this.model.showEnterUserName, this.model),
-          'userLoggedIn': _.bind(this.model.showLoggedIn, this.model),
-          'userLoggedOut': _.bind(this.model.showLoggedOut, this.model),
-        });
+        chatApp.channels.localUserChannel.on({
+          'noSavedUser': this.model.showEnterUserName,
+          'userLoggedIn': this.model.showLoggedIn,
+          'userLoggedOut': this.model.showLoggedOut,
+        }, this.model);
       }
-
-      this.on({
-        'nameInUse': _.bind(this.model.showNameInUse, this.model),
-      });
 
       this.listenTo(this.model, 'change', this.render);
     },
@@ -73,7 +69,12 @@ define([
     //Get user name and pass up to any listeners
     setName: function () {
       var user = this.ui.enterUserNameInput.val();
-      this.trigger('userNameSet', user);
+      var userNameExists = chatApp.channels.chatRoomChannel.request('isUserNameInUse');
+      if (!userNameExists) {
+        this.currentUser.saveUser(user);
+      } else {
+        chatApp.channels.localUserChannel.command('nameInUse');
+      }
     },
 
     //Log out, hiding logged in state, clearing user from model, and showing log in button

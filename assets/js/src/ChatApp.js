@@ -32,6 +32,14 @@ define([
       this.on('start', this.createChatRoom);
     },
 
+    setupEvents: function () {
+      this.channels = {
+        localUserChannel: Backbone.Radio.channel('localUser'),
+        chatRoomChannel: Backbone.Radio.channel('chatRoom'),
+        webCamRoomChannel: Backbone.Radio.channel('webCamRoom'),
+      };
+    },
+
     //Set up all app models
     setupModels: function () {
       this.models = {

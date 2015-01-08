@@ -1,4 +1,4 @@
-/* globals define */
+/* globals define, chatApp */
 
 /**
  * View for "send message" area. Passes out events with message.
@@ -28,7 +28,7 @@ define([
       var messageText = this.ui.messageText.val();
 
       if (messageText && messageText !== '') {
-        this.trigger('messageSent', messageText);
+        chatApp.channels.chatRoom.trigger('messageSent', messageText);
       }
 
       this.ui.messageText.val('');
