@@ -15,8 +15,9 @@ define([
   'models/user/CurrentUser',
   'collections/MessageCollection',
   'collections/UserCollection',
+  'collections/WebcamCollection',
 
-], function ($, _, Backbone, Marionette, ChatRoomController, CurrentUser, MessageCollection, UserCollection) {
+], function ($, _, Backbone, Marionette, ChatRoomController, CurrentUser, MessageCollection, UserCollection, WebcamCollection) {
   'use strict';
 
   return Marionette.Application.extend({
@@ -53,6 +54,7 @@ define([
       this.collections = {
         MessageCollection: new MessageCollection(),
         UserCollection: new UserCollection(),
+        WebcamCollection: new WebcamCollection(),
       };
     },
 

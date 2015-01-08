@@ -28,6 +28,7 @@ define([
       //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
 
+      //Listen to broadcasts from socket
       this._listener.on('userJoined', this.addUser.bind(this));
       this._listener.on('userLeft', this.removeUser.bind(this));
       this._listener.on('newMessage', this.addMessage.bind(this));

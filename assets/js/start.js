@@ -57,6 +57,8 @@ require.config({
     jquery: 'https://code.jquery.com/jquery-2.1.3',
     socketio: 'https://cdn.socket.io/socket.io-1.2.1',
     underscore: '../libs/underscore',
+    text: '../libs/text',
+    jwplayer: 'http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js',
     backbone: '../libs/backbone',
     'backbone.marionette': '../libs/marionette',
     'backbone.marionette.radio.shim': '../libs/marionette-radio-shim',
@@ -64,12 +66,11 @@ require.config({
     'backbone.radio': '../libs/backbone-radio',
     'backbone.babysitter': '../libs/backbone-babysitter',
     templates: '../../templates',
-    text: '../libs/text',
   }
 });
 
 require([
-  'ChatApp', 'backbone.marionette', 'backbone.marionette.radio.shim',
+  'ChatApp', 'backbone.marionette', 'backbone.marionette.radio.shim', 'jwplayer',
 ], function (ChatApp) {
   'use strict';
 
