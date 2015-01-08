@@ -8,7 +8,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'bacmarionette',
+  'backbone.marionette',
   'socketio',
   'models/user/User',
   'models/chat/Message',
