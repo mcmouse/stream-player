@@ -28,7 +28,7 @@ define([
       var messageText = this.ui.messageText.val();
 
       if (messageText && messageText !== '') {
-        chatApp.channels.chatRoom.trigger('messageSent', messageText);
+        chatApp.channels.chatRoomChannel.trigger('messageSent', messageText);
       }
 
       this.ui.messageText.val('');

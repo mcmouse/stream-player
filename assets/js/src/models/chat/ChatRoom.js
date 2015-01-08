@@ -27,15 +27,11 @@ define([
 
       //Set up socketIO listeners
       this._listener = io(chatApp.options.serverAddress + '/chat');
-      this._listener.on({
-        'userJoined': this.addUser,
-        'userLeft': this.removeUser,
-        'newMessage': this.addMessage,
-        'userList': this.setInitialUsers,
-      }, this);
-      // this._listener.on('userLeft', this.removeUser.bind(this));
-      // this._listener.on('newMessage', this.addMessage.bind(this));
-      // this._listener.on('userList', this.setInitialUsers.bind(this));
+
+      this._listener.on('userJoined', this.addUser.bind(this));
+      this._listener.on('userLeft', this.removeUser.bind(this));
+      this._listener.on('newMessage', this.addMessage.bind(this));
+      this._listener.on('userList', this.setInitialUsers.bind(this));
 
       this.loadInitialUsers();
 
