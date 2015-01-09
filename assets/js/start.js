@@ -1,5 +1,7 @@
 /* globals require */
 
+//var test = require('main.js');
+
 require.config({
   baseUrl: '/stream-player/assets/js/src',
   shim: {
@@ -56,9 +58,9 @@ require.config({
   paths: {
     jquery: 'https://code.jquery.com/jquery-2.1.3',
     socketio: 'https://cdn.socket.io/socket.io-1.2.1',
+    jwplayer: 'http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js',
     underscore: '../libs/underscore',
     text: '../libs/text',
-    jwplayer: 'http://jwpsrv.com/library/c_1jaooFEeSxbw6sC0aurw.js',
     backbone: '../libs/backbone',
     'backbone.marionette': '../libs/marionette',
     'backbone.marionette.radio.shim': '../libs/marionette-radio-shim',

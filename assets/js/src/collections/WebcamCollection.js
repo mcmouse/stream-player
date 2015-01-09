@@ -8,6 +8,7 @@ define([
   'backbone',
   'models/webcam/DisplayWebcam',
 ], function (Backbone, DisplayWebcam) {
+
   'use strict';
 
   return Backbone.Collection.extend({

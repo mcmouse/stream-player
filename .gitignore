@@ -1,2 +1,4 @@
 assets/js/src/main.js
 assets/.sass-cache/
+node_modules/
+server/node_modules/
