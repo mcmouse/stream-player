@@ -224,8 +224,6 @@ module.exports = Marionette.Object.extend({
       model: new LoginViewModel(),
       currentUser: chatApp.models.CurrentUser }).render();
 
-    //Cosmetic comment
-
     //Set up event listeners
     this.setupEvents();
   },
