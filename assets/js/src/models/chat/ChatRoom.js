@@ -55,7 +55,7 @@ module.exports = Backbone.Model.extend({
     _.each(users, function (user) {
       this.addUser({
         id: user.id,
-        username: user.name
+        username: user.username
       });
     }, this);
   },
