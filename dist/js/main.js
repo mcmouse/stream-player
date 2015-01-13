@@ -93,7 +93,7 @@ module.exports = Marionette.Application.extend({
     this.channels = {
       localUserChannel: Backbone.Radio.channel("localUser"),
       chatRoomChannel: Backbone.Radio.channel("chatRoom"),
-      webCamRoomChannel: Backbone.Radio.channel("webCamRoom") };
+      webcamRoomChannel: Backbone.Radio.channel("webCamRoom") };
   },
 
   //Set up all app models
@@ -386,12 +386,7 @@ module.exports = Backbone.Model.extend({
 
   //Set our initial users on server response
   setInitialUsers: function (users) {
-    _.each(users, function (user) {
-      this.addUser({
-        id: user.id,
-        username: user.username
-      });
-    }, this);
+    _.each(users, this.addUser, this);
   },
 
   //Test user collection for a particular userName.
@@ -406,9 +401,8 @@ module.exports = Backbone.Model.extend({
 
   //Add a user to the collection if the are not already added.
   addUser: function (data) {
-    var user = this.hasUser(data.username);
     //If the user does not exist in the chatroom, add them
-    if (!user) {
+    if (!this.hasUser(data.username)) {
       this.get("onlineUsers").add(new User({
         id: data.id,
         name: data.username
@@ -640,6 +634,7 @@ module.exports = Backbone.Model.extend({
 },{"Utilities":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/DisplayWebcam.js":[function(require,module,exports){
 "use strict";
 
+/* globals chatApp */
 /* jshint node:true */
 
 /**
@@ -658,11 +653,8 @@ module.exports = (function () {
   });
 })();
 
-},{"Utilities":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/InputWebcam.js":[function(require,module,exports){
-"use strict";
-
-},{}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/WebcamRoom.js":[function(require,module,exports){
-/* globals chatApp */
+},{"Utilities":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/WebcamRoom.js":[function(require,module,exports){
+/* globals chatApp, _ */
 /* jshint node:true */
 
 "use strict";
@@ -673,7 +665,7 @@ module.exports = (function () {
  * @return Backbone.Model WebcamRoom
  */
 
-var Backbone = require("backbone-shim").Backbone, io = require("socket.io-client"), DisplayWebcam = require("models/webcam/DisplayWebcam"), InputWebcam = require("models/webcam/InputWebcam");
+var Backbone = require("backbone-shim").Backbone, io = require("socket.io-client"), DisplayWebcam = require("models/webcam/DisplayWebcam");
 
 module.exports = Backbone.Model.extend({
   initialize: function () {
@@ -695,24 +687,55 @@ module.exports = Backbone.Model.extend({
     this._listener.emit(event, data);
   },
 
-  //Request our initial group of users
+  //Request our initial group of webcams
   loadInitialWebcams: function () {
     this.broadcast("getWebcams");
   },
 
-  setInitialWebcams: function (webcams) {},
+  //Load our initial webcams from the server
+  setInitialWebcams: function (webcams) {
+    _.each(webcams, function (webcam) {
+      this.addWebcam(webcam);
+    }, this);
+  },
 
-  addWebcam: function () {},
+  //Check if we currently have a webcam with the given feedId
+  hasWebcam: function (feedId) {
+    var onlineWebcams = this.get("onlineWebcams");
+    var user = onlineWebcams.find(function (item) {
+      return item.get("feedId") == feedId;
+    });
+    return user;
+  },
 
-  loadInitialUsers: function () {},
+  //Add a webcam to the collection
+  addWebcam: function (feedId) {
+    this.get("onlineWebcams").add(new DisplayWebcam({
+      feedId: feedId
+    }));
+    chatApp.channels.webcamRoomChannel.trigger("webcamAdded");
+  },
 
-  addLocalWebcam: function () {},
+  //Add a webcam locally by broadcasting to the server
+  addLocalWebcam: function (feedId) {
+    this.broadcast("webcamJoined", feedId);
+  },
 
-  removeWebcam: function () {},
+  //Remove a webcam from the collection
+  removeWebcam: function (feedId) {
+    var webcam = this.hasWebcam(feedId);
+    if (webcam) {
+      this.get("onlineWebcams").remove(webcam);
+      chatApp.channels.webcamRoomChannel.trigger("webcamRemoved");
+    }
+  },
 
-  removeLocalWebcam: function () {} });
+  //Remove a webcam locally
+  removeLocalWebcam: function (feedId) {
+    this.broadcast("webcamLeft", feedId);
+  } });
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/webcam/DisplayWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/DisplayWebcam.js","models/webcam/InputWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/InputWebcam.js","socket.io-client":"/Users/tomlagie/Sites/projects/stream-player/node_modules/socket.io-client/index.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/webcam/DisplayWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/DisplayWebcam.js","socket.io-client":"/Users/tomlagie/Sites/projects/stream-player/node_modules/socket.io-client/index.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
 /* jshint node:true */
 
 "use strict";

@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 /**

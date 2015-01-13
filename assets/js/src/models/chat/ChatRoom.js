@@ -52,12 +52,7 @@ module.exports = Backbone.Model.extend({
 
   //Set our initial users on server response
   setInitialUsers: function (users) {
-    _.each(users, function (user) {
-      this.addUser({
-        id: user.id,
-        username: user.username
-      });
-    }, this);
+    _.each(users, this.addUser, this);
   },
 
   //Test user collection for a particular userName.
@@ -72,9 +67,8 @@ module.exports = Backbone.Model.extend({
 
   //Add a user to the collection if the are not already added.
   addUser: function (data) {
-    var user = this.hasUser(data.username);
     //If the user does not exist in the chatroom, add them
-    if (!user) {
+    if (!this.hasUser(data.username)) {
       this.get('onlineUsers').add(new User({
         id: data.id,
         name: data.username

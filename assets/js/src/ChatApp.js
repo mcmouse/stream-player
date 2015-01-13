@@ -38,7 +38,7 @@ module.exports = Marionette.Application.extend({
     this.channels = {
       localUserChannel: Backbone.Radio.channel('localUser'),
       chatRoomChannel: Backbone.Radio.channel('chatRoom'),
-      webCamRoomChannel: Backbone.Radio.channel('webCamRoom'),
+      webcamRoomChannel: Backbone.Radio.channel('webCamRoom'),
     };
   },
 

@@ -1,4 +1,4 @@
-/* globals chatApp */
+/* globals chatApp, _ */
 /* jshint node:true */
 
 'use strict';
@@ -11,8 +11,7 @@
 
 var Backbone = require('backbone-shim').Backbone,
   io = require('socket.io-client'),
-  DisplayWebcam = require('models/webcam/DisplayWebcam'),
-  InputWebcam = require('models/webcam/InputWebcam');
+  DisplayWebcam = require('models/webcam/DisplayWebcam');
 
 module.exports = Backbone.Model.extend({
   initialize: function () {
@@ -34,31 +33,52 @@ module.exports = Backbone.Model.extend({
     this._listener.emit(event, data);
   },
 
-  //Request our initial group of users
+  //Request our initial group of webcams
   loadInitialWebcams: function () {
     this.broadcast('getWebcams');
   },
 
-  setInitialWebcams: function (webcams) {},
-
-  addWebcam: function () {
-
+  //Load our initial webcams from the server
+  setInitialWebcams: function (webcams) {
+    _.each(webcams, function (webcam) {
+      this.addWebcam(webcam);
+    }, this);
   },
 
-  loadInitialUsers: function () {
-
+  //Check if we currently have a webcam with the given feedId
+  hasWebcam: function (feedId) {
+    var onlineWebcams = this.get('onlineWebcams');
+    var user = onlineWebcams.find(function (item) {
+      return item.get('feedId') == feedId;
+    });
+    return user;
   },
 
-  addLocalWebcam: function () {
-
+  //Add a webcam to the collection
+  addWebcam: function (feedId) {
+    this.get('onlineWebcams').add(new DisplayWebcam({
+      feedId: feedId
+    }));
+    chatApp.channels.webcamRoomChannel.trigger('webcamAdded');
   },
 
-  removeWebcam: function () {
-
+  //Add a webcam locally by broadcasting to the server
+  addLocalWebcam: function (feedId) {
+    this.broadcast('webcamJoined', feedId);
   },
 
-  removeLocalWebcam: function () {
+  //Remove a webcam from the collection
+  removeWebcam: function (feedId) {
+    var webcam = this.hasWebcam(feedId);
+    if (webcam) {
+      this.get('onlineWebcams').remove(webcam);
+      chatApp.channels.webcamRoomChannel.trigger('webcamRemoved');
+    }
+  },
 
+  //Remove a webcam locally
+  removeLocalWebcam: function (feedId) {
+    this.broadcast('webcamLeft', feedId);
   },
 
 });
