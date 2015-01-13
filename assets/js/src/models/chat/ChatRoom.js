@@ -89,14 +89,10 @@ module.exports = Backbone.Model.extend({
 
   //Add a local user by broadcasting the "userJoined" event
   addLocalUser: function (user) {
-    if (!this.hasUser(user.get('name'))) {
-      this.broadcast('userJoined', {
-        id: user.get('id'),
-        username: user.get('name')
-      });
-    } else {
-      chatApp.channels.localUserChannel.command('nameInUse');
-    }
+    this.broadcast('userJoined', {
+      id: user.get('id'),
+      username: user.get('name')
+    });
   },
 
   //Remove a user from the collection if they exist in the collection.

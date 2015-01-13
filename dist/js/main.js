@@ -254,9 +254,13 @@ module.exports = Marionette.Object.extend({
   },
 
   setLoggedInUser: function (user) {
-    this.addUserToChatRoom(user);
-    this.chatView.showSendMessageView();
-    this.listenTo(this.chatView.getRegion("sendMessage").currentView, "messageSent", this.addMessageToChatRoom);
+    if (!this.isNameInUse(user.get("name"))) {
+      this.addUserToChatRoom(user);
+      this.chatView.showSendMessageView();
+      this.listenTo(this.chatView.getRegion("sendMessage").currentView, "messageSent", this.addMessageToChatRoom);
+    } else {
+      this.setNameInUse();
+    }
   },
 
   removeLoggedInUser: function (user) {
@@ -419,14 +423,10 @@ module.exports = Backbone.Model.extend({
 
   //Add a local user by broadcasting the "userJoined" event
   addLocalUser: function (user) {
-    if (!this.hasUser(user.get("name"))) {
-      this.broadcast("userJoined", {
-        id: user.get("id"),
-        username: user.get("name")
-      });
-    } else {
-      chatApp.channels.localUserChannel.command("nameInUse");
-    }
+    this.broadcast("userJoined", {
+      id: user.get("id"),
+      username: user.get("name")
+    });
   },
 
   //Remove a user from the collection if they exist in the collection.

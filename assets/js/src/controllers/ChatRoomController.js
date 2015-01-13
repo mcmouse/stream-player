@@ -60,9 +60,13 @@ module.exports = Marionette.Object.extend({
   },
 
   setLoggedInUser: function (user) {
-    this.addUserToChatRoom(user);
-    this.chatView.showSendMessageView();
-    this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'messageSent', this.addMessageToChatRoom);
+    if (!this.isNameInUse(user.get('name'))) {
+      this.addUserToChatRoom(user);
+      this.chatView.showSendMessageView();
+      this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'messageSent', this.addMessageToChatRoom);
+    } else {
+      this.setNameInUse();
+    }
   },
 
   removeLoggedInUser: function (user) {
