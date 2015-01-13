@@ -32,6 +32,8 @@ module.exports = Marionette.Object.extend({
       currentUser: chatApp.models.CurrentUser,
     }).render();
 
+    //Cosmetic comment
+
     //Set up event listeners
     this.setupEvents();
   },
