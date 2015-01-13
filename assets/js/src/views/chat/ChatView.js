@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 'use strict';
@@ -7,8 +8,7 @@
  * @return Marionette.Application ChatApp
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   UserListView = require('views/chat/UserListView'),
   ChatMessagesView = require('views/chat/ChatMessagesView'),
   SendMessageView = require('views/chat/SendMessageView'),

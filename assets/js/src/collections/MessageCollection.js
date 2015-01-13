@@ -6,7 +6,6 @@
  */
 
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   Message = require('models/chat/Message');
 
 module.exports = (function () {

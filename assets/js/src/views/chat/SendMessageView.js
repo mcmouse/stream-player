@@ -1,14 +1,14 @@
+/* globals chatApp */
 /* jshint node:true */
 
 'use strict';
 
 /**
  * View for "send message" area. Passes out events with message.
+ * @return Marionette.ItemView SendMessageView
  */
 
-
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   SendMessageTemplate = require('SendMessage.html');
 
 module.exports = Marionette.ItemView.extend({

@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 'use strict';
@@ -7,9 +8,7 @@
  * @return Marionette.Object ChatRoomController
  */
 
-
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   ChatRoom = require('models/chat/ChatRoom'),
   LoginViewModel = require('models/login/LoginViewModel'),
   ChatViewModel = require('models/chat/ChatViewModel'),

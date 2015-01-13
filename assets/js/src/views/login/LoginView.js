@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 'use strict';
@@ -7,9 +8,7 @@
  * @return Marionette.ItemView LoginView
  */
 
-
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   LoginRegionTemplate = require('LoginRegion.html');
 
 module.exports = Marionette.ItemView.extend({

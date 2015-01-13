@@ -6,9 +6,6 @@
  * @return Object Utilities
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette;
-
 module.exports = {
   //GUID generation from backbone-localstorage.js, lines 11 and 15
   getGUID: function () {

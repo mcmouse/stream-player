@@ -7,9 +7,7 @@
  * @return Backbone.Model LoginViewModel
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette;
-
+var Backbone = require('backbone-shim').Backbone;
 
 module.exports = Backbone.Model.extend({
   defaults: {

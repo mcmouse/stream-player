@@ -6,7 +6,6 @@
  */
 
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   User = require('models/user/User');
 
 module.exports = (function () {

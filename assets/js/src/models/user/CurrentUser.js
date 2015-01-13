@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 /**
@@ -8,7 +9,6 @@
 
 
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   User = require('models/user/User');
 
 module.exports = (function () {
@@ -60,14 +60,21 @@ module.exports = (function () {
     //Trigger necessary events.
     saveUser: function (userName) {
 
+      var user = new User({
+        name: userName
+      });
+
       this.set({
-        user: new User({
-          name: userName,
-        }),
+        user: user,
         loggedInUser: true
       });
 
       this.save();
+
+      //Needed because Backbone.Localstorage degrades nested models on save
+      this.set({
+        user: user
+      });
       chatApp.channels.localUserChannel.trigger('userLoggedIn', this.get('user'));
     },
 

@@ -1,3 +1,4 @@
+/* globals chatApp */
 /* jshint node:true */
 
 'use strict';
@@ -7,8 +8,7 @@
  * @return Marionette.ItemView MessageView
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   MessageTemplate = require('Message.html');
 
 module.exports = Marionette.ItemView.extend({

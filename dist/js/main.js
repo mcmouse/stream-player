@@ -129,8 +129,6 @@ module.exports = Marionette.Application.extend({
  * @return Object Utilities
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette;
-
 module.exports = {
   //GUID generation from backbone-localstorage.js, lines 11 and 15
   getGUID: function () {
@@ -140,7 +138,7 @@ module.exports = {
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
   } };
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/MessageCollection.js":[function(require,module,exports){
+},{}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/MessageCollection.js":[function(require,module,exports){
 "use strict";
 
 /* jshint node:true */
@@ -150,7 +148,7 @@ module.exports = {
  * return Backbone.Collection MessageCollection
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, Message = require("models/chat/Message");
+var Backbone = require("backbone-shim").Backbone, Message = require("models/chat/Message");
 
 module.exports = (function () {
   "use strict";
@@ -169,7 +167,7 @@ module.exports = (function () {
  * @return Backbone.Collection UserCollection
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, User = require("models/user/User");
+var Backbone = require("backbone-shim").Backbone, User = require("models/user/User");
 
 module.exports = (function () {
   "use strict";
@@ -188,7 +186,7 @@ module.exports = (function () {
  * return Backbone.Collection WebcamCollection
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, DisplayWebcam = require("models/webcam/DisplayWebcam");
+var Backbone = require("backbone-shim").Backbone, DisplayWebcam = require("models/webcam/DisplayWebcam");
 
 module.exports = (function () {
   "use strict";
@@ -198,6 +196,7 @@ module.exports = (function () {
 })();
 
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/webcam/DisplayWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/DisplayWebcam.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/ChatRoomController.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
@@ -207,8 +206,7 @@ module.exports = (function () {
  * @return Marionette.Object ChatRoomController
  */
 
-
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, ChatRoom = require("models/chat/ChatRoom"), LoginViewModel = require("models/login/LoginViewModel"), ChatViewModel = require("models/chat/ChatViewModel"), LoginView = require("views/login/LoginView"), ChatView = require("views/chat/ChatView");
+var Marionette = require("backbone-shim").Marionette, ChatRoom = require("models/chat/ChatRoom"), LoginViewModel = require("models/login/LoginViewModel"), ChatViewModel = require("models/chat/ChatViewModel"), LoginView = require("views/login/LoginView"), ChatView = require("views/chat/ChatView");
 
 module.exports = Marionette.Object.extend({
   initialize: function () {
@@ -311,7 +309,7 @@ module.exports = Marionette.Object.extend({
  * Contains all logic necessary for running the chat room and communicating with the server.
  * @return Backbone.Model ChatRoom
  */
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, io = require("socket.io-client"), User = require("models/user/User"), Message = require("models/chat/Message");
+var Backbone = require("backbone-shim").Backbone, io = require("socket.io-client"), User = require("models/user/User"), Message = require("models/chat/Message");
 
 module.exports = Backbone.Model.extend({
   //Initialize our socket.io listener and set up events for adding and removing users
@@ -429,8 +427,7 @@ module.exports = Backbone.Model.extend({
 /* jshint node:true */
 "use strict";
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette;
-
+var Backbone = require("backbone-shim").Backbone;
 
 module.exports = Backbone.Model.extend({});
 
@@ -439,7 +436,7 @@ module.exports = Backbone.Model.extend({});
 
 "use strict";
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette;
+var Backbone = require("backbone-shim").Backbone;
 
 module.exports = Backbone.Model.extend({});
 
@@ -453,8 +450,7 @@ module.exports = Backbone.Model.extend({});
  * @return Backbone.Model LoginViewModel
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette;
-
+var Backbone = require("backbone-shim").Backbone;
 
 module.exports = Backbone.Model.extend({
   defaults: {
@@ -506,6 +502,7 @@ module.exports = Backbone.Model.extend({
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/CurrentUser.js":[function(require,module,exports){
 "use strict";
 
+/* globals chatApp */
 /* jshint node:true */
 
 /**
@@ -515,7 +512,7 @@ module.exports = Backbone.Model.extend({
  */
 
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, User = require("models/user/User");
+var Backbone = require("backbone-shim").Backbone, User = require("models/user/User");
 
 module.exports = (function () {
   "use strict";
@@ -563,13 +560,21 @@ module.exports = (function () {
     //Initialize the User model to generate a unique ID and save it to localstorage.
     //Trigger necessary events.
     saveUser: function (userName) {
+      var user = new User({
+        name: userName
+      });
+
       this.set({
-        user: new User({
-          name: userName }),
+        user: user,
         loggedInUser: true
       });
 
       this.save();
+
+      //Needed because Backbone.Localstorage degrades nested models on save
+      this.set({
+        user: user
+      });
       chatApp.channels.localUserChannel.trigger("userLoggedIn", this.get("user"));
     },
 
@@ -597,7 +602,7 @@ module.exports = (function () {
  * @return Backbone.Model User
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, Utilities = require("Utilities");
+var Backbone = require("backbone-shim").Backbone, Utilities = require("Utilities");
 
 module.exports = Backbone.Model.extend({
   //Generate unique ID for each user model generated.
@@ -615,7 +620,7 @@ module.exports = Backbone.Model.extend({
  * @return Backbone.Model DisplayWebcam
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, Utilities = require("Utilities");
+var Backbone = require("backbone-shim").Backbone;
 
 module.exports = (function () {
   "use strict";
@@ -623,7 +628,7 @@ module.exports = (function () {
   return Backbone.Model.extend({});
 })();
 
-},{"Utilities":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
 /* jshint node:true */
 
 "use strict";
@@ -633,12 +638,13 @@ module.exports = (function () {
  * @return Marionette.CollectionView ChatMessagesView
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, MessageView = require("views/chat/MessageView");
+var Marionette = require("backbone-shim").Marionette, MessageView = require("views/chat/MessageView");
 
 module.exports = Marionette.CollectionView.extend({
   childView: MessageView });
 
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","views/chat/MessageView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/MessageView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatView.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
@@ -648,7 +654,7 @@ module.exports = Marionette.CollectionView.extend({
  * @return Marionette.Application ChatApp
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, UserListView = require("views/chat/UserListView"), ChatMessagesView = require("views/chat/ChatMessagesView"), SendMessageView = require("views/chat/SendMessageView"), ChatRoomTemplate = require("ChatRoom.html");
+var Marionette = require("backbone-shim").Marionette, UserListView = require("views/chat/UserListView"), ChatMessagesView = require("views/chat/ChatMessagesView"), SendMessageView = require("views/chat/SendMessageView"), ChatRoomTemplate = require("ChatRoom.html");
 
 module.exports = Marionette.LayoutView.extend({
   el: "#chat-region",
@@ -685,6 +691,7 @@ module.exports = Marionette.LayoutView.extend({
   } });
 
 },{"ChatRoom.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/ChatRoom.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","views/chat/ChatMessagesView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js","views/chat/SendMessageView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/SendMessageView.js","views/chat/UserListView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/UserListView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/MessageView.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
@@ -694,7 +701,7 @@ module.exports = Marionette.LayoutView.extend({
  * @return Marionette.ItemView MessageView
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, MessageTemplate = require("Message.html");
+var Marionette = require("backbone-shim").Marionette, MessageTemplate = require("Message.html");
 
 module.exports = Marionette.ItemView.extend({
   template: MessageTemplate,
@@ -712,16 +719,17 @@ module.exports = Marionette.ItemView.extend({
 });
 
 },{"Message.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/Message.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/SendMessageView.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
 
 /**
  * View for "send message" area. Passes out events with message.
+ * @return Marionette.ItemView SendMessageView
  */
 
-
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, SendMessageTemplate = require("SendMessage.html");
+var Marionette = require("backbone-shim").Marionette, SendMessageTemplate = require("SendMessage.html");
 
 module.exports = Marionette.ItemView.extend({
   template: SendMessageTemplate,
@@ -755,12 +763,13 @@ module.exports = Marionette.ItemView.extend({
  * @return Marionette.CollectionView UserListView
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, UserView = require("views/chat/UserView");
+var Marionette = require("backbone-shim").Marionette, UserView = require("views/chat/UserView");
 
 module.exports = Marionette.CollectionView.extend({
   childView: UserView });
 
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","views/chat/UserView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/UserView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/UserView.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
@@ -770,7 +779,7 @@ module.exports = Marionette.CollectionView.extend({
  * @return Marionette.ItemView UserView
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, UserTemplate = require("User.html");
+var Marionette = require("backbone-shim").Marionette, UserTemplate = require("User.html");
 
 module.exports = Marionette.ItemView.extend({
   template: UserTemplate,
@@ -788,6 +797,7 @@ module.exports = Marionette.ItemView.extend({
 });
 
 },{"User.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/User.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/login/LoginView.js":[function(require,module,exports){
+/* globals chatApp */
 /* jshint node:true */
 
 "use strict";
@@ -797,8 +807,7 @@ module.exports = Marionette.ItemView.extend({
  * @return Marionette.ItemView LoginView
  */
 
-
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, LoginRegionTemplate = require("LoginRegion.html");
+var Marionette = require("backbone-shim").Marionette, LoginRegionTemplate = require("LoginRegion.html");
 
 module.exports = Marionette.ItemView.extend({
   el: "#login-region",

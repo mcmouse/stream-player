@@ -9,7 +9,6 @@
  */
 
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   Utilities = require('Utilities');
 
 module.exports = Backbone.Model.extend({

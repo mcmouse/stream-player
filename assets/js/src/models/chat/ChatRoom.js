@@ -7,7 +7,6 @@
  * @return Backbone.Model ChatRoom
  */
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   io = require('socket.io-client'),
   User = require('models/user/User'),
   Message = require('models/chat/Message');

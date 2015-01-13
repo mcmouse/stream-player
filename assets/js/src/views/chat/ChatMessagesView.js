@@ -7,8 +7,7 @@
  * @return Marionette.CollectionView ChatMessagesView
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
+var Marionette = require('backbone-shim').Marionette,
   MessageView = require('views/chat/MessageView');
 
 module.exports = Marionette.CollectionView.extend({

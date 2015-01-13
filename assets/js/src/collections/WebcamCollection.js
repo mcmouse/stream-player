@@ -6,7 +6,6 @@
  */
 
 var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette,
   DisplayWebcam = require('models/webcam/DisplayWebcam');
 
 module.exports = (function () {
