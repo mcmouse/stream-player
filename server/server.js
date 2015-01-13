@@ -34,7 +34,6 @@
         delete socket.user;
       }
       delete users[data.id];
-
       chat.emit('userLeft', data);
     });
 
@@ -45,10 +44,10 @@
     });
 
     socket.on('disconnect', function () {
-      console.log('emitting userLeft because of disconnect: ' + socket.user);
+      console.log('emitting userLeft because of disconnect: ' + socket.user.id);
       if (socket.user) {
         chat.emit('userLeft', {
-          username: users[socket.user.id],
+          username: users[socket.user.id].username,
           id: socket.user.id
         });
         delete users[socket.user.id];
