@@ -71,7 +71,7 @@ module.exports = {
  * @return Marionette.Application ChatApp
  */
 
-var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, ChatRoomController = require("controllers/ChatRoomController"), CurrentUser = require("models/user/CurrentUser"), MessageCollection = require("collections/MessageCollection"), UserCollection = require("collections/UserCollection"), WebcamCollection = require("collections/WebcamCollection");
+var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette, ChatRoomController = require("controllers/ChatRoomController"), WebcamRoomController = require("controllers/WebcamRoomController"), CurrentUser = require("models/user/CurrentUser"), MessageCollection = require("collections/MessageCollection"), UserCollection = require("collections/UserCollection"), WebcamCollection = require("collections/WebcamCollection");
 
 module.exports = Marionette.Application.extend({
   container: "#chat-app",
@@ -83,7 +83,10 @@ module.exports = Marionette.Application.extend({
     this.setupOptions();
     this.setupEvents();
 
-    this.on("start", this.createChatRoom);
+    this.on("start", function () {
+      this.createChatRoom();
+      this.createWebcamRoom();
+    });
   },
 
   setupEvents: function () {
@@ -96,8 +99,7 @@ module.exports = Marionette.Application.extend({
   //Set up all app models
   setupModels: function () {
     this.models = {
-      CurrentUser: new CurrentUser()
-    };
+      CurrentUser: new CurrentUser() };
   },
 
   //Set up all app collections
@@ -117,10 +119,14 @@ module.exports = Marionette.Application.extend({
   createChatRoom: function () {
     //Set up chat room
     this.chatRoomController = new ChatRoomController();
+  },
+
+  createWebcamRoom: function () {
+    this.webcamRoomController = new WebcamRoomController();
   }
 });
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","collections/MessageCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/MessageCollection.js","collections/UserCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/UserCollection.js","collections/WebcamCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/WebcamCollection.js","controllers/ChatRoomController":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/ChatRoomController.js","models/user/CurrentUser":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/CurrentUser.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js":[function(require,module,exports){
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","collections/MessageCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/MessageCollection.js","collections/UserCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/UserCollection.js","collections/WebcamCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/WebcamCollection.js","controllers/ChatRoomController":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/ChatRoomController.js","controllers/WebcamRoomController":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/WebcamRoomController.js","models/user/CurrentUser":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/CurrentUser.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js":[function(require,module,exports){
 /* jshint node:true */
 "use strict";
 
@@ -206,15 +212,14 @@ module.exports = (function () {
  * @return Marionette.Object ChatRoomController
  */
 
-var Marionette = require("backbone-shim").Marionette, ChatRoom = require("models/chat/ChatRoom"), LoginViewModel = require("models/login/LoginViewModel"), ChatViewModel = require("models/chat/ChatViewModel"), LoginView = require("views/login/LoginView"), ChatView = require("views/chat/ChatView");
+var Marionette = require("backbone-shim").Marionette, ChatRoom = require("models/chat/ChatRoom"), LoginViewModel = require("models/login/LoginViewModel"), LoginView = require("views/login/LoginView"), ChatView = require("views/chat/ChatView");
 
 module.exports = Marionette.Object.extend({
   initialize: function () {
     //Initialize chat room
     this.chatRoom = new ChatRoom();
 
-    this.chatView = new ChatView({
-      model: new ChatViewModel() }).render();
+    this.chatView = new ChatView().render();
     this.chatView.showInitialRegions();
 
     //Initialize login flow
@@ -300,7 +305,35 @@ module.exports = Marionette.Object.extend({
     this.loginView.showNameInUse();
   } });
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/chat/ChatRoom":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatRoom.js","models/chat/ChatViewModel":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatViewModel.js","models/login/LoginViewModel":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/login/LoginViewModel.js","views/chat/ChatView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatView.js","views/login/LoginView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/login/LoginView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatRoom.js":[function(require,module,exports){
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/chat/ChatRoom":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatRoom.js","models/login/LoginViewModel":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/login/LoginViewModel.js","views/chat/ChatView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatView.js","views/login/LoginView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/login/LoginView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/WebcamRoomController.js":[function(require,module,exports){
+/* globals chatApp */
+/* jshint node:true */
+
+"use strict";
+
+/**
+ * Manages the webcam section by delegating events between views
+ * @return Marionette.Object WebcamRoomController
+ */
+
+var Marionette = require("backbone-shim").Marionette, WebcamView = require("views/webcam/WebcamView"), WebcamRoom = require("models/webcam/WebcamRoom");
+
+module.exports = Marionette.Object.extend({
+  initialize: function () {
+    //WebcamRoom is our server that manages adding and removing webcams
+    this.webcamRoom = new WebcamRoom();
+
+    //Front-end for both display and input webcams
+    this.webcamView = new WebcamView().render();
+    this.webcamView.showInitialRegions();
+
+    this.setupEvents();
+  },
+
+  setupEvents: function () {} });
+
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/webcam/WebcamRoom":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/WebcamRoom.js","views/webcam/WebcamView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/WebcamView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatRoom.js":[function(require,module,exports){
+/* globals chatApp, _ */
 /* jshint node:true */
 
 "use strict";
@@ -339,6 +372,11 @@ module.exports = Backbone.Model.extend({
     });
   },
 
+  //Alias to emit socket events
+  broadcast: function (event, data) {
+    this._listener.emit(event, data);
+  },
+
   //Request our initial group of users
   loadInitialUsers: function () {
     this.broadcast("getUsers");
@@ -346,17 +384,12 @@ module.exports = Backbone.Model.extend({
 
   //Set our initial users on server response
   setInitialUsers: function (users) {
-    for (var user in users) {
+    _.each(users, function (user) {
       this.addUser({
-        id: user,
-        username: users[user]
+        id: user.id,
+        username: user.name
       });
-    }
-  },
-
-  //Alias to emit socket events
-  broadcast: function (event, data) {
-    this._listener.emit(event, data);
+    }, this);
   },
 
   //Test user collection for a particular userName.
@@ -423,15 +456,7 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/chat/Message":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/Message.js","models/user/User":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/User.js","socket.io-client":"/Users/tomlagie/Sites/projects/stream-player/node_modules/socket.io-client/index.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatViewModel.js":[function(require,module,exports){
-/* jshint node:true */
-"use strict";
-
-var Backbone = require("backbone-shim").Backbone;
-
-module.exports = Backbone.Model.extend({});
-
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/Message.js":[function(require,module,exports){
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/chat/Message":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/Message.js","models/user/User":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/User.js","socket.io-client":"/Users/tomlagie/Sites/projects/stream-player/node_modules/socket.io-client/index.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/Message.js":[function(require,module,exports){
 /* jshint node:true */
 
 "use strict";
@@ -620,15 +645,72 @@ module.exports = Backbone.Model.extend({
  * @return Backbone.Model DisplayWebcam
  */
 
-var Backbone = require("backbone-shim").Backbone;
+var Backbone = require("backbone-shim").Backbone, Utilities = require("Utilities");
 
 module.exports = (function () {
   "use strict";
 
-  return Backbone.Model.extend({});
+  return Backbone.Model.extend({
+    defaults: {
+      feedId: Utilities.getGUID() }
+  });
 })();
 
-},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
+},{"Utilities":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/InputWebcam.js":[function(require,module,exports){
+"use strict";
+
+},{}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/WebcamRoom.js":[function(require,module,exports){
+/* globals chatApp */
+/* jshint node:true */
+
+"use strict";
+
+/**
+ * Manages communication with node.js server over socket.io for adding/removing
+ * webcams from the display area
+ * @return Backbone.Model WebcamRoom
+ */
+
+var Backbone = require("backbone-shim").Backbone, io = require("socket.io-client"), DisplayWebcam = require("models/webcam/DisplayWebcam"), InputWebcam = require("models/webcam/InputWebcam");
+
+module.exports = Backbone.Model.extend({
+  initialize: function () {
+    this.set("onlineWebcams", chatApp.collections.WebcamCollection);
+
+    //Set up socketIO listeners
+    this._listener = io(chatApp.options.serverAddress + "/webcams");
+
+    //Listen to broadcasts from socket
+    this._listener.on("webcamJoined", this.addWebcam.bind(this));
+    this._listener.on("webcamLeft", this.removeWebcam.bind(this));
+    this._listener.on("webcamList", this.setInitialWebcams.bind(this));
+
+    this.loadInitialWebcams();
+  },
+
+  //Alias to emit socket events
+  broadcast: function (event, data) {
+    this._listener.emit(event, data);
+  },
+
+  //Request our initial group of users
+  loadInitialWebcams: function () {
+    this.broadcast("getWebcams");
+  },
+
+  setInitialWebcams: function (webcams) {},
+
+  addWebcam: function () {},
+
+  loadInitialUsers: function () {},
+
+  addLocalWebcam: function () {},
+
+  removeWebcam: function () {},
+
+  removeLocalWebcam: function () {} });
+
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/webcam/DisplayWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/DisplayWebcam.js","models/webcam/InputWebcam":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/webcam/InputWebcam.js","socket.io-client":"/Users/tomlagie/Sites/projects/stream-player/node_modules/socket.io-client/index.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatMessagesView.js":[function(require,module,exports){
 /* jshint node:true */
 
 "use strict";
@@ -651,7 +733,7 @@ module.exports = Marionette.CollectionView.extend({
 
 /**
  * View for displaying the collection of messages
- * @return Marionette.Application ChatApp
+ * @return Marionette.LayoutView ChatView
  */
 
 var Marionette = require("backbone-shim").Marionette, UserListView = require("views/chat/UserListView"), ChatMessagesView = require("views/chat/ChatMessagesView"), SendMessageView = require("views/chat/SendMessageView"), ChatRoomTemplate = require("ChatRoom.html");
@@ -873,7 +955,145 @@ module.exports = Marionette.ItemView.extend({
     this.currentUser.removeUser();
   } });
 
-},{"LoginRegion.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/LoginRegion.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/templates/ChatRoom.html":[function(require,module,exports){
+},{"LoginRegion.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/LoginRegion.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/InputWebcamView.js":[function(require,module,exports){
+/* globals chatApp */
+/* jshint node:true */
+
+"use strict";
+
+/**
+ * Controls all markup for the login area, and fires appropriate events to handle logged in state.
+ * @return Marionette.ItemView LoginView
+ */
+
+var Marionette = require("backbone-shim").Marionette, LoginRegionTemplate = require("LoginRegion.html");
+
+module.exports = Marionette.ItemView.extend({
+  el: "#input-webcam",
+
+  //Cache selectors
+  ui: {
+    loginButton: ".login-button",
+    enterUserNameInput: ".enter-user-name-input",
+    setNameButton: ".set-name-button",
+    logOutButton: ".log-out-button" },
+
+  //Set up UI events
+  events: {
+    "click @ui.loginButton": "loadUser",
+    "click @ui.setNameButton": "setName",
+    "click @ui.logOutButton": "logOut" },
+
+  currentUser: null,
+
+  initialize: function (options) {
+    this.currentUser = options.currentUser;
+
+    if (this.currentUser) {
+      chatApp.channels.localUserChannel.on({
+        noSavedUser: this.model.showEnterUserName,
+        userLoggedIn: this.model.showLoggedIn,
+        userLoggedOut: this.model.showLoggedOut }, this.model);
+    }
+
+    this.listenTo(this.model, "change", this.render);
+  },
+
+  //Static HTML
+  template: LoginRegionTemplate,
+
+  templateHelpers: function () {
+    return {
+      loginClasses: (this.model.get("loggedOut") ? "visible" : "hidden"),
+      enterUserNameClasses: (this.model.get("enteringUserName") ? "visible" : "hidden"),
+      nameInUseClasses: (this.model.get("nameInUse") ? "visible" : "hidden"),
+      loggedInClasses: (this.model.get("loggedIn") ? "visible" : "hidden"),
+      name: (this.model.get("loggedIn") ? this.currentUser.getName() : "") };
+  },
+
+  //On login button click, hide the login area and load the user
+  loadUser: function () {
+    this.currentUser.loadUser();
+  },
+
+  //Get user name and pass up to any listeners
+  setName: function () {
+    var user = this.ui.enterUserNameInput.val();
+    var userNameExists = chatApp.channels.chatRoomChannel.request("isUserNameInUse");
+    if (!userNameExists) {
+      this.currentUser.saveUser(user);
+    } else {
+      chatApp.channels.localUserChannel.command("nameInUse");
+    }
+  },
+
+  //Log out, hiding logged in state, clearing user from model, and showing log in button
+  logOut: function () {
+    this.currentUser.removeUser();
+  } });
+
+},{"LoginRegion.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/LoginRegion.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/WebcamRoomView.js":[function(require,module,exports){
+"use strict";
+
+/* jshint node:true */
+
+/**
+ * Collection view for listing all messages
+ * @return Marionette.CollectionView WebcamCollectionView
+ */
+
+var Backbone = require("backbone-shim").Backbone, Marionette = require("backbone-shim").Marionette;
+
+// define([
+//   'jquery',
+//   'underscore',
+//   'backbone',
+//   'backbone.marionette',
+//   'views/webcam/DisplayWebcamView',
+// ], function ($, _, Backbone, Marionette, DisplayWebcamView) {
+//   'use strict';
+
+//   return Marionette.CollectionView.extend({
+//     childView: DisplayWebcamView,
+//   });
+// });
+
+},{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/WebcamView.js":[function(require,module,exports){
+/* globals chatApp */
+/* jshint node:true */
+
+"use strict";
+
+/**
+ * View for displaying webcam regions. Contains regions for display (output) and personal
+ * webcam (input)
+ * @return Marionette.Application ChatApp
+ */
+
+var Marionette = require("backbone-shim").Marionette, WebcamRoomView = require("views/webcam/WebcamRoomView"), InputWebcamView = require("views/webcam/InputWebcamView"), WebcamRoomTemplate = require("WebcamRoom.html");
+
+module.exports = Marionette.LayoutView.extend({
+  el: "#webcam-region",
+  template: WebcamRoomTemplate,
+  regions: {
+    displayWebcams: "#display-webcams",
+    inputWebcam: "#input-webcam" },
+
+  showInitialRegions: function () {
+    this.showDisplayWebcamsView();
+    this.showInputWebcamsView();
+  },
+
+  showDisplayWebcamsView: function () {
+    this.getRegion("displayWebcams").show(new WebcamRoomView({
+      collection: chatApp.collections.WebcamCollection }));
+  },
+
+  showInputWebcamsView: function () {
+    this.getRegion("inputWebcam").show(new InputWebcamView());
+  } });
+
+},{"WebcamRoom.html":"/Users/tomlagie/Sites/projects/stream-player/assets/templates/WebcamRoom.html","backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","views/webcam/InputWebcamView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/InputWebcamView.js","views/webcam/WebcamRoomView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/webcam/WebcamRoomView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/templates/ChatRoom.html":[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -934,6 +1154,15 @@ __p+='<div class="name '+
 '">'+
 ((__t=( name ))==null?'':__t)+
 '</div>';
+}
+return __p;
+};
+
+},{}],"/Users/tomlagie/Sites/projects/stream-player/assets/templates/WebcamRoom.html":[function(require,module,exports){
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='';
 }
 return __p;
 };

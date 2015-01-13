@@ -11,6 +11,7 @@
 var Backbone = require('backbone-shim').Backbone,
   Marionette = require('backbone-shim').Marionette,
   ChatRoomController = require('controllers/ChatRoomController'),
+  WebcamRoomController = require('controllers/WebcamRoomController'),
   CurrentUser = require('models/user/CurrentUser'),
   MessageCollection = require('collections/MessageCollection'),
   UserCollection = require('collections/UserCollection'),
@@ -27,7 +28,10 @@ module.exports = Marionette.Application.extend({
     this.setupOptions();
     this.setupEvents();
 
-    this.on('start', this.createChatRoom);
+    this.on('start', function () {
+      this.createChatRoom();
+      this.createWebcamRoom();
+    });
   },
 
   setupEvents: function () {
@@ -41,7 +45,7 @@ module.exports = Marionette.Application.extend({
   //Set up all app models
   setupModels: function () {
     this.models = {
-      CurrentUser: new CurrentUser()
+      CurrentUser: new CurrentUser(),
     };
   },
 
@@ -64,5 +68,9 @@ module.exports = Marionette.Application.extend({
   createChatRoom: function () {
     //Set up chat room
     this.chatRoomController = new ChatRoomController();
+  },
+
+  createWebcamRoom: function () {
+    this.webcamRoomController = new WebcamRoomController();
   }
 });

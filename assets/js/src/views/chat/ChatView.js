@@ -5,7 +5,7 @@
 
 /**
  * View for displaying the collection of messages
- * @return Marionette.Application ChatApp
+ * @return Marionette.LayoutView ChatView
  */
 
 var Marionette = require('backbone-shim').Marionette,

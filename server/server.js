@@ -19,7 +19,7 @@
 
     socket.on('userJoined', function (data) {
       console.log('broadcasting new user with name ' + data.username);
-      users[data.id] = data.username;
+      _.extend(users, data);
       socket.user = data;
       chat.emit('userJoined', data);
     });
@@ -33,7 +33,10 @@
       if (socket.user) {
         delete socket.user;
       }
-      delete users[data.id];
+
+      users = _.omit(users, function (user) {
+        return user.id === data.id;
+      });
       chat.emit('userLeft', data);
     });
 
@@ -50,7 +53,9 @@
           username: users[socket.user.id],
           id: socket.user.id
         });
-        delete users[socket.user.id];
+        users = _.omit(users, function (user) {
+          return user.id === socket.user.id;
+        });
         delete socket.user;
       }
     });

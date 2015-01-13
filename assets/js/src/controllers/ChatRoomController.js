@@ -11,7 +11,6 @@
 var Marionette = require('backbone-shim').Marionette,
   ChatRoom = require('models/chat/ChatRoom'),
   LoginViewModel = require('models/login/LoginViewModel'),
-  ChatViewModel = require('models/chat/ChatViewModel'),
   LoginView = require('views/login/LoginView'),
   ChatView = require('views/chat/ChatView');
 
@@ -20,9 +19,7 @@ module.exports = Marionette.Object.extend({
     //Initialize chat room
     this.chatRoom = new ChatRoom();
 
-    this.chatView = new ChatView({
-      model: new ChatViewModel(),
-    }).render();
+    this.chatView = new ChatView().render();
     this.chatView.showInitialRegions();
 
     //Initialize login flow

@@ -1,3 +1,4 @@
+/* globals chatApp, _ */
 /* jshint node:true */
 
 'use strict';
@@ -39,6 +40,11 @@ module.exports = Backbone.Model.extend({
     });
   },
 
+  //Alias to emit socket events
+  broadcast: function (event, data) {
+    this._listener.emit(event, data);
+  },
+
   //Request our initial group of users
   loadInitialUsers: function () {
     this.broadcast('getUsers');
@@ -46,17 +52,12 @@ module.exports = Backbone.Model.extend({
 
   //Set our initial users on server response
   setInitialUsers: function (users) {
-    for (var user in users) {
+    _.each(users, function (user) {
       this.addUser({
-        id: user,
-        username: users[user]
+        id: user.id,
+        username: user.name
       });
-    }
-  },
-
-  //Alias to emit socket events
-  broadcast: function (event, data) {
-    this._listener.emit(event, data);
+    }, this);
   },
 
   //Test user collection for a particular userName.
