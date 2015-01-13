@@ -425,7 +425,7 @@ module.exports = Backbone.Model.extend({
         username: user.get("name")
       });
     } else {
-      chatApp.channels.localUserChannel.trigger("nameInUse");
+      chatApp.channels.localUserChannel.command("nameInUse");
     }
   },
 
