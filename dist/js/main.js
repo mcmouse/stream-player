@@ -940,7 +940,7 @@ module.exports = Marionette.ItemView.extend({
   //Get user name and pass up to any listeners
   setName: function () {
     var user = this.ui.enterUserNameInput.val();
-    var userNameExists = chatApp.channels.chatRoomChannel.request("isUserNameInUse");
+    var userNameExists = chatApp.channels.chatRoomChannel.request("isUserNameInUse", user);
     if (!userNameExists) {
       this.currentUser.saveUser(user);
     } else {
