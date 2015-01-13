@@ -1,56 +1,52 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * View for displaying the collection of messages
  * @return Marionette.Application ChatApp
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'views/chat/UserListView',
-  'views/chat/ChatMessagesView',
-  'views/chat/SendMessageView',
-  'text!templates/ChatRoom.html',
-], function ($, _, Backbone, Marionette, UserListView, ChatMessagesView, SendMessageView, ChatRoomTemplate) {
-  'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  UserListView = require('views/chat/UserListView'),
+  ChatMessagesView = require('views/chat/ChatMessagesView'),
+  SendMessageView = require('views/chat/SendMessageView'),
+  ChatRoomTemplate = require('ChatRoom.html');
 
-  return Marionette.LayoutView.extend({
-    el: '#chat-region',
-    template: _.template(ChatRoomTemplate),
-    regions: {
-      userList: '#user-list',
-      chatMessages: '#chat-messages',
-      sendMessage: '#send-message'
-    },
+module.exports = Marionette.LayoutView.extend({
+  el: '#chat-region',
+  template: ChatRoomTemplate,
+  regions: {
+    userList: '#user-list',
+    chatMessages: '#chat-messages',
+    sendMessage: '#send-message'
+  },
 
-    showInitialRegions: function () {
-      this.showChatMessageView();
-      this.showUserListView();
-    },
+  showInitialRegions: function () {
+    this.showChatMessageView();
+    this.showUserListView();
+  },
 
-    //Display the "send a message" view on user login
-    showChatMessageView: function () {
-      this.getRegion('chatMessages').show(new ChatMessagesView({
-        collection: chatApp.collections.MessageCollection,
-      }));
-    },
+  //Display the "send a message" view on user login
+  showChatMessageView: function () {
+    this.getRegion('chatMessages').show(new ChatMessagesView({
+      collection: chatApp.collections.MessageCollection,
+    }));
+  },
 
-    showUserListView: function () {
-      this.getRegion('userList').show(new UserListView({
-        collection: chatApp.collections.UserCollection,
-      }));
-    },
+  showUserListView: function () {
+    this.getRegion('userList').show(new UserListView({
+      collection: chatApp.collections.UserCollection,
+    }));
+  },
 
-    showSendMessageView: function () {
-      this.getRegion('sendMessage').show(new SendMessageView());
-    },
+  showSendMessageView: function () {
+    this.getRegion('sendMessage').show(new SendMessageView());
+  },
 
-    //Hide the "send a message" view on user logout
-    hideSendMessageView: function () {
-      this.getRegion('sendMessage').empty();
-    },
-  });
+  //Hide the "send a message" view on user logout
+  hideSendMessageView: function () {
+    this.getRegion('sendMessage').empty();
+  },
 });

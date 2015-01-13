@@ -1,85 +1,82 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * Controls all markup for the login area, and fires appropriate events to handle logged in state.
  * @return Marionette.ItemView LoginView
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'text!templates/LoginRegion.html',
-], function ($, _, Backbone, Marionette, LoginRegionTemplate) {
-  'use strict';
 
-  return Marionette.ItemView.extend({
-    el: '#login-region',
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  LoginRegionTemplate = require('LoginRegion.html');
 
-    //Cache selectors
-    ui: {
-      'loginButton': '.login-button',
-      'enterUserNameInput': '.enter-user-name-input',
-      'setNameButton': '.set-name-button',
-      'logOutButton': '.log-out-button',
-    },
+module.exports = Marionette.ItemView.extend({
+  el: '#login-region',
 
-    //Set up UI events
-    events: {
-      'click @ui.loginButton': 'loadUser',
-      'click @ui.setNameButton': 'setName',
-      'click @ui.logOutButton': 'logOut',
-    },
+  //Cache selectors
+  ui: {
+    'loginButton': '.login-button',
+    'enterUserNameInput': '.enter-user-name-input',
+    'setNameButton': '.set-name-button',
+    'logOutButton': '.log-out-button',
+  },
 
-    currentUser: null,
+  //Set up UI events
+  events: {
+    'click @ui.loginButton': 'loadUser',
+    'click @ui.setNameButton': 'setName',
+    'click @ui.logOutButton': 'logOut',
+  },
 
-    initialize: function (options) {
-      this.currentUser = options.currentUser;
+  currentUser: null,
 
-      if (this.currentUser) {
-        chatApp.channels.localUserChannel.on({
-          'noSavedUser': this.model.showEnterUserName,
-          'userLoggedIn': this.model.showLoggedIn,
-          'userLoggedOut': this.model.showLoggedOut,
-        }, this.model);
-      }
+  initialize: function (options) {
+    this.currentUser = options.currentUser;
 
-      this.listenTo(this.model, 'change', this.render);
-    },
+    if (this.currentUser) {
+      chatApp.channels.localUserChannel.on({
+        'noSavedUser': this.model.showEnterUserName,
+        'userLoggedIn': this.model.showLoggedIn,
+        'userLoggedOut': this.model.showLoggedOut,
+      }, this.model);
+    }
 
-    //Static HTML
-    template: _.template(LoginRegionTemplate),
+    this.listenTo(this.model, 'change', this.render);
+  },
 
-    templateHelpers: function () {
-      return {
-        loginClasses: (this.model.get('loggedOut') ? 'visible' : 'hidden'),
-        enterUserNameClasses: (this.model.get('enteringUserName') ? 'visible' : 'hidden'),
-        nameInUseClasses: (this.model.get('nameInUse') ? 'visible' : 'hidden'),
-        loggedInClasses: (this.model.get('loggedIn') ? 'visible' : 'hidden'),
-        name: (this.model.get('loggedIn') ? this.currentUser.getName() : ''),
-      };
-    },
+  //Static HTML
+  template: LoginRegionTemplate,
 
-    //On login button click, hide the login area and load the user
-    loadUser: function () {
-      this.currentUser.loadUser();
-    },
+  templateHelpers: function () {
+    return {
+      loginClasses: (this.model.get('loggedOut') ? 'visible' : 'hidden'),
+      enterUserNameClasses: (this.model.get('enteringUserName') ? 'visible' : 'hidden'),
+      nameInUseClasses: (this.model.get('nameInUse') ? 'visible' : 'hidden'),
+      loggedInClasses: (this.model.get('loggedIn') ? 'visible' : 'hidden'),
+      name: (this.model.get('loggedIn') ? this.currentUser.getName() : ''),
+    };
+  },
 
-    //Get user name and pass up to any listeners
-    setName: function () {
-      var user = this.ui.enterUserNameInput.val();
-      var userNameExists = chatApp.channels.chatRoomChannel.request('isUserNameInUse');
-      if (!userNameExists) {
-        this.currentUser.saveUser(user);
-      } else {
-        chatApp.channels.localUserChannel.command('nameInUse');
-      }
-    },
+  //On login button click, hide the login area and load the user
+  loadUser: function () {
+    this.currentUser.loadUser();
+  },
 
-    //Log out, hiding logged in state, clearing user from model, and showing log in button
-    logOut: function () {
-      this.currentUser.removeUser();
-    },
-  });
+  //Get user name and pass up to any listeners
+  setName: function () {
+    var user = this.ui.enterUserNameInput.val();
+    var userNameExists = chatApp.channels.chatRoomChannel.request('isUserNameInUse');
+    if (!userNameExists) {
+      this.currentUser.saveUser(user);
+    } else {
+      chatApp.channels.localUserChannel.command('nameInUse');
+    }
+  },
+
+  //Log out, hiding logged in state, clearing user from model, and showing log in button
+  logOut: function () {
+    this.currentUser.removeUser();
+  },
 });

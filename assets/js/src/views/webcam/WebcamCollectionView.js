@@ -1,20 +1,23 @@
-/* globals define */
+/* jshint node:true */
 
 /**
  * Collection view for listing all messages
  * @return Marionette.CollectionView WebcamCollectionView
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'views/webcam/DisplayWebcamView',
-], function ($, _, Backbone, Marionette, DisplayWebcamView) {
-  'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette;
 
-  return Marionette.CollectionView.extend({
-    childView: DisplayWebcamView,
-  });
-});
+// define([
+//   'jquery',
+//   'underscore',
+//   'backbone',
+//   'backbone.marionette',
+//   'views/webcam/DisplayWebcamView',
+// ], function ($, _, Backbone, Marionette, DisplayWebcamView) {
+//   'use strict';
+
+//   return Marionette.CollectionView.extend({
+//     childView: DisplayWebcamView,
+//   });
+// });

@@ -1,20 +1,16 @@
-/* globals define */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * Collection view for listing all users
  * @return Marionette.CollectionView UserListView
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'views/chat/UserView',
-], function ($, _, Backbone, Marionette, UserView) {
-  'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  UserView = require('views/chat/UserView');
 
-  return Marionette.CollectionView.extend({
-    childView: UserView,
-  });
+module.exports = Marionette.CollectionView.extend({
+  childView: UserView,
 });

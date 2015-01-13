@@ -1,4 +1,6 @@
 (function (root, factory) {
+  'use strict';
+
   if (typeof define === 'function' && define.amd) {
     define(['backbone.marionette', 'backbone.radio', 'underscore'], function (Marionette, Radio, _) {
       return factory(Marionette, Radio, _);

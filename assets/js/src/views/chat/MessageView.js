@@ -1,32 +1,28 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * View for displaying a single message
  * @return Marionette.ItemView MessageView
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'text!templates/Message.html',
-], function ($, _, Backbone, Marionette, MessageTemplate) {
-  'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  MessageTemplate = require('Message.html');
 
-  return Marionette.ItemView.extend({
-    template: _.template(MessageTemplate),
-    classes: 'message',
-    templateHelpers: function () {
-      var currentUserClasses = '';
-      if (chatApp.models.CurrentUser.loadedUser()) {
-        if (this.model.get('username') === chatApp.models.CurrentUser.getName()) {
-          currentUserClasses += 'current-user';
-        }
+module.exports = Marionette.ItemView.extend({
+  template: MessageTemplate,
+  classes: 'message',
+  templateHelpers: function () {
+    var currentUserClasses = '';
+    if (chatApp.models.CurrentUser.loadedUser()) {
+      if (this.model.get('username') === chatApp.models.CurrentUser.getName()) {
+        currentUserClasses += 'current-user';
       }
-      return {
-        currentUserClasses: currentUserClasses,
-      };
     }
-  });
+    return {
+      currentUserClasses: currentUserClasses,
+    };
+  }
 });

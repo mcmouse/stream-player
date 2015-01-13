@@ -1,9 +1,8 @@
-/* globals define */
+/* jshint node:true */
 
+'use strict';
 
-define(['backbone'],
-  function (Backbone) {
-    'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette;
 
-    return Backbone.Model.extend({});
-  });
+module.exports = Backbone.Model.extend({});

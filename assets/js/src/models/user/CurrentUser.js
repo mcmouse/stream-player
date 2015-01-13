@@ -1,4 +1,4 @@
-/* globals define, chatApp */
+/* jshint node:true */
 
 /**
  * Controls setting, saving, and loading the user, as well as triggering appropriate events
@@ -6,14 +6,12 @@
  * @return Backbone.Model LoginController
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.localstorage',
-  'backbone.marionette',
-  'models/user/User',
-], function ($, _, Backbone, BackboneLocalStorage, Marionette, User) {
+
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  User = require('models/user/User');
+
+module.exports = (function () {
   'use strict';
 
   return Backbone.Model.extend({
@@ -87,4 +85,4 @@ define([
     },
 
   });
-});
+})();

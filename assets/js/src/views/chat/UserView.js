@@ -1,32 +1,28 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * View for displaying a single user
  * @return Marionette.ItemView UserView
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'text!templates/User.html',
-], function ($, _, Backbone, Marionette, UserTemplate) {
-  'use strict';
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  UserTemplate = require('User.html');
 
-  return Marionette.ItemView.extend({
-    template: _.template(UserTemplate),
-    classes: 'user',
-    templateHelpers: function () {
-      var currentUserClasses = '';
-      if (chatApp.models.CurrentUser.loadedUser()) {
-        if (this.model.get('name') === chatApp.models.CurrentUser.getName()) {
-          currentUserClasses += 'current-user';
-        }
+module.exports = Marionette.ItemView.extend({
+  template: UserTemplate,
+  classes: 'user',
+  templateHelpers: function () {
+    var currentUserClasses = '';
+    if (chatApp.models.CurrentUser.loadedUser()) {
+      if (this.model.get('name') === chatApp.models.CurrentUser.getName()) {
+        currentUserClasses += 'current-user';
       }
-      return {
-        currentUserClasses: currentUserClasses,
-      };
     }
-  });
+    return {
+      currentUserClasses: currentUserClasses,
+    };
+  }
 });

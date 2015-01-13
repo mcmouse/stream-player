@@ -1,11 +1,18 @@
+/* line 1, ../../sass/main.scss */
 .hidden {
   display: none;
 }
 
+/* line 5, ../../sass/main.scss */
 .visible {
   display: block;
 }
 
-.current-user{
+/* line 9, ../../sass/main.scss */
+.current-user {
   font-weight: bold;
+}
+
+.test{
+  background: blue;
 }

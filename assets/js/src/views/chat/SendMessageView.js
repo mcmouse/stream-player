@@ -1,37 +1,34 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * View for "send message" area. Passes out events with message.
  */
 
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'text!templates/SendMessage.html',
-], function ($, _, Backbone, Marionette, SendMessageTemplate) {
-  'use strict';
 
-  return Marionette.ItemView.extend({
-    template: _.template(SendMessageTemplate),
-    ui: {
-      'messageText': '.message-text',
-      'messageButton': '.send-message'
-    },
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  SendMessageTemplate = require('SendMessage.html');
 
-    events: {
-      'click @ui.messageButton': 'sendNewMessage'
-    },
+module.exports = Marionette.ItemView.extend({
+  template: SendMessageTemplate,
+  ui: {
+    'messageText': '.message-text',
+    'messageButton': '.send-message'
+  },
 
-    sendNewMessage: function () {
-      var messageText = this.ui.messageText.val();
+  events: {
+    'click @ui.messageButton': 'sendNewMessage'
+  },
 
-      if (messageText && messageText !== '') {
-        chatApp.channels.chatRoomChannel.trigger('messageSent', messageText);
-      }
+  sendNewMessage: function () {
+    var messageText = this.ui.messageText.val();
 
-      this.ui.messageText.val('');
+    if (messageText && messageText !== '') {
+      chatApp.channels.chatRoomChannel.trigger('messageSent', messageText);
     }
-  });
+
+    this.ui.messageText.val('');
+  }
 });

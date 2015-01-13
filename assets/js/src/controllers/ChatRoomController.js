@@ -1,121 +1,117 @@
-/* globals define, chatApp */
+/* jshint node:true */
+
+'use strict';
 
 /**
  * Manages the ChatRoom by delegating events
  * @return Marionette.Object ChatRoomController
  */
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'backbone.marionette',
-  'models/chat/ChatRoom',
-  'models/user/CurrentUser',
-  'models/login/LoginViewModel',
-  'models/chat/ChatViewModel',
-  'views/login/LoginView',
-  'views/chat/ChatView',
-], function ($, _, Backbone, Marionette, ChatRoom, CurrentUser, LoginViewModel, ChatViewModel, LoginView, ChatView) {
-  'use strict';
 
-  return Marionette.Object.extend({
-    initialize: function () {
-      //Initialize chat room
-      this.chatRoom = new ChatRoom();
 
-      this.chatView = new ChatView({
-        model: new ChatViewModel(),
-      }).render();
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
+  ChatRoom = require('models/chat/ChatRoom'),
+  LoginViewModel = require('models/login/LoginViewModel'),
+  ChatViewModel = require('models/chat/ChatViewModel'),
+  LoginView = require('views/login/LoginView'),
+  ChatView = require('views/chat/ChatView');
 
-      this.chatView.showInitialRegions();
+module.exports = Marionette.Object.extend({
+  initialize: function () {
+    //Initialize chat room
+    this.chatRoom = new ChatRoom();
 
-      //Initialize login flow
-      this.loginView = new LoginView({
-        model: new LoginViewModel(),
-        currentUser: chatApp.models.CurrentUser,
-      }).render();
+    this.chatView = new ChatView({
+      model: new ChatViewModel(),
+    }).render();
+    this.chatView.showInitialRegions();
 
-      //Set up event listeners
-      this.setupEvents();
-    },
+    //Initialize login flow
+    this.loginView = new LoginView({
+      model: new LoginViewModel(),
+      currentUser: chatApp.models.CurrentUser,
+    }).render();
 
-    setupEvents: function () {
-      //Set up event management
+    //Set up event listeners
+    this.setupEvents();
+  },
 
-      //Update chat room when user logs in or logs out
-      chatApp.channels.localUserChannel.on({
-        'userLoggedIn': this.setLoggedInUser,
-        'userLoggedOut': this.removeLoggedInUser,
-      }, this);
+  setupEvents: function () {
+    //Set up event management
 
-      //Set name in use
-      chatApp.channels.localUserChannel.comply({
-        'nameInUse': this.setNameInUse
-      }, this);
+    //Update chat room when user logs in or logs out
+    chatApp.channels.localUserChannel.on({
+      'userLoggedIn': this.setLoggedInUser,
+      'userLoggedOut': this.removeLoggedInUser,
+    }, this);
 
-      //Log when user is added or removed froms erver
-      chatApp.channels.chatRoomChannel.on({
-        'userNameSet': this.isNameInUse,
-        'userAdded': this.userAddedFromServer,
-        'userRemoved': this.userRemovedFromServer,
-        'messageSent': this.addMessageToChatRoom,
-      }, this);
+    //Set name in use
+    chatApp.channels.localUserChannel.comply({
+      'nameInUse': this.setNameInUse
+    }, this);
 
-      chatApp.channels.chatRoomChannel.reply({
-        'isUserNameInUse': this.isNameInUse,
-      }, this);
-    },
+    //Log when user is added or removed froms erver
+    chatApp.channels.chatRoomChannel.on({
+      'userNameSet': this.isNameInUse,
+      'userAdded': this.userAddedFromServer,
+      'userRemoved': this.userRemovedFromServer,
+      'messageSent': this.addMessageToChatRoom,
+    }, this);
 
-    setLoggedInUser: function (user) {
-      this.addUserToChatRoom(user);
-      this.chatView.showSendMessageView();
-      this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'messageSent', this.addMessageToChatRoom);
-    },
+    chatApp.channels.chatRoomChannel.reply({
+      'isUserNameInUse': this.isNameInUse,
+    }, this);
+  },
 
-    removeLoggedInUser: function (user) {
-      this.removeUserFromChatRoom(user);
-      this.stopListening(this.chatView.getRegion('sendMessage').currentView);
-      this.chatView.hideSendMessageView();
-    },
+  setLoggedInUser: function (user) {
+    this.addUserToChatRoom(user);
+    this.chatView.showSendMessageView();
+    this.listenTo(this.chatView.getRegion('sendMessage').currentView, 'messageSent', this.addMessageToChatRoom);
+  },
 
-    //Add local user to chat room and update view
-    addUserToChatRoom: function (user) {
-      this.chatRoom.addLocalUser(user);
-    },
+  removeLoggedInUser: function (user) {
+    this.removeUserFromChatRoom(user);
+    this.stopListening(this.chatView.getRegion('sendMessage').currentView);
+    this.chatView.hideSendMessageView();
+  },
 
-    //Remove local user from chat room
-    removeUserFromChatRoom: function (user) {
-      this.chatRoom.removeLocalUser(user);
-    },
+  //Add local user to chat room and update view
+  addUserToChatRoom: function (user) {
+    this.chatRoom.addLocalUser(user);
+  },
 
-    //Add a message to the chat room
-    addMessageToChatRoom: function (message) {
-      this.chatRoom.addLocalMessage({
-        username: chatApp.models.CurrentUser.getName(),
-        message: message,
-      });
-    },
+  //Remove local user from chat room
+  removeUserFromChatRoom: function (user) {
+    this.chatRoom.removeLocalUser(user);
+  },
 
-    //Logging for server add/remove
-    userAddedFromServer: function () {},
+  //Add a message to the chat room
+  addMessageToChatRoom: function (message) {
+    this.chatRoom.addLocalMessage({
+      username: chatApp.models.CurrentUser.getName(),
+      message: message,
+    });
+  },
 
-    //Logging for server add/remove
-    userRemovedFromServer: function (data) {
-      if (data.username === chatApp.models.CurrentUser.getName()) {
-        chatApp.models.CurrentUser.removeUser();
-      }
-    },
+  //Logging for server add/remove
+  userAddedFromServer: function () {},
 
-    //Check if chat room contains name
-    isNameInUse: function (userName) {
-      return this.chatRoom.hasUser(userName);
-    },
+  //Logging for server add/remove
+  userRemovedFromServer: function (data) {
+    if (data.username === chatApp.models.CurrentUser.getName()) {
+      chatApp.models.CurrentUser.removeUser();
+    }
+  },
 
-    //Set name is in use
-    setNameInUse: function () {
-      this.chatView.hideSendMessageView();
-      this.loginView.showNameInUse();
-    },
+  //Check if chat room contains name
+  isNameInUse: function (userName) {
+    return this.chatRoom.hasUser(userName);
+  },
 
-  });
+  //Set name is in use
+  setNameInUse: function () {
+    this.chatView.hideSendMessageView();
+    this.loginView.showNameInUse();
+  },
+
 });
