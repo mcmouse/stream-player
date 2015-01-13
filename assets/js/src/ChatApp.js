@@ -71,6 +71,6 @@ module.exports = Marionette.Application.extend({
   },
 
   createWebcamRoom: function () {
-    this.webcamRoomController = new WebcamRoomController();
+    //this.webcamRoomController = new WebcamRoomController();
   }
 });

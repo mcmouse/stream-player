@@ -121,9 +121,7 @@ module.exports = Marionette.Application.extend({
     this.chatRoomController = new ChatRoomController();
   },
 
-  createWebcamRoom: function () {
-    this.webcamRoomController = new WebcamRoomController();
-  }
+  createWebcamRoom: function () {}
 });
 
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","collections/MessageCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/MessageCollection.js","collections/UserCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/UserCollection.js","collections/WebcamCollection":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/collections/WebcamCollection.js","controllers/ChatRoomController":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/ChatRoomController.js","controllers/WebcamRoomController":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/WebcamRoomController.js","models/user/CurrentUser":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/user/CurrentUser.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/Utilities.js":[function(require,module,exports){
