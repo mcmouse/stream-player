@@ -107,7 +107,7 @@ module.exports = Marionette.Object.extend({
   //Set name is in use
   setNameInUse: function () {
     this.chatView.hideSendMessageView();
-    this.loginView.showNameInUse();
+    this.loginView.model.showNameInUse();
   },
 
 });

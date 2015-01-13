@@ -300,7 +300,7 @@ module.exports = Marionette.Object.extend({
   //Set name is in use
   setNameInUse: function () {
     this.chatView.hideSendMessageView();
-    this.loginView.showNameInUse();
+    this.loginView.model.showNameInUse();
   } });
 
 },{"backbone-shim":"/Users/tomlagie/Sites/projects/stream-player/assets/js/libs/backbone-shim.js","models/chat/ChatRoom":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/chat/ChatRoom.js","models/login/LoginViewModel":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/models/login/LoginViewModel.js","views/chat/ChatView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/chat/ChatView.js","views/login/LoginView":"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/views/login/LoginView.js"}],"/Users/tomlagie/Sites/projects/stream-player/assets/js/src/controllers/WebcamRoomController.js":[function(require,module,exports){
