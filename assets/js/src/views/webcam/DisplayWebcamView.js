@@ -16,6 +16,6 @@ module.exports = Marionette.ItemView.extend({
   template: DisplayWebcamTemplate,
   classes: 'display-webcam',
   onRender: function () {
-    chatApp.channels.webcamRoom.trigger('webcamRendered', this.model.feedId);
+    chatApp.channels.webcamRoomChannel.trigger('webcamRendered', this.model.feedId);
   }
 });

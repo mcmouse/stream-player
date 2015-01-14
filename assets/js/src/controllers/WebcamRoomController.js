@@ -26,6 +26,9 @@ module.exports = Marionette.Object.extend({
   },
 
   setupEvents: function () {
-
+    chatApp.channels.webcamRoomChannel.on({
+      'webcamStarted': this.webcamRoom.addLocalWebcam,
+      'webcamStopped': this.webcamRoom.removeLocalWebcam,
+    }, this.webcamRoom);
   },
 });

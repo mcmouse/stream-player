@@ -5,19 +5,10 @@
  * @return Marionette.CollectionView WebcamCollectionView
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Marionette = require('backbone-shim').Marionette;
+var Marionette = require('backbone-shim').Marionette,
+  DisplayWebcamView = require('views/webcam/DisplayWebcamView');
 
-// define([
-//   'jquery',
-//   'underscore',
-//   'backbone',
-//   'backbone.marionette',
-//   'views/webcam/DisplayWebcamView',
-// ], function ($, _, Backbone, Marionette, DisplayWebcamView) {
-//   'use strict';
 
-//   return Marionette.CollectionView.extend({
-//     childView: DisplayWebcamView,
-//   });
-// });
+module.exports = Marionette.CollectionView.extend({
+  childView: DisplayWebcamView
+});

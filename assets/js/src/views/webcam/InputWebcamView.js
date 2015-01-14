@@ -9,73 +9,47 @@
  */
 
 var Marionette = require('backbone-shim').Marionette,
-  LoginRegionTemplate = require('LoginRegion.html');
+  InputWebcamTemplate = require('InputWebcam.html'),
+  VideoInTemplate = require('VideoInTemplate.html');
 
 module.exports = Marionette.ItemView.extend({
-  el: '#input-webcam',
-
   //Cache selectors
   ui: {
-    'loginButton': '.login-button',
-    'enterUserNameInput': '.enter-user-name-input',
-    'setNameButton': '.set-name-button',
-    'logOutButton': '.log-out-button',
+    'showWebcamButton': '.show-webcam',
+    'hideWebcamButton': '.hide-webcam',
+    'webcam': '#video-in',
   },
 
   //Set up UI events
   events: {
-    'click @ui.loginButton': 'loadUser',
-    'click @ui.setNameButton': 'setName',
-    'click @ui.logOutButton': 'logOut',
+    'click @ui.showWebcamButton': 'showWebcam',
+    'click @ui.hideWebcamButton': 'hideWebcam',
   },
 
-  currentUser: null,
-
-  initialize: function (options) {
-    this.currentUser = options.currentUser;
-
-    if (this.currentUser) {
-      chatApp.channels.localUserChannel.on({
-        'noSavedUser': this.model.showEnterUserName,
-        'userLoggedIn': this.model.showLoggedIn,
-        'userLoggedOut': this.model.showLoggedOut,
-      }, this.model);
-    }
-
-    this.listenTo(this.model, 'change', this.render);
-  },
+  videoInTemplate: VideoInTemplate,
 
   //Static HTML
-  template: LoginRegionTemplate,
+  template: InputWebcamTemplate,
 
-  templateHelpers: function () {
-    return {
-      loginClasses: (this.model.get('loggedOut') ? 'visible' : 'hidden'),
-      enterUserNameClasses: (this.model.get('enteringUserName') ? 'visible' : 'hidden'),
-      nameInUseClasses: (this.model.get('nameInUse') ? 'visible' : 'hidden'),
-      loggedInClasses: (this.model.get('loggedIn') ? 'visible' : 'hidden'),
-      name: (this.model.get('loggedIn') ? this.currentUser.getName() : ''),
-    };
+  showWebcam: function () {
+    //Update UI
+    this.ui.showWebcamButton.hide();
+    this.ui.hideWebcamButton.show();
+    this.ui.webcam.append(this.videoInTemplate(this.model.toJSON()));
+    this.ui.webcam.show();
+
+    //Trigger event
+    chatApp.channels.webcamRoomChannel.trigger('webcamStarted', this.model.get('feedId'));
   },
 
-  //On login button click, hide the login area and load the user
-  loadUser: function () {
-    this.currentUser.loadUser();
-  },
+  hideWebcam: function () {
+    //Update UI
+    this.ui.showWebcamButton.show();
+    this.ui.hideWebcamButton.hide();
+    this.ui.webcam.hide();
+    this.ui.webcam.empty();
 
-  //Get user name and pass up to any listeners
-  setName: function () {
-    var user = this.ui.enterUserNameInput.val();
-    var userNameExists = chatApp.channels.chatRoomChannel.request('isUserNameInUse');
-    if (!userNameExists) {
-      this.currentUser.saveUser(user);
-    } else {
-      chatApp.channels.localUserChannel.command('nameInUse');
-    }
-  },
-
-  //Log out, hiding logged in state, clearing user from model, and showing log in button
-  logOut: function () {
-    this.currentUser.removeUser();
+    //Trigger event
+    chatApp.channels.webcamRoomChannel.trigger('webcamStopped', this.model.get('feedId'));
   },
 });

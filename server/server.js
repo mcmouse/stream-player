@@ -85,7 +85,7 @@
       console.log('Broadcasting new webcam with feed ID ' + feedId);
       feeds.push(feedId);
       socket.feed = feedId;
-      chat.emit('webcamJoined', feedId);
+      webcams.emit('webcamJoined', feedId);
     });
 
     //User logged out or disconnected webcam. Detach and rebroadcast.
@@ -95,14 +95,14 @@
         delete socket.feed;
       }
       feeds = _.without(feeds, feedId);
-      chat.emit('webcamLeft', feedId);
+      webcams.emit('webcamLeft', feedId);
     });
 
     //User disconnected
     socket.on('disconnect', function () {
       console.log('Emitting webcamLeft because of disconnect. Socket webcam id is: ' + socket.feed);
       if (socket.feed) {
-        chat.emit('webcamLeft', socket.feed);
+        webcams.emit('webcamLeft', socket.feed);
         feeds = _.without(feeds, socket.feed);
         delete socket.feed;
       }

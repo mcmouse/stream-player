@@ -1,20 +1,12 @@
-/* globals chatApp */
 /* jshint node:true */
+
+'use strict';
 
 /**
  * Display webcam model
  * @return Backbone.Model DisplayWebcam
  */
 
-var Backbone = require('backbone-shim').Backbone,
-  Utilities = require('Utilities');
+var Backbone = require('backbone-shim').Backbone;
 
-module.exports = (function () {
-  'use strict';
-
-  return Backbone.Model.extend({
-    defaults: {
-      feedId: Utilities.getGUID(),
-    }
-  });
-})();
+module.exports = Backbone.Model.extend({});

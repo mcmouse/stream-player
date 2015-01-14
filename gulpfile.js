@@ -23,6 +23,7 @@ var config = {
   inputFiles: {
     html: './assets/html/*.html',
     js: './assets/js/start.js',
+    swf: './assets/js/libs/*.swf',
     css: './assets/css/*.css',
     scss: ['./assets/sass/*.scss',
       './assets/sass/**/*.scss'
@@ -156,6 +157,13 @@ function buildJS() {
 
 }
 
+//Move our SWF's over
+function buildSWF() {
+  //Move our libraries
+  return gulp.src(config.inputFiles.swf)
+    .pipe(gulp.dest(config.outputDir + 'js/libs/'));
+}
+
 //For building libraries
 function buildCSS() {
   //Move our libraries
@@ -208,18 +216,23 @@ gulp.task('js', ['clean'], function () {
   buildJS();
 });
 
+gulp.task('swf', ['clean'], function () {
+  buildSWF();
+});
+
 //Persistent build task
-gulp.task('build', ['clean', 'html', 'css', 'js']);
+gulp.task('build', ['clean', 'html', 'css', 'js', 'swf']);
 
 //Doesn't re-run the JS task because we only want to construct one
 //watchify bundler
-gulp.task('watch', ['clean', 'html', 'css'], function () {
+gulp.task('watch', ['clean', 'html', 'css', 'swf'], function () {
   config.watch = true;
   buildJS();
 
   gulp.watch(config.inputFiles.html, buildHTML);
   gulp.watch(config.inputFiles.css, buildCSS);
   gulp.watch(config.inputFiles.scss, buildSCSS);
+  gulp.watch(config.inputFiles.swf, buildSWF);
 
   browserSync({
     server: {
