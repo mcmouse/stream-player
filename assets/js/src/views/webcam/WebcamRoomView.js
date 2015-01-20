@@ -10,5 +10,8 @@ var Marionette = require('backbone-shim').Marionette,
 
 
 module.exports = Marionette.CollectionView.extend({
-  childView: DisplayWebcamView
+  childView: DisplayWebcamView,
+  attributes: {
+    class: 'display-webcams',
+  },
 });

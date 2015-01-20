@@ -39,6 +39,7 @@
     "gulp-watchify": "^0.3.0",
     "jquery": "^2.1.3",
     "lodash": "^2.4.1",
+    "modernizr": "^3.0.0-pre",
     "node-underscorify": "0.0.13",
     "rimraf": "^2.2.8",
     "run-sequence": "^1.0.2",
@@ -48,7 +49,8 @@
     "underscore": "^1.7.0",
     "underscorify": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1"
+    "watchify": "^2.2.1",
+    "webrtc.io-client": "0.0.2-3"
   },
   "browser": {
     "jwplayer": "./assets/js/libs/jwplayer.js"

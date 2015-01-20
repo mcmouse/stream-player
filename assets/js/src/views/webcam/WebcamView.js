@@ -9,18 +9,24 @@
  * @return Marionette.Application ChatApp
  */
 
-var Marionette = require('backbone-shim').Marionette,
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
   WebcamRoomView = require('views/webcam/WebcamRoomView'),
   InputWebcamView = require('views/webcam/InputWebcamView'),
+  ErrorView = require('views/error/ErrorView'),
   InputWebcam = require('models/webcam/InputWebcam'),
   WebcamRoomTemplate = require('WebcamRoom.html');
 
 module.exports = Marionette.LayoutView.extend({
   el: '#webcam-region',
+  attributes: {
+    class: 'webcam-layout',
+  },
   template: WebcamRoomTemplate,
   regions: {
     displayWebcams: '#display-webcams',
     inputWebcam: '#input-webcam',
+    errors: '.errors',
   },
 
   initialize: function () {
@@ -28,6 +34,14 @@ module.exports = Marionette.LayoutView.extend({
       'userLoggedIn': this.showInputWebcamView,
       'userLoggedOut': this.hideInputWebcamView,
     }, this);
+  },
+
+  showError: function (message) {
+    this.getRegion('errors').show(new ErrorView({
+      model: new Backbone.Model({
+        message: message
+      }),
+    }));
   },
 
   showInitialRegions: function () {

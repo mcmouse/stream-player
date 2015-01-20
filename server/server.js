@@ -12,6 +12,7 @@
   var server = require('http').Server(app);
   var io = require('socket.io')(server);
   var _ = require('underscore');
+  var webRTC = require('webrtc.io').listen(8082);
 
   server.listen(8081);
 

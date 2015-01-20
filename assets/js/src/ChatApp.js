@@ -62,7 +62,6 @@ module.exports = Marionette.Application.extend({
   setupOptions: function () {
     this.options = {
       serverAddress: 'http://ec2-54-149-64-14.us-west-2.compute.amazonaws.com:8081',
-      rtmpServerAddress: 'rtmp://ec2-54-149-64-14.us-west-2.compute.amazonaws.com/live/'
     };
   },
 

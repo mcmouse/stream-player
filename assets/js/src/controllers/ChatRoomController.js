@@ -8,28 +8,43 @@
  * @return Marionette.Object ChatRoomController
  */
 
+//Need to require browsernizr tests firsts
+require('browsernizr/test/webrtc/peerconnection');
+require('browsernizr/test/webrtc/getusermedia');
+require('browsernizr/test/websockets');
+
 var Marionette = require('backbone-shim').Marionette,
   ChatRoom = require('models/chat/ChatRoom'),
   LoginViewModel = require('models/login/LoginViewModel'),
   LoginView = require('views/login/LoginView'),
-  ChatView = require('views/chat/ChatView');
+  ChatView = require('views/chat/ChatView'),
+  Modernizr = require('browsernizr');
 
 module.exports = Marionette.Object.extend({
   initialize: function () {
-    //Initialize chat room
-    this.chatRoom = new ChatRoom();
-
     this.chatView = new ChatView().render();
-    this.chatView.showInitialRegions();
 
-    //Initialize login flow
-    this.loginView = new LoginView({
-      model: new LoginViewModel(),
-      currentUser: chatApp.models.CurrentUser,
-    }).render();
+    if (this.hasBrowserSupport()) {
+      //Initialize chat room
+      this.chatRoom = new ChatRoom();
 
-    //Set up event listeners
-    this.setupEvents();
+      this.chatView.showInitialRegions();
+
+      //Initialize login flow
+      this.loginView = new LoginView({
+        model: new LoginViewModel(),
+        currentUser: chatApp.models.CurrentUser,
+      }).render();
+
+      //Set up event listeners
+      this.setupEvents();
+    } else {
+      this.chatView.showError('Your browser is not supported, peasant! Get a new one!');
+    }
+  },
+
+  hasBrowserSupport: function () {
+    return Modernizr.websockets;
   },
 
   setupEvents: function () {

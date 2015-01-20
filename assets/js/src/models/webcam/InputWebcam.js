@@ -10,7 +10,8 @@
 
 
 var Backbone = require('backbone-shim').Backbone,
-  Utilities = require('Utilities');
+  Utilities = require('Utilities'),
+  rtc = require('webrtc.io');
 
 module.exports = Backbone.Model.extend({
   //Set up defaults for localstorage ID and loaded user state.
@@ -18,7 +19,6 @@ module.exports = Backbone.Model.extend({
     feedId: Utilities.getGUID(),
   },
 
-  initialize: function () {
-    this.set('baseUrl', chatApp.options.rtmpServerAddress);
-  }
+
+
 });

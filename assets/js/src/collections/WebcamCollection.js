@@ -12,6 +12,7 @@ module.exports = (function () {
   'use strict';
 
   return Backbone.Collection.extend({
+    classes: 'display-webcam-collection',
     model: DisplayWebcam,
   });
 })();

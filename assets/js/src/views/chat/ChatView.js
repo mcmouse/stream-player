@@ -8,10 +8,12 @@
  * @return Marionette.LayoutView ChatView
  */
 
-var Marionette = require('backbone-shim').Marionette,
+var Backbone = require('backbone-shim').Backbone,
+  Marionette = require('backbone-shim').Marionette,
   UserListView = require('views/chat/UserListView'),
   ChatMessagesView = require('views/chat/ChatMessagesView'),
   SendMessageView = require('views/chat/SendMessageView'),
+  ErrorView = require('views/error/ErrorView'),
   ChatRoomTemplate = require('ChatRoom.html');
 
 module.exports = Marionette.LayoutView.extend({
@@ -20,7 +22,16 @@ module.exports = Marionette.LayoutView.extend({
   regions: {
     userList: '#user-list',
     chatMessages: '#chat-messages',
-    sendMessage: '#send-message'
+    sendMessage: '#send-message',
+    errors: '.errors',
+  },
+
+  showError: function (message) {
+    this.getRegion('errors').show(new ErrorView({
+      model: new Backbone.Model({
+        message: message
+      }),
+    }));
   },
 
   showInitialRegions: function () {
