@@ -13,7 +13,7 @@
 var Marionette = require('backbone-shim').Marionette,
   WebcamView = require('views/webcam/WebcamView'),
   WebcamRoom = require('models/webcam/WebcamRoom'),
-  Modernizr = require('browsernizr');
+  Modernizr = require('modernizr-wrapper');
 
 module.exports = Marionette.Object.extend({
   initialize: function () {

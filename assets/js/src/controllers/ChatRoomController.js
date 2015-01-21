@@ -9,16 +9,13 @@
  */
 
 //Need to require browsernizr tests firsts
-require('browsernizr/test/webrtc/peerconnection');
-require('browsernizr/test/webrtc/getusermedia');
-require('browsernizr/test/websockets');
 
 var Marionette = require('backbone-shim').Marionette,
   ChatRoom = require('models/chat/ChatRoom'),
   LoginViewModel = require('models/login/LoginViewModel'),
   LoginView = require('views/login/LoginView'),
   ChatView = require('views/chat/ChatView'),
-  Modernizr = require('browsernizr');
+  Modernizr = require('modernizr-wrapper');
 
 module.exports = Marionette.Object.extend({
   initialize: function () {

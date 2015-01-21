@@ -110,4 +110,9 @@
     });
   });
 
+  webRTC.on('connect', function (data) {
+    console.log('connect');
+    console.log(data);
+  });
+
 })();

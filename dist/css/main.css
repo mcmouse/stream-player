@@ -1,20 +1,8 @@
-/* line 1, ../../sass/main.scss */
 .hidden {
   display: none; }
 
-/* line 5, ../../sass/main.scss */
 .visible {
   display: block; }
 
-/* line 9, ../../sass/main.scss */
 .current-user {
   font-weight: bold; }
-
-.test {
-  background: blue; }
-
-.something {
-  display: none; }
-
-.something-else {
-  display: none; }

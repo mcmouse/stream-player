@@ -49,8 +49,7 @@
     "underscore": "^1.7.0",
     "underscorify": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1",
-    "webrtc.io-client": "0.0.2-3"
+    "watchify": "^2.2.1"
   },
   "browser": {
     "jwplayer": "./assets/js/libs/jwplayer.js"

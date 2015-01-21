@@ -9,8 +9,7 @@
  */
 
 var Marionette = require('backbone-shim').Marionette,
-  InputWebcamTemplate = require('InputWebcam.html'),
-  VideoInTemplate = require('VideoInTemplate.html');
+  InputWebcamTemplate = require('InputWebcam.html');
 
 module.exports = Marionette.ItemView.extend({
   //Cache selectors
@@ -26,17 +25,28 @@ module.exports = Marionette.ItemView.extend({
     'click @ui.hideWebcamButton': 'hideWebcam',
   },
 
-  videoInTemplate: VideoInTemplate,
+  modelEvents: {
+    'webcamStreamCreated': 'displayWebcam',
+  },
 
   //Static HTML
   template: InputWebcamTemplate,
 
   showWebcam: function () {
+    this.model.startWebcam();
+  },
+
+  displayWebcam: function () {
+    //Only append video once it's loaded
+    this.render();
+
     //Update UI
     this.ui.showWebcamButton.hide();
     this.ui.hideWebcamButton.show();
-    this.ui.webcam.append(this.videoInTemplate(this.model.toJSON()));
-    this.ui.webcam.show();
+
+    //Get a handle on the video
+    this.video = this.ui.webcam[0];
+    this.ui.webcam.toggleClass('hidden');
 
     //Trigger event
     chatApp.channels.webcamRoomChannel.trigger('webcamStarted', this.model.get('feedId'));
@@ -46,8 +56,8 @@ module.exports = Marionette.ItemView.extend({
     //Update UI
     this.ui.showWebcamButton.show();
     this.ui.hideWebcamButton.hide();
-    this.ui.webcam.hide();
-    this.ui.webcam.empty();
+    this.video.stop();
+    this.ui.webcam.toggleClass('hidden');
 
     //Trigger event
     chatApp.channels.webcamRoomChannel.trigger('webcamStopped', this.model.get('feedId'));
