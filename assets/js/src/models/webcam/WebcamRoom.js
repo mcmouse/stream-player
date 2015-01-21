@@ -22,10 +22,8 @@ module.exports = Backbone.Model.extend({
 
     //Listen to broadcasts from socket
     rtc.on('add remote stream', this.addWebcam.bind(this));
-    rtc.on('remove_peer_connected', this.removeWebcam.bind(this));
-    //rtc.on('get_peers', this.setWebcams.bind(this));
+    rtc.on('disconnect stream', this.removeWebcam.bind(this));
 
-    //this.loadInitialWebcams();
   },
 
   //Alias to emit socket events
@@ -35,20 +33,6 @@ module.exports = Backbone.Model.extend({
       'data': data
     }));
   },
-
-  //Request our initial group of webcams
-  // loadInitialWebcams: function () {
-  //   this.broadcast('join_room', {
-  //     room: '',
-  //   });
-  // },
-
-  //Load our initial webcams from the server
-  // setWebcams: function (data) {
-  //   _.each(data.connections, function (webcam) {
-  //     this.addWebcam(webcam);
-  //   }, this);
-  // },
 
   //Check if we currently have a webcam with the given feedId
   hasWebcam: function (feedId) {

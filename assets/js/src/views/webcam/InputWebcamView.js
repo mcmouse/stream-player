@@ -50,7 +50,6 @@ module.exports = Marionette.ItemView.extend({
     this.ui.hideWebcamButton.show();
 
     //Get a handle on the video
-    this.video = this.ui.webcam[0];
     this.ui.webcam.toggleClass('hidden');
 
     //Trigger event
