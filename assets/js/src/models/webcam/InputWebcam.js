@@ -26,7 +26,15 @@ module.exports = Backbone.Model.extend({
       'audio': true,
     }, function (stream) {
       this.set('src', URL.createObjectURL(stream));
-      this.trigger('webcamStreamCreated');
+      this.trigger('webcamStreamStarted');
     }.bind(this));
   },
+
+  stopWebcam: function () {
+    this.set({
+      'src': '',
+      'feedId': '',
+    });
+    this.trigger('webcamStreamStopped');
+  }
 });

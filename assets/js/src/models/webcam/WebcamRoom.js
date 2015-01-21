@@ -23,17 +23,17 @@ module.exports = Backbone.Model.extend({
     //Listen to broadcasts from socket
     rtc.on('add remote stream', this.addWebcam.bind(this));
     rtc.on('remove_peer_connected', this.removeWebcam.bind(this));
-    rtc.on('get_peers', this.setWebcams.bind(this));
+    //rtc.on('get_peers', this.setWebcams.bind(this));
 
     //this.loadInitialWebcams();
   },
 
   //Alias to emit socket events
   broadcast: function (event, data) {
-    rtc._socket.send({
+    rtc._socket.send(JSON.stringify({
       'eventName': event,
       'data': data
-    });
+    }));
   },
 
   //Request our initial group of webcams
@@ -44,11 +44,11 @@ module.exports = Backbone.Model.extend({
   // },
 
   //Load our initial webcams from the server
-  setWebcams: function (data) {
-    _.each(data.connections, function (webcam) {
-      this.addWebcam(webcam);
-    }, this);
-  },
+  // setWebcams: function (data) {
+  //   _.each(data.connections, function (webcam) {
+  //     this.addWebcam(webcam);
+  //   }, this);
+  // },
 
   //Check if we currently have a webcam with the given feedId
   hasWebcam: function (feedId) {
@@ -60,18 +60,12 @@ module.exports = Backbone.Model.extend({
   },
 
   //Add a webcam to the collection
-  addWebcam: function (data) {
+  addWebcam: function (stream, socket) {
     this.get('onlineWebcams').add(new DisplayWebcam({
-      feedId: data.socketId,
-      src: URL.createObjectURL(data.stream),
+      feedId: socket,
+      src: URL.createObjectURL(stream),
     }));
     chatApp.channels.webcamRoomChannel.trigger('webcamAdded');
-  },
-
-  //Add a webcam locally by broadcasting to the server
-  //Not needed because webrtc.io handles implicitly?
-  addLocalWebcam: function () {
-    //this.broadcast('close', feedId);
   },
 
   //Remove a webcam from the collection

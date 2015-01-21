@@ -16,8 +16,13 @@ module.exports = Marionette.ItemView.extend({
   attributes: {
     class: 'display-webcam',
   },
-  initialize: function () {},
+
+  ui: {
+    'video': '.webcam',
+  },
+
   onRender: function () {
+    this.ui.video[0].play();
     chatApp.channels.webcamRoomChannel.trigger('webcamRendered', this.model.feedId);
   },
   onShow: function () {}

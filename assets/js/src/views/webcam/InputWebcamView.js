@@ -21,19 +21,24 @@ module.exports = Marionette.ItemView.extend({
 
   //Set up UI events
   events: {
-    'click @ui.showWebcamButton': 'showWebcam',
-    'click @ui.hideWebcamButton': 'hideWebcam',
+    'click @ui.showWebcamButton': 'startWebcam',
+    'click @ui.hideWebcamButton': 'stopWebcam',
   },
 
   modelEvents: {
-    'webcamStreamCreated': 'displayWebcam',
+    'webcamStreamStarted': 'displayWebcam',
+    'webcamStreamStopped': 'hideWebcam',
   },
 
   //Static HTML
   template: InputWebcamTemplate,
 
-  showWebcam: function () {
+  startWebcam: function () {
     this.model.startWebcam();
+  },
+
+  stopWebcam: function () {
+    this.model.stopWebcam();
   },
 
   displayWebcam: function () {
@@ -53,11 +58,8 @@ module.exports = Marionette.ItemView.extend({
   },
 
   hideWebcam: function () {
-    //Update UI
-    this.ui.showWebcamButton.show();
-    this.ui.hideWebcamButton.hide();
-    this.video.stop();
-    this.ui.webcam.toggleClass('hidden');
+    //Reset UI state
+    this.render();
 
     //Trigger event
     chatApp.channels.webcamRoomChannel.trigger('webcamStopped', this.model.get('feedId'));
