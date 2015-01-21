@@ -21,7 +21,7 @@ module.exports = Backbone.Model.extend({
     rtc.connect(chatApp.options.webRTCAddress, '');
 
     //Listen to broadcasts from socket
-    rtc.on('new_peer_connected', this.addWebcam.bind(this));
+    rtc.on('add remote stream', this.addWebcam.bind(this));
     rtc.on('remove_peer_connected', this.removeWebcam.bind(this));
     rtc.on('get_peers', this.setWebcams.bind(this));
 

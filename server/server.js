@@ -112,8 +112,11 @@
 
   webRTC.on('connection', function (data) {
     console.log('connect');
-    console.log(data);
-    console.log(webRTC);
+  });
+
+  webRTC.on('join_room', function (data) {
+    console.log('join room');
+    console.log('data');
   });
 
 })();
