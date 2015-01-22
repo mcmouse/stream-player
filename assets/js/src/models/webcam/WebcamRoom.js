@@ -23,6 +23,9 @@ module.exports = Backbone.Model.extend({
     //Listen to broadcasts from socket
     rtc.on('add remote stream', this.addWebcam.bind(this));
     rtc.on('disconnect stream', this.removeWebcam.bind(this));
+    rtc.on('connections', this.setWebcams.bind(this));
+
+    window.rtc = rtc;
 
   },
 
@@ -32,6 +35,13 @@ module.exports = Backbone.Model.extend({
       'eventName': event,
       'data': data
     }));
+  },
+
+  //Load our initial webcams from the server
+  setWebcams: function () {
+    rtc.createPeerConnections();
+    rtc.sendOffers();
+    rtc.addStreams();
   },
 
   //Check if we currently have a webcam with the given feedId
